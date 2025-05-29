@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成都五一假期旅游攻略 | 5天4晚完美行程</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin: 0 5px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .card h3 {
+            color: #34495e;
+            font-size: 1.2em;
+            margin: 15px 0 10px 0;
+        }
+
+        .transport-option {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .transport-option strong {
+            color: #2c3e50;
+        }
+
+        .attraction {
+            background: #f1f2f6;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .attraction-name {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .attraction-info {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .day-schedule {
+            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+
+        .day-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .time-slot {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 8px 0;
+        }
+
+        .weather-info {
+            background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            border-left: 4px solid #fdcb6e;
+        }
+
+        .tip-title {
+            font-weight: bold;
+            color: #d63031;
+            margin-bottom: 5px;
+        }
+
+        .budget {
+            background: linear-gradient(45deg, #a8e6cf 0%, #dcedc1 100%);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2d3436;
+            margin-top: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8e6cf 0%, #dcedc8 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><span class="emoji">🌟</span>成都五一假期旅游攻略<span class="emoji">🐼</span></h1>
+            <div class="subtitle">5天4晚完美行程 · 从北京出发的自由行指南</div>
+            <div style="margin-top: 15px; font-size: 1.1em; color: #3498db;">✈️ 高铁直达 🏛️ 文化之旅 🍲 美食天堂 📸 网红打卡</div>
+        </div>
+
+        <div class="content-grid">
+            <!-- 出行规划 -->
+            <div class="card">
+                <h2><span class="emoji">🚄</span>出行规划</h2>
+                
+                <div class="transport-option">
+                    <strong>🛫 飞机</strong><br>
+                    出发：北京首都/大兴机场<br>
+                    到达：成都双流/天府机场<br>
+                    时长：约3小时<br>
+                    价格：<span class="highlight">800-2000元</span>
+                </div>
+                
+                <div class="transport-option">
+                    <strong>🚄 高铁（推荐）</strong><br>
+                    出发：北京西站<br>
+                    到达：成都东站<br>
+                    时长：约7.5-8小时<br>
+                    价格：<span class="highlight">二等座553元，一等座884元</span>
+                </div>
+                
+                <div class="tip">
+                    <div class="tip-title">💡 推荐理由</div>
+                    高铁性价比最高，成都东站地铁交通便利，沿途风景优美
+                </div>
+            </div>
+
+            <!-- 市内交通 -->
+            <div class="card">
+                <h2><span class="emoji">🚇</span>成都市内交通</h2>
+                
+                <h3>地铁系统</h3>
+                <ul>
+                    <li><strong>主要线路：</strong>1-8号线，18号线等</li>
+                    <li><strong>重要站点：</strong>春熙路站（2、3号线）</li>
+                    <li><strong>运营时间：</strong>6:30-23:00</li>
+                    <li><strong>票价：</strong>2-10元</li>
+                </ul>
+                
+                <h3>乘车方式</h3>
+                <ul>
+                    <li>🎫 天府通卡（地铁、公交通用）</li>
+                    <li>📱 手机扫码（支付宝、微信）</li>
+                    <li>📲 天府通APP（推荐下载）</li>
+                </ul>
+            </div>
+
+            <!-- 热门景点 -->
+            <div class="card">
+                <h2><span class="emoji">🏛️</span>热门景点</h2>
+                
+                <div class="attraction">
+                    <div class="attraction-name">🐼 成都大熊猫繁育研究基地</div>
+                    <div class="attraction-info">
+                        门票：55元 | 游玩：3-4小时 | 需预约<br>
+                        最佳时间：上午8-10点（熊猫最活跃）
+                    </div>
+                </div>
+                
+                <div class="attraction">
+                    <div class="attraction-name">⚔️ 武侯祠博物馆</div>
+                    <div class="attraction-info">
+                        门票：50元 | 游玩：2-3小时<br>
+                        特色：三国文化，与锦里相连
+                    </div>
+                </div>
+                
+                <div class="attraction">
+                    <div class="attraction-name">📜 杜甫草堂博物馆</div>
+                    <div class="attraction-info">
+                        门票：50元 | 游玩：2小时<br>
+                        特色：诗圣故居，园林景观
+                    </div>
+                </div>
+                
+                <div class="attraction">
+                    <div class="attraction-name">🏮 宽窄巷子景区</div>
+                    <div class="attraction-info">
+                        门票：免费 | 游玩：2-3小时<br>
+                        特色：清代街区，美食购物
+                    </div>
+                </div>
+            </div>
+
+            <!-- 网红打卡地 -->
+            <div class="card">
+                <h2><span class="emoji">📸</span>网红打卡地</h2>
+                
+                <div class="attraction">
+                    <div class="attraction-name">🛍️ 成都太古里</div>
+                    <div class="attraction-info">
+                        地址：中纱帽街8号<br>
+                        交通：春熙路地铁站<br>
+                        特色：开放式购物中心，建筑设计独特
+                    </div>
+                </div>
+                
+                <div class="attraction">
+                    <div class="attraction-name">🏢 IFS国际金融中心</div>
+                    <div class="attraction-info">
+                        地址：红星路三段1号<br>
+                        特色：屋顶大熊猫雕塑
+                    </div>
+                </div>
+                
+                <div class="attraction">
+                    <div class="attraction-name">🌉 九眼桥</div>
+                    <div class="attraction-info">
+                        交通：牛王庙地铁站<br>
+                        特色：夜景绝佳，酒吧一条街
+                    </div>
+                </div>
+                
+                <div class="attraction">
+                    <div class="attraction-name">🏗️ 成都双子塔</div>
+                    <div class="attraction-info">
+                        地址：交子北一路与交子大道交叉口<br>
+                        特色：现代建筑地标，夜景打卡点
+                    </div>
+                </div>
+            </div>
+
+            <!-- 住宿建议 -->
+            <div class="card">
+                <h2><span class="emoji">🏨</span>住宿建议</h2>
+                
+                <h3>🌟 春熙路/太古里区域</h3>
+                <ul>
+                    <li><strong>交通：</strong>春熙路地铁站</li>
+                    <li><strong>优势：</strong>购物方便，夜生活丰富</li>
+                    <li><strong>推荐：</strong>太古里IFS禧玥酒店</li>
+                </ul>
+                
+                <h3>🏛️ 武侯祠/锦里区域</h3>
+                <ul>
+                    <li><strong>交通：</strong>高升桥地铁站</li>
+                    <li><strong>优势：</strong>文化氛围浓厚</li>
+                    <li><strong>推荐：</strong>宽窄巷子杜甫草堂漫心酒店</li>
+                </ul>
+                
+                <h3>🌆 天府新区</h3>
+                <ul>
+                    <li><strong>交通：</strong>世纪城地铁站</li>
+                    <li><strong>优势：</strong>环境优美，相对安静</li>
+                    <li><strong>推荐：</strong>高性价比连锁酒店</li>
+                </ul>
+            </div>
+
+            <!-- 天气穿搭 -->
+            <div class="card">
+                <h2><span class="emoji">🌤️</span>天气与穿搭</h2>
+                
+                <div class="weather-info">
+                    <h3>五一期间天气预报</h3>
+                    <div style="margin: 10px 0;">
+                        🌡️ <strong>温度：</strong>17-30°C<br>
+                        ☁️ <strong>天气：</strong>多云转晴，偶有小雨<br>
+                        💨 <strong>风力：</strong>北风1-3级
+                    </div>
+                </div>
+                
+                <h3>👔 穿搭建议</h3>
+                <ul>
+                    <li><strong>上装：</strong>薄外套+T恤，方便增减</li>
+                    <li><strong>下装：</strong>牛仔裤或休闲裤</li>
+                    <li><strong>鞋子：</strong>舒适的运动鞋</li>
+                    <li><strong>配件：</strong>雨伞（备用）、防晒帽</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 每日行程 -->
+        <div class="card" style="grid-column: 1 / -1;">
+            <h2><span class="emoji">📅</span>每日行程安排</h2>
+            
+            <div class="day-schedule">
+                <div class="day-title">Day 1：抵达成都</div>
+                <div class="time-slot"><strong>上午：</strong>北京西站出发（高铁）</div>
+                <div class="time-slot"><strong>下午：</strong>抵达成都东站，前往酒店办理入住</div>
+                <div class="time-slot"><strong>晚上：</strong>春熙路、太古里逛街，品尝火锅</div>
+                <div class="time-slot"><strong>住宿：</strong>春熙路区域酒店</div>
+            </div>
+            
+            <div class="day-schedule">
+                <div class="day-title">Day 2：熊猫基地+文化之旅</div>
+                <div class="time-slot"><strong>上午：</strong>成都大熊猫繁育研究基地（8:00-12:00）</div>
+                <div class="time-slot"><strong>下午：</strong>杜甫草堂博物馆（14:00-16:00）</div>
+                <div class="time-slot"><strong>晚上：</strong>宽窄巷子晚餐，体验成都慢生活</div>
+            </div>
+            
+            <div class="day-schedule">
+                <div class="day-title">Day 3：三国文化+休闲</div>
+                <div class="time-slot"><strong>上午：</strong>武侯祠博物馆（9:00-11:30）</div>
+                <div class="time-slot"><strong>下午：</strong>锦里古街，购买特产（12:00-15:00）</div>
+                <div class="time-slot"><strong>下午：</strong>锦城公园休闲（15:30-17:30）</div>
+                <div class="time-slot"><strong>晚上：</strong>九眼桥夜景，酒吧街体验</div>
+            </div>
+            
+            <div class="day-schedule">
+                <div class="day-title">Day 4：现代成都+购物</div>
+                <div class="time-slot"><strong>上午：</strong>IFS国际金融中心，屋顶熊猫打卡</div>
+                <div class="time-slot"><strong>下午：</strong>天府新区，双子塔夜景打卡点踩点</div>
+                <div class="time-slot"><strong>下午：</strong>桂溪生态公园休闲</div>
+                <div class="time-slot"><strong>晚上：</strong>双子塔夜景拍照，天府新区晚餐</div>
+            </div>
+            
+            <div class="day-schedule">
+                <div class="day-title">Day 5：返程</div>
+                <div class="time-slot"><strong>上午：</strong>酒店退房，最后购物</div>
+                <div class="time-slot"><strong>下午：</strong>成都东站，返回北京</div>
+            </div>
+        </div>
+
+        <!-- 防坑小贴士 -->
+        <div class="card" style="grid-column: 1 / -1;">
+            <h2><span class="emoji">💡</span>防坑小贴士</h2>
+            
+            <div class="tip">
+                <div class="tip-title">🚇 交通出行</div>
+                <ul>
+                    <li>避开早晚高峰期乘坐地铁</li>
+                    <li>熊猫基地建议早上前往，下午人流量大</li>
+                    <li>春熙路周末人流密集，注意安全</li>
+                </ul>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-title">🍲 美食消费</div>
+                <ul>
+                    <li>正宗火锅推荐：蜀大侠、大龙燚</li>
+                    <li>避免景区内高价餐厅</li>
+                    <li>尝试街边小吃：钟水饺、龙抄手、担担面</li>
+                </ul>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-title">🛍️ 购物建议</div>
+                <ul>
+                    <li>特产购买：宽窄巷子、锦里价格较高，可到超市购买</li>
+                    <li>茶叶、川菜调料是不错的伴手礼</li>
+                    <li>熊猫周边商品在熊猫基地购买更正宗</li>
+                </ul>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-title">📱 其他提醒</div>
+                <ul>
+                    <li>成都人说话语速较快，不懂可以请他们慢点说</li>
+                    <li>成都湿度较大，注意保湿</li>
+                    <li>景区门票建议提前网上预订</li>
+                    <li>保持手机电量充足，移动支付很普及</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="budget">
+            💰 预算参考：人均3000-5000元<br>
+            （含交通、住宿、餐饮、门票）
+        </div>
+
+        <div class="footer">
+            <h3>🐼 祝您在成都度过愉快的五一假期！✨</h3>
+            <p style="margin-top: 10px; font-size: 0.9em;">本攻略基于高德地图数据生成，实际情况请以当地最新信息为准</p>
+        </div>
+    </div>
+</body>
+</html>
