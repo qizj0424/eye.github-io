@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合肥-南京端午3天2晚自由行攻略</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .header .emoji {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .transport-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .transport-table th,
+        .transport-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .transport-table th {
+            background-color: #667eea;
+            color: white;
+        }
+        
+        .transport-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .weather-card {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .weather-date {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .weather-temp {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        
+        .attraction-list {
+            list-style: none;
+        }
+        
+        .attraction-item {
+            background: #f8f9fa;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .attraction-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+        
+        .attraction-info {
+            margin-top: 5px;
+            color: #666;
+        }
+        
+        .itinerary-day {
+            background: #f8f9fa;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .day-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .time-slot {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+        
+        .time {
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            margin-right: 15px;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .activity {
+            flex: 1;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .tip-card {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .tip-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .emergency-contact {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .contact-title {
+            font-weight: bold;
+            color: #0c5460;
+            margin-bottom: 5px;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .transport-table {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌉 合肥-南京端午3天2晚自由行攻略</h1>
+            <p>2025年端午假期专版</p>
+        </div>
+        
+        <div class="card">
+            <h2>🚄 出行规划对比</h2>
+            <table class="transport-table">
+                <thead>
+                    <tr>
+                        <th>交通方式</th>
+                        <th>车次/航班</th>
+                        <th>出发站</th>
+                        <th>到达站</th>
+                        <th>时长</th>
+                        <th>参考价格</th>
+                        <th>推荐指数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🚄 高铁（推荐）</td>
+                        <td>D2248</td>
+                        <td>合肥南站</td>
+                        <td>南京南站</td>
+                        <td>2小时12分</td>
+                        <td>¥154.5</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>🚂 普快</td>
+                        <td>G9250</td>
+                        <td>合肥站</td>
+                        <td>南京南站</td>
+                        <td>3小时30分</td>
+                        <td>¥89.5</td>
+                        <td>⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>🚗 自驾</td>
+                        <td>-</td>
+                        <td>合肥市区</td>
+                        <td>南京市区</td>
+                        <td>2小时30分</td>
+                        <td>¥120（油费+过路费）</td>
+                        <td>⭐⭐⭐⭐</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight">
+                <strong>🎯 最佳路线推荐：</strong><br>
+                <strong>去程：</strong>三孝口地铁站 → 轨道交通5号线 → 合肥南站 → D2248次高铁 → 南京南站 → 地铁3号线 → 鸡鸣寺站<br>
+                <strong>返程：</strong>南京南站 → G9250次高铁 → 合肥站 → 轨道交通1号线 → 市区
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🌦️ 端午天气预报</h2>
+            <div class="weather-grid">
+                <div class="weather-card">
+                    <div class="weather-date">5月29日 周四</div>
+                    <div class="weather-temp">17-30℃</div>
+                    <div>☀️ 晴天</div>
+                    <div>东南风 1-3级</div>
+                </div>
+                <div class="weather-card">
+                    <div class="weather-date">5月30日 周五</div>
+                    <div class="weather-temp">19-31℃</div>
+                    <div>⛅ 多云转阴</div>
+                    <div>东南风 1-3级</div>
+                </div>
+                <div class="weather-card">
+                    <div class="weather-date">5月31日 周六</div>
+                    <div class="weather-temp">17-30℃</div>
+                    <div>🌧️ 阴转中雨</div>
+                    <div>东南风 1-3级</div>
+                </div>
+                <div class="weather-card">
+                    <div class="weather-date">6月1日 周日</div>
+                    <div class="weather-temp">18-20℃</div>
+                    <div>🌦️ 中雨转小雨</div>
+                    <div>东风 1-3级</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🏯 必游景点推荐</h2>
+            <ul class="attraction-list">
+                <li class="attraction-item">
+                    <div class="attraction-name">🏛️ 中山陵景区（5A级）</div>
+                    <div class="attraction-info">
+                        📍 地址：石象路7号<br>
+                        🚇 交通：地铁2号线苜蓿园站<br>
+                        🎫 门票：免费（需预约）<br>
+                        ⏰ 建议游玩：3小时
+                    </div>
+                </li>
+                <li class="attraction-item">
+                    <div class="attraction-name">🏮 夫子庙秦淮风光带</div>
+                    <div class="attraction-info">
+                        📍 地址：平江府路80-1号<br>
+                        🚇 交通：地铁3号线夫子庙站2号口<br>
+                        🎫 门票：免费（部分景点收费）<br>
+                        🌙 最佳时间：夜游18:00-21:00
+                    </div>
+                </li>
+                <li class="attraction-item">
+                    <div class="attraction-name">🏯 明孝陵景区</div>
+                    <div class="attraction-info">
+                        📍 地址：石象路7号<br>
+                        🚇 交通：地铁2号线苜蓿园站<br>
+                        🎫 门票：¥70<br>
+                        📸 网红点：石象路银杏大道
+                    </div>
+                </li>
+                <li class="attraction-item">
+                    <div class="attraction-name">🌸 瞻园（金陵第一园）</div>
+                    <div class="attraction-info">
+                        📍 地址：瞻园路128号<br>
+                        🚇 交通：地铁1号线三山街站<br>
+                        🎫 门票：¥30<br>
+                        ⏰ 建议游玩：1.5小时
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>🏨 住宿建议</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-title">🏙️ 新街口商圈</div>
+                    <strong>推荐酒店：</strong>金鹰国际酒店<br>
+                    <strong>优势：</strong>地铁1/2号线交汇，购物便利<br>
+                    <strong>端午参考价：</strong>¥600-800/晚
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">🏮 夫子庙景区</div>
+                    <strong>推荐酒店：</strong>夫子庙隐逸酒店<br>
+                    <strong>优势：</strong>临河观景，夜游便利<br>
+                    <strong>端午参考价：</strong>¥450-650/晚
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">🌸 玄武湖周边</div>
+                    <strong>推荐酒店：</strong>南京玄武饭店<br>
+                    <strong>优势：</strong>环境清幽，性价比高<br>
+                    <strong>端午参考价：</strong>¥350-500/晚
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>📸 网红打卡地</h2>
+            <ul class="attraction-list">
+                <li class="attraction-item">
+                    <div class="attraction-name">🌃 老门东历史街区</div>
+                    <div class="attraction-info">
+                        📸 拍照点：明城墙遗址、传统建筑群<br>
+                        🚇 交通：地铁3号线武定门站<br>
+                        🍜 美食：鸭血粉丝汤、桂花糖芋苗
+                    </div>
+                </li>
+                <li class="attraction-item">
+                    <div class="attraction-name">🌊 玄武湖公园</div>
+                    <div class="attraction-info">
+                        📸 拍照点：樱洲、梁洲荷花池<br>
+                        🚇 交通：地铁1号线玄武门站<br>
+                        ⏰ 最佳时间：清晨或傍晚
+                    </div>
+                </li>
+                <li class="attraction-item">
+                    <div class="attraction-name">🎨 1912街区</div>
+                    <div class="attraction-info">
+                        📸 拍照点：民国风建筑、酒吧街<br>
+                        🚇 交通：地铁2号线大行宫站<br>
+                        🌙 夜景最佳：20:00-22:00
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>📅 每日行程安排</h2>
+            
+            <div class="itinerary-day">
+                <div class="day-title">Day 1：古都初印象（5月29日）</div>
+                <div class="time-slot">
+                    <div class="time">09:00</div>
+                    <div class="activity">抵达南京南站，乘地铁3号线至夫子庙</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">10:30</div>
+                    <div class="activity">夫子庙景区游览，参观江南贡院</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">12:00</div>
+                    <div class="activity">秦淮河畔午餐：鸭血粉丝汤、小笼包</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">14:00</div>
+                    <div class="activity">瞻园游览，感受江南园林之美</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">16:30</div>
+                    <div class="activity">老门东历史街区，拍照打卡</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">19:00</div>
+                    <div class="activity">秦淮河夜游，欣赏两岸灯火</div>
+                </div>
+            </div>
+            
+            <div class="itinerary-day">
+                <div class="day-title">Day 2：钟山风景区深度游（5月30日）</div>
+                <div class="time-slot">
+                    <div class="time">08:30</div>
+                    <div class="activity">地铁2号线至苜蓿园站，前往中山陵</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">09:00</div>
+                    <div class="activity">中山陵景区：博爱坊→陵门→碑亭→祭堂</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">11:30</div>
+                    <div class="activity">明孝陵游览，石象路拍照</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">13:00</div>
+                    <div class="activity">灵谷景区午餐休息</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">15:00</div>
+                    <div class="activity">灵谷寺、无梁殿参观</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">17:00</div>
+                    <div class="activity">返回市区，1912街区晚餐</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">20:00</div>
+                    <div class="activity">玄武湖夜景漫步</div>
+                </div>
+            </div>
+            
+            <div class="itinerary-day">
+                <div class="day-title">Day 3：文化体验与返程（5月31日）</div>
+                <div class="time-slot">
+                    <div class="time">09:00</div>
+                    <div class="activity">南京博物院（建议预约）</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">11:30</div>
+                    <div class="activity">总统府历史建筑群</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">13:30</div>
+                    <div class="activity">科巷美食街：盐水鸭、汤包</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">15:00</div>
+                    <div class="activity">整理行李，前往南京南站</div>
+                </div>
+                <div class="time-slot">
+                    <div class="time">16:30</div>
+                    <div class="activity">返程高铁，结束愉快旅程</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>💡 实用小贴士</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-title">🎫 门票预约</div>
+                    中山陵需提前1-3天预约<br>
+                    南京博物院需提前预约<br>
+                    建议关注官方微信公众号
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">🚇 交通卡</div>
+                    推荐使用"金陵通"APP<br>
+                    支持地铁、公交扫码乘车<br>
+                    也可使用支付宝、微信乘车码
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">👕 穿搭建议</div>
+                    5月底气温适中，建议薄外套<br>
+                    6月1日有雨，记得带雨具<br>
+                    舒适的步行鞋必备
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">🍜 美食推荐</div>
+                    鸭血粉丝汤：回味鸭血粉丝汤<br>
+                    盐水鸭：桂花鸭专卖店<br>
+                    小笼包：尹氏汤包
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">⚠️ 防坑提醒</div>
+                    景区周边避免购买高价纪念品<br>
+                    正规渠道购买门票<br>
+                    注意保管个人财物
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">📱 实用APP</div>
+                    高德地图：导航必备<br>
+                    大众点评：美食推荐<br>
+                    携程/去哪儿：酒店预订
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🚨 应急联系方式</h2>
+            <div class="emergency-contact">
+                <div class="contact-title">🏥 医疗急救</div>
+                急救电话：120<br>
+                南京市第一医院：025-52271000<br>
+                江苏省人民医院：025-83714511
+            </div>
+            <div class="emergency-contact">
+                <div class="contact-title">🚔 报警求助</div>
+                报警电话：110<br>
+                南京市公安局：025-84420114
+            </div>
+            <div class="emergency-contact">
+                <div class="contact-title">🚇 交通服务</div>
+                南京地铁客服：025-83191111<br>
+                南京南站客服：025-68112222<br>
+                出租车投诉：025-83195555
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="highlight">
+                <strong>🎯 攻略制作说明：</strong><br>
+                本攻略基于高德地图MCP服务实时数据生成，包含准确的交通路线、景点信息和天气预报。<br>
+                数据更新时间：2025年5月28日 | 适用于端午假期出行
+            </div>
+        </div>
+    </div>
+</body>
+</html>

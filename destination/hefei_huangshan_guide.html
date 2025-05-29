@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>端午假期合肥到黄山3天2晚自由行攻略</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header .emoji {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .transport-table, .attraction-table, .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .transport-table th, .attraction-table th, .schedule-table th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .transport-table td, .attraction-table td, .schedule-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .transport-table tr:nth-child(even), .attraction-table tr:nth-child(even), .schedule-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .route-card {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .route-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .route-step {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 8px 0;
+            border-left: 4px solid #fff;
+        }
+        
+        .weather-card {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .weather-day {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+        
+        .day-schedule {
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .time-slot {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #fff;
+        }
+        
+        .time-slot h4 {
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .tips-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .tips-list li {
+            background: #f8f9fa;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+            transition: background 0.3s ease;
+        }
+        
+        .tips-list li:hover {
+            background: #e9ecef;
+        }
+        
+        .contact-info {
+            background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        .emergency-contact {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin: 5px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .star-rating {
+            color: #f39c12;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="emoji">🌟</span>
+            <h1>端午假期合肥到黄山3天2晚自由行攻略</h1>
+            <p style="font-size: 1.2em; color: #7f8c8d; margin-top: 10px;">探索徽州文化，领略黄山风光</p>
+        </div>
+        
+        <div class="content-grid">
+            <!-- 交通规划 -->
+            <div class="card">
+                <h2>🚄 出行规划</h2>
+                <table class="transport-table">
+                    <thead>
+                        <tr>
+                            <th>交通方式</th>
+                            <th>时长</th>
+                            <th>价格参考</th>
+                            <th>推荐指数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>高铁G45</strong></td>
+                            <td>约3小时</td>
+                            <td>150-200元</td>
+                            <td><span class="star-rating">⭐⭐⭐⭐⭐</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>普快K1109</strong></td>
+                            <td>约7.5小时</td>
+                            <td>50-80元</td>
+                            <td><span class="star-rating">⭐⭐⭐</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>自驾</strong></td>
+                            <td>约4小时</td>
+                            <td>约200元</td>
+                            <td><span class="star-rating">⭐⭐⭐⭐</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="route-card">
+                    <h3>🚇 推荐路线：高铁G45</h3>
+                    <div class="route-step">地铁5号线：三孝口站 → 合肥南站（17分钟）</div>
+                    <div class="route-step">高铁G45：合肥南站 → 黄山北站（3小时）</div>
+                    <div class="route-step">高铁快线1路：黄山北站 → 市医院西门（38分钟）</div>
+                </div>
+            </div>
+            
+            <!-- 景点推荐 -->
+            <div class="card">
+                <h2>🏔️ 景点推荐</h2>
+                <table class="attraction-table">
+                    <thead>
+                        <tr>
+                            <th>景点名称</th>
+                            <th>门票价格</th>
+                            <th>游玩时长</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="highlight">黄山风景区</span></td>
+                            <td>190元/人</td>
+                            <td>1-2天</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">屯溪老街</span></td>
+                            <td>免费</td>
+                            <td>2-3小时</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">黎阳老街</span></td>
+                            <td>免费</td>
+                            <td>1-2小时</td>
+                        </tr>
+                        <tr>
+                            <td>新安江山水画廊</td>
+                            <td>148元/人</td>
+                            <td>半天</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- 天气信息 -->
+            <div class="card">
+                <h2>🌤️ 端午期间天气</h2>
+                <div class="weather-card">
+                    <div class="weather-day">
+                        <span><strong>5月28日</strong></span>
+                        <span>小雨转多云</span>
+                        <span>14-23℃</span>
+                    </div>
+                    <div class="weather-day">
+                        <span><strong>5月29日</strong></span>
+                        <span>晴天</span>
+                        <span>13-29℃</span>
+                    </div>
+                    <div class="weather-day">
+                        <span><strong>5月30日</strong></span>
+                        <span>晴天</span>
+                        <span>16-30℃</span>
+                    </div>
+                    <div class="weather-day">
+                        <span><strong>5月31日</strong></span>
+                        <span>小雨转中雨</span>
+                        <span>17-27℃</span>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; font-weight: bold;">📦 必备物品：雨具、防晒用品、运动鞋、轻便外套</p>
+            </div>
+            
+            <!-- 住宿建议 -->
+            <div class="card">
+                <h2>🏨 住宿建议</h2>
+                <div style="margin: 15px 0;">
+                    <h3 style="color: #2980b9; margin-bottom: 10px;">屯溪老街周边</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0; border-bottom: 1px solid #eee;">🏨 亚朵酒店：400-600元/晚</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #eee;">🏨 老街苑精品酒店：200-350元/晚</li>
+                        <li style="padding: 8px 0;">🏨 青石老街客栈：150-280元/晚</li>
+                    </ul>
+                </div>
+                <div style="margin: 15px 0;">
+                    <h3 style="color: #2980b9; margin-bottom: 10px;">黄山风景区汤口镇</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0; border-bottom: 1px solid #eee;">🏨 全季酒店：300-450元/晚</li>
+                        <li style="padding: 8px 0;">🏨 清雅大酒店：200-380元/晚</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 网红打卡地 -->
+            <div class="card">
+                <h2>📸 网红打卡地</h2>
+                <table class="attraction-table">
+                    <thead>
+                        <tr>
+                            <th>地点</th>
+                            <th>特色</th>
+                            <th>最佳时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>屯溪老街</td>
+                            <td>徽派建筑群</td>
+                            <td>傍晚时分</td>
+                        </tr>
+                        <tr>
+                            <td>黎阳老街</td>
+                            <td>古今结合建筑</td>
+                            <td>夜晚灯光</td>
+                        </tr>
+                        <tr>
+                            <td>新安江滨水景观带</td>
+                            <td>江景夜色</td>
+                            <td>日落后</td>
+                        </tr>
+                        <tr>
+                            <td>黄山迎客松</td>
+                            <td>标志性景观</td>
+                            <td>日出时分</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 每日行程 -->
+        <div class="card" style="margin-bottom: 30px;">
+            <h2>📅 每日行程安排</h2>
+            
+            <div class="day-schedule">
+                <h3>Day 1：抵达日 - 古街漫步</h3>
+                <div class="time-slot">
+                    <h4>🌅 上午（10:00-12:00）</h4>
+                    <p>抵达黄山北站/黄山站 → 前往酒店办理入住 → 午餐：老街第1楼品尝徽菜</p>
+                </div>
+                <div class="time-slot">
+                    <h4>🌞 下午（14:00-17:00）</h4>
+                    <p>游览屯溪老街 → 购买特产：徽墨、歙砚、茶叶 → 拍照打卡：古建筑群</p>
+                </div>
+                <div class="time-slot">
+                    <h4>🌙 晚上（18:00-21:00）</h4>
+                    <p>晚餐：黎阳小吃街 → 夜游黎阳老街和黎阳in巷 → 新安江滨水景观带夜景</p>
+                </div>
+            </div>
+            
+            <div class="day-schedule">
+                <h3>Day 2：黄山风景区一日游</h3>
+                <div class="time-slot">
+                    <h4>🌅 早上（06:00-08:00）</h4>
+                    <p>早餐后前往黄山风景区南大门 → 乘坐景区交通至云谷寺 → 云谷索道上山</p>
+                </div>
+                <div class="time-slot">
+                    <h4>🌞 上午（08:30-12:00）</h4>
+                    <p>游览始信峰、黑虎松 → 前往北海景区 → 观赏猴子观海、梦笔生花</p>
+                </div>
+                <div class="time-slot">
+                    <h4>🌞 下午（13:00-17:00）</h4>
+                    <p>午餐：山上餐厅 → 游览西海大峡谷（体力允许）→ 或选择光明顶看日落</p>
+                </div>
+                <div class="time-slot">
+                    <h4>🌙 晚上（17:30-19:00）</h4>
+                    <p>玉屏索道下山 → 返回市区酒店休息</p>
+                </div>
+            </div>
+            
+            <div class="day-schedule">
+                <h3>Day 3：文化体验 - 返程日</h3>
+                <div class="time-slot">
+                    <h4>🌅 上午（09:00-11:30）</h4>
+                    <p>退房寄存行李 → 游览徽州古城或花山谜窟（二选一）→ 体验徽州文化</p>
+                </div>
+                <div class="time-slot">
+                    <h4>🌞 下午（12:00-15:00）</h4>
+                    <p>午餐：当地特色餐厅 → 最后购物：屯溪老街 → 前往车站准备返程</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 防坑小贴士 -->
+        <div class="card" style="margin-bottom: 30px;">
+            <h2>💡 防坑小贴士</h2>
+            <ul class="tips-list">
+                <li><strong>交通提醒：</strong>黄山北站距离市区较远，预留充足换乘时间</li>
+                <li><strong>景区注意：</strong>黄山风景区需提前在官方平台预约</li>
+                <li><strong>住宿建议：</strong>山上住宿价格较高，建议山下住宿</li>
+                <li><strong>安全提醒：</strong>携带足够饮水和高热量食物，注意安全</li>
+                <li><strong>购物提醒：</strong>正宗徽墨、歙砚价格不菲，注意辨别真伪</li>
+                <li><strong>美食建议：</strong>徽菜口味偏重，不习惯可要求少盐少油</li>
+                <li><strong>特色美食：</strong>尝试毛豆腐、臭鳜鱼、徽州烧饼</li>
+            </ul>
+        </div>
+        
+        <!-- 应急联系方式 -->
+        <div class="contact-info">
+            <h3>📞 应急联系方式</h3>
+            <div>
+                <span class="emergency-contact">黄山风景区：0559-5561111</span>
+                <span class="emergency-contact">旅游投诉：0559-2355777</span>
+                <span class="emergency-contact">紧急救援：110/120/119</span>
+            </div>
+            <p style="margin-top: 20px; font-size: 1.2em; font-weight: bold;">🎉 祝您端午假期黄山之行愉快！</p>
+        </div>
+    </div>
+</body>
+</html>

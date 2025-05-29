@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>您的专属旅游规划 - 智能旅游规划助手</title>
+    <style>
+        /* 
+         * 旅游规划结果展示页面样式
+         * 功能：展示用户的个性化旅游规划结果
+         * 包含美观的结果展示和返回导航功能
+         */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .loading-container {
+            text-align: center;
+            padding: 60px 20px;
+            display: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .error-container {
+            text-align: center;
+            padding: 60px 20px;
+            display: none;
+        }
+
+        .error-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .error-text {
+            color: #e74c3c;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .plan-overview {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .plan-overview h2 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .overview-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .overview-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .overview-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .plan-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f0f2f5;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .itinerary-day {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .day-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .day-content {
+            color: #555;
+            line-height: 1.6;
+            margin-left: 15px;
+        }
+
+        .suggestions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .suggestion-card {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease;
+        }
+
+        .suggestion-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .suggestion-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .suggestion-content {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .suggestions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        .icon {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+     * 旅游规划结果展示页面
+     * 功能：展示智能生成的个性化旅游规划
+     * 包含行程概览、详细规划、贴心建议等内容
+     -->
+    
+    <div class="container">
+        <!-- 页面头部 -->
+        <div class="header">
+            <h1>
+                <span class="icon">📋</span>
+                您的专属旅游规划
+            </h1>
+            <button class="back-btn" onclick="goBack()">
+                <span class="icon">⬅️</span>
+                返回首页
+            </button>
+        </div>
+
+        <!-- 加载状态 -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">正在为您生成专属旅游规划...</div>
+        </div>
+
+        <!-- 错误状态 -->
+        <div class="error-container" id="errorContainer">
+            <div class="error-icon">❌</div>
+            <div class="error-text">抱歉，未找到规划数据</div>
+            <button class="back-btn" onclick="goBack()">
+                <span class="icon">⬅️</span>
+                返回重新规划
+            </button>
+        </div>
+
+        <!-- 规划内容区域 -->
+        <div id="planContent" style="display: none;">
+            <!-- 行程概览 -->
+            <div class="plan-overview">
+                <h2>
+                    <span class="icon">🎯</span>
+                    行程概览
+                </h2>
+                <div class="overview-grid" id="overviewGrid">
+                    <!-- 动态生成概览信息 -->
+                </div>
+            </div>
+
+            <!-- 详细行程安排 -->
+            <div class="plan-section">
+                <div class="section-title">
+                    <span class="icon">📅</span>
+                    详细行程安排
+                </div>
+                <div id="itineraryContent">
+                    <!-- 动态生成行程内容 -->
+                </div>
+            </div>
+
+            <!-- 贴心建议 -->
+            <div class="plan-section">
+                <div class="section-title">
+                    <span class="icon">💡</span>
+                    贴心建议
+                </div>
+                <div class="suggestions-grid" id="suggestionsGrid">
+                    <!-- 动态生成建议内容 -->
+                </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="action-buttons">
+                <button class="action-btn btn-secondary" onclick="goBack()">
+                    <span class="icon">⬅️</span>
+                    重新规划
+                </button>
+                <button class="action-btn btn-primary" onclick="savePlan()">
+                    <span class="icon">💾</span>
+                    保存规划
+                </button>
+                <button class="action-btn btn-primary" onclick="sharePlan()">
+                    <span class="icon">📱</span>
+                    分享规划
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* 
+         * 旅游规划结果页面交互脚本
+         * 功能：加载并展示旅游规划数据，处理用户交互
+         */
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('旅游规划结果页面加载完成');
+            loadPlanData();
+        });
+
+        /**
+         * 加载旅游规划数据
+         * 从localStorage读取规划数据并渲染到页面
+         */
+        function loadPlanData() {
+            const loadingContainer = document.getElementById('loadingContainer');
+            const errorContainer = document.getElementById('errorContainer');
+            const planContent = document.getElementById('planContent');
+            
+            // 显示加载状态
+            loadingContainer.style.display = 'block';
+            
+            // 模拟加载延迟
+            setTimeout(() => {
+                try {
+                    // 从localStorage获取规划数据
+                    const planData = localStorage.getItem('travelPlanData');
+                    
+                    if (!planData) {
+                        throw new Error('未找到规划数据');
+                    }
+                    
+                    const data = JSON.parse(planData);
+                    
+                    // 渲染规划内容
+                    renderPlanContent(data);
+                    
+                    // 隐藏加载状态，显示内容
+                    loadingContainer.style.display = 'none';
+                    planContent.style.display = 'block';
+                    
+                } catch (error) {
+                    console.error('加载规划数据失败:', error);
+                    loadingContainer.style.display = 'none';
+                    errorContainer.style.display = 'block';
+                }
+            }, 1500);
+        }
+
+        /**
+         * 渲染规划内容到页面
+         * @param {Object} data - 旅游规划数据
+         */
+        function renderPlanContent(data) {
+            // 渲染行程概览
+            renderOverview(data);
+            
+            // 渲染详细行程
+            renderItinerary(data);
+            
+            // 渲染贴心建议
+            renderSuggestions(data);
+        }
+
+        /**
+         * 渲染行程概览
+         * @param {Object} data - 旅游规划数据
+         */
+        function renderOverview(data) {
+            const overviewGrid = document.getElementById('overviewGrid');
+            
+            const overviewItems = [
+                { label: '出发地', value: data.departure, icon: '📍' },
+                { label: '目的地', value: data.destination, icon: '🎯' },
+                { label: '出发时间', value: data.formattedDate, icon: '📅' },
+                { label: '游玩天数', value: `${data.duration}天`, icon: '⏰' }
+            ];
+            
+            overviewGrid.innerHTML = overviewItems.map(item => `
+                <div class="overview-item">
+                    <div class="overview-label">
+                        <span class="icon">${item.icon}</span>
+                        ${item.label}
+                    </div>
+                    <div class="overview-value">${item.value}</div>
+                </div>
+            `).join('');
+        }
+
+        /**
+         * 渲染详细行程安排
+         * @param {Object} data - 旅游规划数据
+         */
+        function renderItinerary(data) {
+            const itineraryContent = document.getElementById('itineraryContent');
+            const duration = parseInt(data.duration);
+            
+            let itineraryHTML = '';
+            
+            // 第一天
+            itineraryHTML += `
+                <div class="itinerary-day">
+                    <div class="day-title">📅 第1天：抵达${data.destination}</div>
+                    <div class="day-content">
+                        • 从${data.departure}出发，前往${data.destination}<br>
+                        • 抵达后入住酒店，休整适应环境<br>
+                        • 漫步周边，熟悉当地环境<br>
+                        • 品尝当地特色晚餐
+                    </div>
+                </div>
+            `;
+            
+            // 第二天
+            if (duration >= 2) {
+                itineraryHTML += `
+                    <div class="itinerary-day">
+                        <div class="day-title">🗺️ 第2天：主要景点游览</div>
+                        <div class="day-content">
+                            • 参观${data.destination}标志性景点<br>
+                            • 深度了解当地历史文化<br>
+                            • 体验特色民俗活动<br>
+                            • 购买纪念品和特产
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 第三天
+            if (duration >= 3) {
+                itineraryHTML += `
+                    <div class="itinerary-day">
+                        <div class="day-title">🍽️ 第3天：深度体验</div>
+                        <div class="day-content">
+                            • 品尝当地特色美食<br>
+                            • 体验传统手工艺制作<br>
+                            • 参观当地博物馆或艺术馆<br>
+                            • 与当地人交流互动
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 第四天及更多
+            if (duration >= 4) {
+                itineraryHTML += `
+                    <div class="itinerary-day">
+                        <div class="day-title">🚶 第4天：周边探索</div>
+                        <div class="day-content">
+                            • 探索${data.destination}周边景点<br>
+                            • 参加户外活动或自然体验<br>
+                            • 购物休闲，享受慢时光<br>
+                            • 拍摄留念照片
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (duration > 4) {
+                itineraryHTML += `
+                    <div class="itinerary-day">
+                        <div class="day-title">🎯 第5-${duration-1}天：自由活动</div>
+                        <div class="day-content">
+                            • 根据个人兴趣自由安排<br>
+                            • 深度体验当地生活方式<br>
+                            • 参加季节性特色活动<br>
+                            • 放松身心，享受假期
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 最后一天
+            if (duration > 1) {
+                itineraryHTML += `
+                    <div class="itinerary-day">
+                        <div class="day-title">✈️ 第${duration}天：返程准备</div>
+                        <div class="day-content">
+                            • 整理行李，购买最后的纪念品<br>
+                            • 退房办理相关手续<br>
+                            • 前往机场/车站<br>
+                            • 返回${data.departure}，结束愉快旅程
+                        </div>
+                    </div>
+                `;
+            }
+            
+            itineraryContent.innerHTML = itineraryHTML;
+        }
+
+        /**
+         * 渲染贴心建议
+         * @param {Object} data - 旅游规划数据
+         */
+        function renderSuggestions(data) {
+            const suggestionsGrid = document.getElementById('suggestionsGrid');
+            
+            const suggestions = [
+                {
+                    title: '🏨 住宿建议',
+                    content: '提前预订住宿可享受优惠价格，建议选择交通便利、评价良好的酒店。根据行程安排选择市中心或景区附近的住宿。'
+                },
+                {
+                    title: '🚗 交通指南',
+                    content: '了解当地交通方式，提前规划最佳路线。可考虑租车、公共交通或包车服务，根据行程灵活选择。'
+                },
+                {
+                    title: '🌤️ 天气准备',
+                    content: '关注目的地天气预报，准备合适的衣物。不同季节有不同的装备需求，建议携带雨具和防晒用品。'
+                },
+                {
+                    title: '💰 预算规划',
+                    content: '合理规划旅行预算，包括交通、住宿、餐饮、门票等费用。建议预留应急资金，享受无忧旅程。'
+                },
+                {
+                    title: '📱 通讯网络',
+                    content: '确保手机有足够流量或办理当地电话卡。下载离线地图和翻译软件，保持与家人的联系。'
+                },
+                {
+                    title: '⚕️ 健康安全',
+                    content: '准备常用药品，了解当地医疗机构位置。购买旅行保险，确保人身和财产安全。'
+                }
+            ];
+            
+            suggestionsGrid.innerHTML = suggestions.map(suggestion => `
+                <div class="suggestion-card">
+                    <div class="suggestion-title">${suggestion.title}</div>
+                    <div class="suggestion-content">${suggestion.content}</div>
+                </div>
+            `).join('');
+        }
+
+        /**
+         * 返回首页
+         */
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        /**
+         * 保存规划
+         */
+        function savePlan() {
+            const planData = localStorage.getItem('travelPlanData');
+            if (planData) {
+                const data = JSON.parse(planData);
+                const filename = `旅游规划_${data.departure}到${data.destination}_${data.formattedDate}.txt`;
+                
+                let content = `🌟 智能旅游规划助手 - 您的专属旅游规划 🌟\n\n`;
+                content += `📍 出发地：${data.departure}\n`;
+                content += `🎯 目的地：${data.destination}\n`;
+                content += `📅 出发时间：${data.formattedDate}\n`;
+                content += `⏰ 游玩天数：${data.duration}天\n\n`;
+                content += `详细规划内容请查看网页版本。\n\n`;
+                content += `生成时间：${new Date().toLocaleString('zh-CN')}\n`;
+                content += `感谢使用智能旅游规划助手！`;
+                
+                downloadTextFile(filename, content);
+                alert('规划已保存到本地文件！');
+            }
+        }
+
+        /**
+         * 分享规划
+         */
+        function sharePlan() {
+            const planData = localStorage.getItem('travelPlanData');
+            if (planData) {
+                const data = JSON.parse(planData);
+                const shareText = `我用智能旅游规划助手制定了从${data.departure}到${data.destination}的${data.duration}天旅行计划！出发时间：${data.formattedDate}。快来一起规划你的旅程吧！`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: '我的旅游规划',
+                        text: shareText,
+                        url: window.location.href
+                    });
+                } else {
+                    // 复制到剪贴板
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        alert('规划内容已复制到剪贴板，可以分享给朋友了！');
+                    }).catch(() => {
+                        alert('分享内容：' + shareText);
+                    });
+                }
+            }
+        }
+
+        /**
+         * 下载文本文件
+         * @param {string} filename - 文件名
+         * @param {string} content - 文件内容
+         */
+        function downloadTextFile(filename, content) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+    </script>
+</body>
+</html> 

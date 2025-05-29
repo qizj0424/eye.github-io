@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>智能旅游规划助手</title>
     <style>
+        /* 
+         * 智能旅游规划助手网页样式
+         * 功能：为用户提供美观、易用的旅游规划界面
+         * 包含响应式设计和现代化UI元素
+         */
+        
         * {
             margin: 0;
             padding: 0;
@@ -12,19 +18,34 @@
         }
 
         body {
-            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
         }
 
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
+            background: white;
             border-radius: 20px;
-            padding: 40px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .header {
@@ -33,204 +54,291 @@
         }
 
         .header h1 {
-            font-size: 2.5em;
-            color: #2c3e50;
+            font-size: 32px;
+            color: #333;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .header p {
-            font-size: 1.2em;
-            color: #7f8c8d;
+            color: #666;
+            font-size: 16px;
         }
 
-        .form-section {
+        .form-container {
             background: #f8f9fa;
             border-radius: 15px;
             padding: 30px;
             margin-bottom: 30px;
-            border: 2px solid #e9ecef;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .form-control {
+            padding: 12px 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .generate-btn {
             width: 100%;
-            background: linear-gradient(45deg, #3498db, #2980b9);
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            font-weight: bold;
-            border-radius: 10px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .generate-btn:hover {
-            background: linear-gradient(45deg, #2980b9, #1f5f8b);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
 
-        .generate-btn:disabled {
-            background: #bdc3c7;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+        .generate-btn:active {
+            transform: translateY(0);
         }
 
-        .result-section {
-            background: #fff;
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 30px;
-            border: 2px solid #e9ecef;
-            display: none;
-        }
-
-        .result-section.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #7f8c8d;
-        }
-
-        .loading-spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .plan-item {
-            background: #f1f2f6;
-            border-radius: 10px;
+        .tips-container {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 12px;
             padding: 20px;
-            margin: 15px 0;
-            border-left: 4px solid #3498db;
+            margin-top: 20px;
         }
 
-        .plan-day {
+        .tips-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips-list li {
+            color: #856404;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .tips-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #f39c12;
             font-weight: bold;
-            color: #2c3e50;
-            font-size: 1.2em;
-            margin-bottom: 10px;
         }
 
-        .plan-content {
-            color: #34495e;
-            line-height: 1.6;
-        }
-
-        .info-card {
-            background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-            text-align: center;
-        }
-
-        .emoji {
-            font-size: 1.5em;
-            margin: 0 5px;
-        }
-
+        /* 响应式设计 */
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
                 margin: 10px;
             }
-            
+
             .form-row {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
-            
+
             .header h1 {
-                font-size: 2em;
+                font-size: 24px;
+            }
+
+            .form-control {
+                padding: 10px 12px;
+            }
+
+            .generate-btn {
+                padding: 15px;
+                font-size: 16px;
+            }
+
+            .recommendation-container {
+                padding: 20px;
+                margin-bottom: 15px;
+            }
+
+            .recommendation-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .recommendation-btn {
+                padding: 15px 18px;
+            }
+
+            .btn-title {
+                font-size: 15px;
+            }
+
+            .btn-subtitle {
+                font-size: 12px;
             }
         }
 
-        .tip {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            border-left: 4px solid #fdcb6e;
+        /* 图标样式 */
+        .icon {
+            font-size: 20px;
         }
 
-        .tip-title {
-            font-weight: bold;
-            color: #d63031;
-            margin-bottom: 8px;
+        /* 推荐攻略区域样式 */
+        .recommendation-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .recommendation-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .recommendation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .recommendation-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .recommendation-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+            background: linear-gradient(135deg, #fff 0%, #f0f2ff 100%);
+        }
+
+        .recommendation-btn .icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .btn-content {
+            flex: 1;
+            text-align: left;
+        }
+
+        .btn-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .btn-subtitle {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.3;
+        }
+
+        .recommendation-btn:hover .btn-title {
+            color: #667eea;
+        }
+
+        .recommendation-btn:hover .btn-subtitle {
+            color: #555;
         }
     </style>
 </head>
 <body>
+    <!-- 
+     * 智能旅游规划助手主页面
+     * 功能：提供用户友好的旅游规划信息输入界面
+     * 包含出发地、目的地、时间、天数选择及规划生成功能
+     -->
+    
     <div class="container">
+        <!-- 页面标题区域 -->
         <div class="header">
-            <h1><span class="emoji">🌟</span>智能旅游规划助手<span class="emoji">✈️</span></h1>
+            <h1>
+                <span class="icon">🌟</span>
+                智能旅游规划助手
+                <span class="icon">✈️</span>
+            </h1>
             <p>输入您的旅行信息，为您量身定制完美行程</p>
         </div>
 
-        <div class="form-section">
+        <!-- 表单输入区域 -->
+        <div class="form-container">
             <form id="travelForm">
+                <!-- 第一行：出发地和目的地 -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="departure"><span class="emoji">📍</span>出发地</label>
-                        <select id="departure" required>
+                        <label class="form-label">
+                            <span class="icon">📍</span>
+                            出发地
+                        </label>
+                        <select class="form-control" id="departure" required>
                             <option value="">请选择出发地</option>
                             <option value="北京">北京</option>
                             <option value="上海">上海</option>
@@ -239,39 +347,59 @@
                             <option value="杭州">杭州</option>
                             <option value="南京">南京</option>
                             <option value="武汉">武汉</option>
-                            <option value="西安">西安</option>
-                            <option value="重庆">重庆</option>
-                            <option value="天津">天津</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="destination"><span class="emoji">🎯</span>目的地</label>
-                        <select id="destination" required>
-                            <option value="">请选择目的地</option>
                             <option value="成都">成都</option>
-                            <option value="西安">西安</option>
                             <option value="重庆">重庆</option>
-                            <option value="昆明">昆明</option>
-                            <option value="厦门">厦门</option>
+                            <option value="西安">西安</option>
                             <option value="青岛">青岛</option>
                             <option value="大连">大连</option>
+                            <option value="厦门">厦门</option>
+                            <option value="昆明">昆明</option>
+                            <option value="其他">其他城市</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span class="icon">🎯</span>
+                            目的地
+                        </label>
+                        <select class="form-control" id="destination" required>
+                            <option value="">请选择目的地</option>
                             <option value="三亚">三亚</option>
                             <option value="桂林">桂林</option>
                             <option value="丽江">丽江</option>
                             <option value="张家界">张家界</option>
+                            <option value="九寨沟">九寨沟</option>
                             <option value="黄山">黄山</option>
+                            <option value="泰山">泰山</option>
+                            <option value="西湖">杭州西湖</option>
+                            <option value="故宫">北京故宫</option>
+                            <option value="长城">万里长城</option>
+                            <option value="兵马俑">西安兵马俑</option>
+                            <option value="稻城亚丁">稻城亚丁</option>
+                            <option value="普陀山">普陀山</option>
+                            <option value="鼓浪屿">厦门鼓浪屿</option>
+                            <option value="其他">其他景点</option>
                         </select>
                     </div>
                 </div>
-                
+
+                <!-- 第二行：出发时间和游玩天数 -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="departureDate"><span class="emoji">📅</span>出发时间</label>
-                        <input type="date" id="departureDate" required>
+                        <label class="form-label">
+                            <span class="icon">📅</span>
+                            出发时间
+                        </label>
+                        <input type="date" class="form-control" id="departureDate" required min="2025-01-01">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="duration"><span class="emoji">⏰</span>游玩天数</label>
-                        <select id="duration" required>
+                        <label class="form-label">
+                            <span class="icon">⏰</span>
+                            游玩天数
+                        </label>
+                        <select class="form-control" id="duration" required>
                             <option value="">请选择天数</option>
                             <option value="1">1天</option>
                             <option value="2">2天</option>
@@ -280,273 +408,178 @@
                             <option value="5">5天</option>
                             <option value="6">6天</option>
                             <option value="7">7天</option>
-                            <option value="8">8天以上</option>
+                            <option value="10">10天</option>
+                            <option value="15">15天</option>
+                            <option value="30">30天</option>
                         </select>
                     </div>
                 </div>
 
-                <button type="submit" class="generate-btn" id="generateBtn">
-                    <span class="emoji">🚀</span>生成专属旅游规划
+                <!-- 生成规划按钮 -->
+                <button type="submit" class="generate-btn">
+                    <span class="icon">🚀</span>
+                    生成专属旅游规划
                 </button>
             </form>
         </div>
 
-        <div class="tip">
-            <div class="tip-title"><span class="emoji">💡</span>温馨提示</div>
-            <ul>
-                <li>建议提前1-2周规划行程，便于预订酒店和景点门票</li>
-                <li>根据季节选择合适的目的地，避开旅游高峰期</li>
-                <li>系统将根据您的选择推荐最佳交通方式和住宿区域</li>
-                <li>生成的规划包含景点推荐、美食指南、交通攻略等详细信息</li>
-            </ul>
+        <!-- 推荐攻略按钮区域 -->
+        <div class="recommendation-container">
+            <div class="recommendation-header">
+                <span class="icon">🌟</span>
+                热门推荐攻略
+            </div>
+            <div class="recommendation-grid">
+                <a href="destination/beijing_chengdu_guide.html" class="recommendation-btn">
+                    <span class="icon">🏔️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">北京-成都五一攻略</div>
+                        <div class="btn-subtitle">体验古都到天府的魅力</div>
+                    </div>
+                </a>
+                
+                <a href="destination/hefei_nanjing_guide.html" class="recommendation-btn">
+                    <span class="icon">🏮</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-南京端午攻略</div>
+                        <div class="btn-subtitle">江南文化深度游</div>
+                    </div>
+                </a>
+                
+                <a href="destination/hefei_wuhan_guide.html" class="recommendation-btn">
+                    <span class="icon">🌸</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-武汉端午攻略</div>
+                        <div class="btn-subtitle">探索江城风情</div>
+                    </div>
+                </a>
+                
+                <a href="destination/hefei_huangshan_guide.html" class="recommendation-btn">
+                    <span class="icon">⛰️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-黄山端午攻略</div>
+                        <div class="btn-subtitle">登临天下第一奇山</div>
+                    </div>
+                </a>
+            </div>
         </div>
 
-        <div class="result-section" id="resultSection">
-            <div class="loading" id="loadingDiv">
-                <div class="loading-spinner"></div>
-                <p>正在为您生成专属旅游规划，请稍候...</p>
+        <!-- 温馨提示区域 -->
+        <div class="tips-container">
+            <div class="tips-header">
+                <span class="icon">💡</span>
+                温馨提示
             </div>
-            <div id="planContent" style="display: none;"></div>
+            <ul class="tips-list">
+                <li>建议提前1-2周规划行程，便于预订酒店和景点门票</li>
+                <li>根据季节选择合适的目的地，避开旅游高峰期</li>
+                <li>关注特殊情况的连带节假日最佳交通方式和住宿区域</li>
+                <li>生成的规划包含景点推荐、美食指南、交通攻略等详细信息</li>
+            </ul>
         </div>
     </div>
 
     <script>
-        // 设置默认日期为明天
-        document.addEventListener('DOMContentLoaded', function() {
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            const dateString = tomorrow.toISOString().split('T')[0];
-            document.getElementById('departureDate').value = dateString;
-            document.getElementById('departureDate').min = dateString;
-        });
-
+        /* 
+         * 旅游规划助手交互脚本
+         * 功能：处理表单提交、数据验证和结果展示
+         */
+        
+        // 设置日期输入的默认最小值为今天
+        document.getElementById('departureDate').min = new Date().toISOString().split('T')[0];
+        
         // 表单提交处理
         document.getElementById('travelForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+            e.preventDefault(); // 阻止表单默认提交行为
             
-            const departure = document.getElementById('departure').value;
-            const destination = document.getElementById('destination').value;
-            const departureDate = document.getElementById('departureDate').value;
-            const duration = document.getElementById('duration').value;
+            // 获取表单数据
+            const formData = {
+                departure: document.getElementById('departure').value,
+                destination: document.getElementById('destination').value,
+                departureDate: document.getElementById('departureDate').value,
+                duration: document.getElementById('duration').value
+            };
             
-            if (!departure || !destination || !departureDate || !duration) {
-                alert('请填写完整的旅行信息');
+            // 验证表单数据完整性
+            if (!formData.departure || !formData.destination || !formData.departureDate || !formData.duration) {
+                alert('请填写完整的旅行信息！');
                 return;
             }
             
-            if (departure === destination) {
-                alert('出发地和目的地不能相同');
+            // 验证出发地和目的地不能相同
+            if (formData.departure === formData.destination) {
+                alert('出发地和目的地不能相同！');
                 return;
             }
             
-            generateTravelPlan(departure, destination, departureDate, duration);
-        });
-
-        function generateTravelPlan(departure, destination, departureDate, duration) {
-            const resultSection = document.getElementById('resultSection');
-            const loadingDiv = document.getElementById('loadingDiv');
-            const planContent = document.getElementById('planContent');
-            const generateBtn = document.getElementById('generateBtn');
-            
-            // 显示加载状态
-            resultSection.classList.add('show');
-            loadingDiv.style.display = 'block';
-            planContent.style.display = 'none';
-            generateBtn.disabled = true;
-            
-            // 滚动到结果区域
-            resultSection.scrollIntoView({ behavior: 'smooth' });
-            
-            // 模拟API调用延迟
-            setTimeout(() => {
-                loadingDiv.style.display = 'none';
-                planContent.style.display = 'block';
-                generateBtn.disabled = false;
-                
-                // 生成旅游规划内容
-                planContent.innerHTML = generatePlanHTML(departure, destination, departureDate, duration);
-            }, 2000);
-        }
-
-        function generatePlanHTML(departure, destination, departureDate, duration) {
-            const date = new Date(departureDate);
-            const dateStr = date.toLocaleDateString('zh-CN', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                weekday: 'long'
+            // 格式化日期显示
+            const date = new Date(formData.departureDate);
+            const formattedDate = date.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
             });
             
-            let planHTML = `
-                <h2 style="color: #2c3e50; text-align: center; margin-bottom: 30px;">
-                    <span class="emoji">🎉</span>${departure} → ${destination} ${duration}天旅游规划<span class="emoji">🎉</span>
-                </h2>
-                
-                <div class="info-card">
-                    <h3>📋 行程概览</h3>
-                    <p><strong>出发地：</strong>${departure} | <strong>目的地：</strong>${destination}</p>
-                    <p><strong>出发时间：</strong>${dateStr} | <strong>游玩天数：</strong>${duration}天</p>
-                </div>
-            `;
+            // 生成规划结果
+            generateTravelPlan(formData, formattedDate);
+        });
+        
+        /**
+         * 生成旅游规划结果
+         * @param {Object} data - 表单数据对象
+         * @param {string} formattedDate - 格式化后的日期
+         */
+        function generateTravelPlan(data, formattedDate) {
+            // 显示加载状态
+            const button = document.querySelector('.generate-btn');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<span class="icon">⏳</span> 正在生成规划...';
+            button.disabled = true;
             
-            // 根据目的地生成特色内容
-            const destinationInfo = getDestinationInfo(destination);
+            // 准备要传递给guide.html的数据
+            const planData = {
+                departure: data.departure,
+                destination: data.destination,
+                departureDate: data.departureDate,
+                formattedDate: formattedDate,
+                duration: data.duration,
+                generateTime: new Date().toISOString()
+            };
             
-            planHTML += `
-                <div class="plan-item">
-                    <div class="plan-day">🚄 交通建议</div>
-                    <div class="plan-content">
-                        ${destinationInfo.transport}
-                    </div>
-                </div>
-                
-                <div class="plan-item">
-                    <div class="plan-day">🏨 住宿推荐</div>
-                    <div class="plan-content">
-                        ${destinationInfo.accommodation}
-                    </div>
-                </div>
-            `;
-            
-            // 生成每日行程
-            for (let day = 1; day <= parseInt(duration); day++) {
-                const dayPlan = generateDayPlan(destination, day, duration);
-                planHTML += `
-                    <div class="plan-item">
-                        <div class="plan-day">📅 第${day}天行程</div>
-                        <div class="plan-content">
-                            ${dayPlan}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            planHTML += `
-                <div class="plan-item">
-                    <div class="plan-day">🍽️ 美食推荐</div>
-                    <div class="plan-content">
-                        ${destinationInfo.food}
-                    </div>
-                </div>
-                
-                <div class="plan-item">
-                    <div class="plan-day">💰 预算参考</div>
-                    <div class="plan-content">
-                        ${destinationInfo.budget}
-                    </div>
-                </div>
-                
-                <div class="tip">
-                    <div class="tip-title">🎯 贴心提醒</div>
-                    ${destinationInfo.tips}
-                </div>
-            `;
-            
-            return planHTML;
-        }
-
-        function getDestinationInfo(destination) {
-            const info = {
-                '成都': {
-                    transport: '推荐高铁出行，成都东站交通便利。市内地铁发达，建议下载天府通APP。',
-                    accommodation: '春熙路/太古里区域：购物方便，夜生活丰富<br>武侯祠/锦里区域：文化氛围浓厚<br>天府新区：环境优美，相对安静',
-                    food: '必尝美食：火锅（蜀大侠、大龙燚）、钟水饺、龙抄手、担担面、夫妻肺片、麻婆豆腐',
-                    budget: `人均预算：${getDurationBudget(3000, 5000)}元（含交通、住宿、餐饮、门票）`,
-                    tips: '<ul><li>熊猫基地建议早上前往</li><li>成都湿度较大，注意保湿</li><li>景区门票建议提前预订</li></ul>'
-                },
-                '西安': {
-                    transport: '高铁、飞机均便利。市内地铁覆盖主要景点，建议办理长安通卡。',
-                    accommodation: '钟楼/鼓楼区域：交通便利，古城氛围<br>大雁塔区域：现代化，购物方便<br>高新区：环境好，相对安静',
-                    food: '必尝美食：肉夹馍、凉皮、羊肉泡馍、胡辣汤、biangbiang面、柿子饼',
-                    budget: `人均预算：${getDurationBudget(2500, 4000)}元（含交通、住宿、餐饮、门票）`,
-                    tips: '<ul><li>兵马俑需要一整天时间</li><li>回民街晚上更热闹</li><li>古城墙适合傍晚游览</li></ul>'
-                },
-                '重庆': {
-                    transport: '建议飞机或高铁。市内轻轨发达，但地形复杂，建议使用导航。',
-                    accommodation: '解放碑/洪崖洞区域：核心商圈<br>观音桥区域：交通便利<br>南滨路区域：江景房，夜景美',
-                    food: '必尝美食：火锅、小面、酸辣粉、毛血旺、口水鸡、辣子鸡',
-                    budget: `人均预算：${getDurationBudget(2800, 4500)}元（含交通、住宿、餐饮、门票）`,
-                    tips: '<ul><li>重庆地形复杂，容易迷路</li><li>火锅很辣，量力而行</li><li>洪崖洞夜景最美</li></ul>'
+            // 模拟AI规划生成过程
+            setTimeout(() => {
+                try {
+                    // 将规划数据保存到localStorage
+                    localStorage.setItem('travelPlanData', JSON.stringify(planData));
+                    
+                    // 跳转到规划结果页面
+                    window.location.href = 'guide.html';
+                    
+                } catch (error) {
+                    console.error('生成规划失败:', error);
+                    alert('生成规划时出现错误，请重试！');
+                    
+                    // 恢复按钮状态
+                    button.innerHTML = originalText;
+                    button.disabled = false;
                 }
-            };
-            
-            return info[destination] || {
-                transport: '建议根据距离选择高铁或飞机出行，到达后可使用公共交通或打车。',
-                accommodation: '建议选择交通便利、靠近景点的区域住宿，可通过各大订房平台预订。',
-                food: '品尝当地特色美食，可参考美食攻略或询问当地人推荐。',
-                budget: `人均预算：${getDurationBudget(2500, 4000)}元（含交通、住宿、餐饮、门票）`,
-                tips: '<ul><li>提前了解当地天气</li><li>准备好身份证等证件</li><li>注意人身和财产安全</li></ul>'
-            };
+            }, 2000); // 2秒延迟模拟处理时间
         }
-
-        function getDurationBudget(minBase, maxBase) {
-            const duration = parseInt(document.getElementById('duration').value);
-            const minBudget = Math.round(minBase * (duration / 5));
-            const maxBudget = Math.round(maxBase * (duration / 5));
-            return `${minBudget}-${maxBudget}`;
-        }
-
-        function generateDayPlan(destination, day, totalDays) {
-            const plans = {
-                '成都': [
-                    '上午：成都大熊猫繁育研究基地（8:00-12:00）<br>下午：杜甫草堂博物馆（14:00-16:00）<br>晚上：宽窄巷子晚餐，体验成都慢生活',
-                    '上午：武侯祠博物馆（9:00-11:30）<br>下午：锦里古街，购买特产（12:00-15:00）<br>晚上：九眼桥夜景，酒吧街体验',
-                    '上午：IFS国际金融中心，屋顶熊猫打卡<br>下午：天府新区，双子塔夜景打卡点<br>晚上：春熙路、太古里购物美食',
-                    '上午：青城山或都江堰一日游<br>下午：返回市区休息<br>晚上：品尝地道川菜',
-                    '上午：最后购物，整理行李<br>下午：前往机场/火车站返程'
-                ],
-                '西安': [
-                    '上午：兵马俑博物馆（8:00-12:00）<br>下午：华清宫（14:00-17:00）<br>晚上：回民街品尝美食',
-                    '上午：西安城墙（9:00-11:00）<br>下午：陕西历史博物馆（14:00-17:00）<br>晚上：大雁塔音乐喷泉',
-                    '上午：华山一日游或法门寺<br>下午：继续游览<br>晚上：返回市区休息',
-                    '上午：钟楼、鼓楼（9:00-11:00）<br>下午：碑林博物馆（14:00-16:00）<br>晚上：德福巷酒吧街',
-                    '上午：最后购物，品尝小吃<br>下午：前往机场/火车站返程'
-                ],
-                '重庆': [
-                    '上午：解放碑步行街（9:00-11:00）<br>下午：洪崖洞（14:00-17:00）<br>晚上：观赏洪崖洞夜景',
-                    '上午：磁器口古镇（9:00-12:00）<br>下午：渣滓洞、白公馆（14:00-17:00）<br>晚上：南滨路夜景',
-                    '上午：武隆天生三桥一日游<br>下午：继续游览<br>晚上：返回市区',
-                    '上午：长江索道（9:00-10:00）<br>下午：李子坝轻轨站、鹅岭公园<br>晚上：观音桥商圈',
-                    '上午：最后购物，品尝火锅<br>下午：前往机场/火车站返程'
-                ]
-            };
+        
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('智能旅游规划助手页面加载完成');
             
-            const cityPlans = plans[destination] || [
-                '上午：游览当地著名景点<br>下午：体验当地文化<br>晚上：品尝特色美食',
-                '上午：继续景点游览<br>下午：购物或休闲<br>晚上：夜spectrwasser渲染',
-                '上午：周边景点一日游<br>下午：继续游览<br>晚上：返回市区',
-                '上午：自由活动<br>下午：最后游览<br>晚上：准备返程',
-                '上午：整理行李<br>下午：返程'
-            ];
-            
-            return cityPlans[Math.min(day - 1, cityPlans.length - 1)];
-        }
+            // 为选择框添加变化监听，提供更好的用户体验
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => {
+                select.addEventListener('change', function() {
+                    if (this.value) {
+                        this.style.color = '#333';
+                    }
+                });
+            });
+        });
     </script>
 </body>
-</html>
-
-<!-- 新增行程配置面板 -->
-<section class="config-panel">
-  <h2><span class="emoji">✈️</span>行程规划器</h2>
-  <form id="trip-planner">
-    <div class="form-group">
-      <label>出发城市：</label>
-      <select class="city-select" id="departure">
-        <option value="北京">北京</option>
-        <option value="上海">上海</option>
-        <!-- 更多选项... -->
-      </select>
-    </div>
-    <!-- 其他表单字段... -->
-  </form>
-</section>
-
-<!-- 添加响应式样式 -->
-<style>
-.config-panel {
-  background: rgba(255,255,255,0.95);
-  border-radius: 15px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-}
-</style>
+</html> 
