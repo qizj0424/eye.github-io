@@ -185,13 +185,64 @@
             padding: 15px;
             margin: 15px 0;
         }
+        
+        /* 标题美化样式 */
+        .guide-title-wrapper {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 18px;
+            box-shadow: 0 6px 24px rgba(102, 126, 234, 0.15);
+            padding: 32px 24px 24px 24px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .guide-title-wrapper::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            top: -40px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .guide-title {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .guide-title .icon {
+            font-size: 2.5rem;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.10));
+        }
+        @media (max-width: 600px) {
+            .guide-title-wrapper {
+                padding: 20px 8px 16px 8px;
+                margin-bottom: 20px;
+            }
+            .guide-title {
+                font-size: 1.3rem;
+                gap: 8px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🚄 端午节合肥到武汉出行计划</h1>
-            <p>2025年端午假期专版 | 5月31日-6月2日</p>
+        <div class="guide-title-wrapper">
+            <span class="icon">🌸</span>
+            <h1 class="guide-title">端午节合肥到武汉出行计划</h1>
         </div>
         
         <div class="content">
