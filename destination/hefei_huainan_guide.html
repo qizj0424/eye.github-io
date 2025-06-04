@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 
+     * 合肥到淮南旅游攻略页面
+     * 功能：展示详细的合肥到淮南旅游攻略信息
+     * 包含交通指南、景点推荐、住宿美食等全方位信息
+     * 特色：八公山风景区、寿县古城、豆腐文化体验
+     -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="合肥到淮南旅游攻略 - 详细的交通指南、景点推荐、美食住宿攻略，八公山风景区、寿县古城深度游">
+    <meta name="keywords" content="合肥到淮南,淮南旅游,八公山,寿县古城,豆腐之乡,旅游攻略">
+    <title>合肥到淮南旅游攻略 - 豆腐之乡深度游指南</title>
+    <style>
+        /* 
+         * 合肥到淮南旅游攻略页面样式
+         * 功能：展示美观的旅游攻略信息和实用建议
+         * 包含响应式布局设计和无障碍优化
+         */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(135deg, #2E8B57 0%, #228B22 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #2E8B57;
+            padding: 0.75rem 1.25rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-btn:hover {
+            background: #2E8B57;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 标题美化样式 */
+        .guide-title-wrapper {
+            background: linear-gradient(135deg, #2E8B57 0%, #228B22 100%);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(46, 139, 87, 0.2);
+            padding: 2.5rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .guide-title-wrapper::before {
+            content: '';
+            position: absolute;
+            left: -50px;
+            top: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .guide-title-wrapper::after {
+            content: '';
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .guide-title {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-align: center;
+        }
+        
+        .guide-title .icon {
+            font-size: 2.8rem;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+        }
+        
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
+        }
+        
+        /* 目录导航 */
+        .table-of-contents {
+            background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #2E8B57;
+        }
+        
+        .table-of-contents h3 {
+            color: #2E8B57;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .toc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+            list-style: none;
+        }
+        
+        .toc-list li a {
+            color: #228B22;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .toc-list li a:hover {
+            background: rgba(46, 139, 87, 0.1);
+            color: #2E8B57;
+            transform: translateX(5px);
+        }
+        
+        /* 章节样式 */
+        .section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 100px;
+        }
+        
+        .section h2 {
+            color: #2E8B57;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #2E8B57;
+            padding-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section h3 {
+            color: #228B22;
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+        
+        .section h4 {
+            color: #2E8B57;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.75rem 0;
+        }
+        
+        /* 信息卡片样式 */
+        .info-card {
+            background: linear-gradient(135deg, #f0fff0 0%, #fff 100%);
+            border-left: 4px solid #2E8B57;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .transportation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .transport-card {
+            background: white;
+            border: 2px solid #e0ffe0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .transport-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #2E8B57;
+        }
+        
+        .transport-card h4 {
+            color: #2E8B57;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .rating {
+            color: #ffa500;
+            font-size: 1.2rem;
+        }
+        
+        /* 景点网格 */
+        .attraction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .attraction-card {
+            background: linear-gradient(135deg, #f0fff0 0%, #fff 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 5px solid #228B22;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .attraction-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .attraction-card h4 {
+            color: #2E8B57;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .attraction-info {
+            display: grid;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .attraction-info span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .price {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .free {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .guide-title {
+                font-size: 1.8rem;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .transportation-grid,
+            .attraction-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← 返回首页</a>
+    
+    <div class="container">
+        <header class="guide-title-wrapper">
+            <h1 class="guide-title">
+                <span class="icon">🚗🏛️</span>
+                合肥到淮南旅游攻略
+            </h1>
+        </header>
+
+        <main class="content">
+            <!-- 目录导航 -->
+            <nav class="table-of-contents" role="navigation" aria-label="攻略目录">
+                <h3>📋 攻略目录</h3>
+                <ul class="toc-list">
+                    <li><a href="#overview">📍 目的地概览</a></li>
+                    <li><a href="#transportation">🚄 出行规划</a></li>
+                    <li><a href="#local-transport">🚌 淮南市内交通</a></li>
+                    <li><a href="#attractions">🎯 景点推荐</a></li>
+                    <li><a href="#accommodation">🏨 住宿建议</a></li>
+                    <li><a href="#food-spots">📸 美食打卡地</a></li>
+                    <li><a href="#itinerary">📅 两日行程安排</a></li>
+                    <li><a href="#tips">🌤️ 实用建议</a></li>
+                    <li><a href="#budget">💰 预算参考</a></li>
+                </ul>
+            </nav>
+
+            <!-- 目的地概览 -->
+            <section id="overview" class="section">
+                <h2>📍 目的地概览</h2>
+                
+                <div class="info-card">
+                    <h3>淮南简介</h3>
+                    <div class="attraction-info">
+                        <span><strong>地理位置：</strong> 安徽省中北部，淮河中游</span>
+                        <span><strong>别名：</strong> "豆腐之乡"、"能源之都"</span>
+                        <span><strong>特色：</strong> 豆腐文化发源地、八公山地质奇观、古楚文化</span>
+                        <span><strong>最佳旅游季节：</strong> 春秋两季（3-5月，9-11月）</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 出行规划 -->
+            <section id="transportation" class="section">
+                <h2>🚄 出行规划</h2>
+                
+                <h3>合肥到淮南交通方式</h3>
+                
+                <div class="transportation-grid">
+                    <div class="transport-card">
+                        <h4>🚗 自驾出行 <span class="rating">⭐⭐⭐⭐⭐</span>（强烈推荐）</h4>
+                        <div class="attraction-info">
+                            <span><strong>路线：</strong> 合肥 → G4001合肥绕城高速 → S12滁新高速 → 淮南</span>
+                            <span><strong>距离：</strong> 约106公里</span>
+                            <span><strong>时长：</strong> 1小时20分钟</span>
+                            <span><strong>过路费：</strong> <span class="price">约45元</span></span>
+                            <span><strong>油费：</strong> <span class="price">约70元</span>（按7.5L/100km计算）</span>
+                            <span><strong>优势：</strong> 时间灵活，方便游览多个景点</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>🚄 高铁动车 <span class="rating">⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span><strong>始发站：</strong> 合肥南站</span>
+                            <span><strong>到达站：</strong> 淮南南站</span>
+                            <span><strong>车程：</strong> 暂无直达高铁（需中转）</span>
+                            <span><strong>建议方案：</strong> 合肥南 → 蚌埠南 → 淮南南</span>
+                            <span><strong>总时长：</strong> 约2-2.5小时</span>
+                            <span><strong>价格：</strong> 二等座约<span class="price">45-60元</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>🚌 城际巴士 <span class="rating">⭐⭐⭐⭐</span>（推荐）</h4>
+                        <div class="attraction-info">
+                            <span><strong>路线：</strong> 合肥 → 淮南</span>
+                            <span><strong>时长：</strong> 1小时40分钟</span>
+                            <span><strong>票价：</strong> <span class="price">25-30元</span></span>
+                            <span><strong>班次：</strong> 6:30-18:30，每40分钟一班</span>
+                            <span><strong>优势：</strong> 经济实惠，班次较多</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>🚌 长途客车 <span class="rating">⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span><strong>始发站：</strong> 合肥汽车客运总站</span>
+                            <span><strong>终点站：</strong> 淮南汽车站</span>
+                            <span><strong>班次：</strong> 每30分钟一班</span>
+                            <span><strong>时长：</strong> 约2小时</span>
+                            <span><strong>票价：</strong> <span class="price">35-40元</span></span>
+                            <span><strong>优势：</strong> 班次密集，直达市区</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 淮南市内交通 -->
+            <section id="local-transport" class="section">
+                <h2>🚌 淮南市内交通</h2>
+                
+                <div class="info-card">
+                    <h3>公交系统</h3>
+                    <div class="attraction-info">
+                        <span><strong>主要线路：</strong></span>
+                        <span>• 1路：火车站 - 田家庵区 - 八公山区</span>
+                        <span>• 3路：市政府 - 淮南师范学院 - 八公山</span>
+                        <span>• 18路：火车站 - 舜耕山风景区</span>
+                        <span>• 121路：市区 - 寿县古城</span>
+                    </div>
+                </div>
+                
+                <div class="transportation-grid">
+                    <div class="transport-card">
+                        <h4>💳 交通支付方式</h4>
+                        <div class="attraction-info">
+                            <span><strong>淮南公交卡：</strong> 普通卡5折优惠</span>
+                            <span><strong>移动支付：</strong> 支持支付宝、微信扫码</span>
+                            <span><strong>票价：</strong> 市内1-2元，城际3-5元</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>🚕 出租车 & 网约车</h4>
+                        <div class="attraction-info">
+                            <span><strong>起步价：</strong> 6元（2公里）</span>
+                            <span><strong>网约车：</strong> 滴滴、美团等主流平台</span>
+                            <span><strong>市内短途：</strong> 一般15-25元</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>🚲 共享交通</h4>
+                        <div class="attraction-info">
+                            <span><strong>共享单车：</strong> 哈啰单车、美团单车</span>
+                            <span><strong>价格：</strong> 1.5元/30分钟</span>
+                            <span><strong>分布：</strong> 主要景点和商业区</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 景点推荐 -->
+            <section id="attractions" class="section">
+                <h2>🎯 景点推荐</h2>
+                
+                <h3>🔥 核心景点</h3>
+                
+                <div class="attraction-grid">
+                    <div class="attraction-card">
+                        <h4>1. 八公山风景区 ⭐⭐⭐⭐⭐（必游）</h4>
+                        <div class="attraction-info">
+                            <span><strong>📍 地址：</strong> 八公山区八南路</span>
+                            <span><strong>🎫 门票：</strong> <span class="price">40元</span></span>
+                            <span><strong>🕐 开放时间：</strong> 8:00-17:30</span>
+                            <span><strong>⏰ 游玩时长：</strong> 4-6小时</span>
+                            <span><strong>🚌 交通：</strong> 市区乘3路公交直达</span>
+                            <span><strong>✨ 特色：</strong> 淝水之战古战场、豆腐发明地</span>
+                            <span><strong>📸 拍照点：</strong> 八公山顶、豆腐文化园</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <h4>2. 寿县古城墙 ⭐⭐⭐⭐⭐（文化遗产）</h4>
+                        <div class="attraction-info">
+                            <span><strong>📍 地址：</strong> 寿县内环路与北大街交汇处</span>
+                            <span><strong>🎫 门票：</strong> 古城<span class="free">免费</span>，登城墙<span class="price">20元</span></span>
+                            <span><strong>🕐 开放时间：</strong> 全天开放</span>
+                            <span><strong>⏰ 游玩时长：</strong> 半天</span>
+                            <span><strong>🚗 交通：</strong> 自驾约40分钟，或乘121路公交</span>
+                            <span><strong>✨ 特色：</strong> 中国保存最完整的古城墙之一</span>
+                            <span><strong>🏛️ 景点：</strong> 古城墙、寿春楼、孔庙</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <h4>3. 舜耕山风景区 ⭐⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>📍 地址：</strong> 田家庵区洞山东路南侧</span>
+                            <span><strong>🎫 门票：</strong> <span class="price">20元</span></span>
+                            <span><strong>🕐 开放时间：</strong> 7:00-18:00</span>
+                            <span><strong>⏰ 游玩时长：</strong> 3-4小时</span>
+                            <span><strong>🚌 交通：</strong> 18路公交直达</span>
+                            <span><strong>✨ 特色：</strong> 城市森林公园，仙女湖风光秀丽</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <h4>4. 大通万人坑教育馆 ⭐⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>📍 地址：</strong> 大通区园艺路1号</span>
+                            <span><strong>🎫 门票：</strong> <span class="free">免费</span>（需预约）</span>
+                            <span><strong>🕐 开放时间：</strong> 9:00-16:30（周一闭馆）</span>
+                            <span><strong>⏰ 游玩时长：</strong> 2小时</span>
+                            <span><strong>📱 预约方式：</strong> 微信公众号或电话预约</span>
+                            <span><strong>✨ 特色：</strong> 爱国主义教育基地</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>🌟 网红打卡地</h3>
+                
+                <div class="attraction-grid">
+                    <div class="attraction-card">
+                        <h4>1. 九龙岗民国小镇 ⭐⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>📍 地址：</strong> 谢家集区九大路188号</span>
+                            <span><strong>🎫 门票：</strong> <span class="free">免费</span></span>
+                            <span><strong>✨ 特色：</strong> 民国风情建筑群，复古拍照圣地</span>
+                            <span><strong>📸 最佳时间：</strong> 傍晚时分，复古灯光效果佳</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <h4>2. 龙湖公园 ⭐⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>📍 地址：</strong> 田家庵区人民北路160号</span>
+                            <span><strong>🎫 门票：</strong> <span class="free">免费</span></span>
+                            <span><strong>✨ 特色：</strong> 城市中央公园，湖光山色</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <h4>3. 两琴相悦 ⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>📍 地址：</strong> 淮河大道188-1号</span>
+                            <span><strong>✨ 特色：</strong> 音乐主题文化地标，年轻人聚集地</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 住宿建议 -->
+            <section id="accommodation" class="section">
+                <h2>🏨 住宿建议</h2>
+                
+                <div class="transportation-grid">
+                    <div class="transport-card">
+                        <h4>1. 田家庵区市中心 ⭐⭐⭐⭐⭐（推荐）</h4>
+                        <div class="attraction-info">
+                            <span><strong>优势：</strong> 交通便利，景点集中，餐饮丰富</span>
+                            <span><strong>价格区间：</strong> 经济型<span class="price">¥120-180</span>，商务型<span class="price">¥200-350</span></span>
+                            <span><strong>推荐酒店：</strong></span>
+                            <span>• 汉庭酒店（淮南国庆路店）- <span class="price">¥149/晚</span></span>
+                            <span>• 如家酒店（淮南火车站店）- <span class="price">¥138/晚</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>2. 山南新区 ⭐⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>优势：</strong> 新城区，环境优美，配套完善</span>
+                            <span><strong>价格区间：</strong> <span class="price">¥160-280</span></span>
+                            <span><strong>推荐酒店：</strong></span>
+                            <span>• 维也纳酒店（淮南山南新区店）- <span class="price">¥188/晚</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>3. 八公山附近 ⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>优势：</strong> 靠近主要景点，空气清新</span>
+                            <span><strong>推荐：</strong> 农家乐或民宿体验</span>
+                            <span><strong>价格：</strong> <span class="price">¥80-150/晚</span></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 美食打卡地 -->
+            <section id="food-spots" class="section">
+                <h2>📸 美食 & 网红打卡地</h2>
+                
+                <h3>🍽️ 特色美食</h3>
+                
+                <div class="attraction-grid">
+                    <div class="attraction-card">
+                        <h4>1. 淮南豆腐宴 ⭐⭐⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>特色：</strong> 发源地特色，108种豆腐做法</span>
+                            <span><strong>推荐：</strong> 八公山豆腐村、市区老字号餐厅</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <h4>2. 淮南牛肉汤 ⭐⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>特色：</strong> 当地特色早餐，鲜香浓郁</span>
+                            <span><strong>推荐：</strong> 徐家牛肉汤（山南新区）</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <h4>3. 八公山酥梨 ⭐⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>特色：</strong> 当地特产水果，脆甜多汁</span>
+                            <span><strong>购买地：</strong> 八公山景区、当地果园</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>🍴 美食街区</h3>
+                
+                <div class="attraction-grid">
+                    <div class="attraction-card">
+                        <h4>1. 淮师大门美食街 ⭐⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>📍 地址：</strong> 洞山西路169号</span>
+                            <span><strong>✨ 特色：</strong> 学生聚集地，小吃丰富，价格亲民</span>
+                            <span><strong>🍽️ 推荐：</strong> 烤冷面、炸串、奶茶</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attraction-card">
+                        <h4>2. 1952美食街 ⭐⭐⭐⭐</h4>
+                        <div class="attraction-info">
+                            <span><strong>📍 地址：</strong> 山南政务中心对面负一层</span>
+                            <span><strong>✨ 特色：</strong> 复古主题美食街，环境优雅</span>
+                            <span><strong>🍽️ 推荐：</strong> 特色餐厅、网红咖啡</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 两日行程安排 -->
+            <section id="itinerary" class="section">
+                <h2>📅 两日行程安排</h2>
+                
+                <div class="info-card">
+                    <h3>🌅 Day 1：淮南市区文化之旅</h3>
+                    <div class="attraction-info">
+                        <span><strong>上午 (8:00-12:00)</strong></span>
+                        <span>• 8:00 合肥出发（自驾或城际巴士）</span>
+                        <span>• 9:30 到达淮南，入住酒店</span>
+                        <span>• 10:00-12:00 参观淮南市博物馆</span>
+                        <span><strong>中午 (12:00-13:30)</strong></span>
+                        <span>• 淮师大门美食街品尝淮南牛肉汤</span>
+                        <span><strong>下午 (13:30-17:30)</strong></span>
+                        <span>• 13:30-16:00 舜耕山风景区登山观景</span>
+                        <span>• 16:00-17:30 龙湖公园休闲漫步</span>
+                        <span><strong>晚上 (17:30-21:00)</strong></span>
+                        <span>• 17:30-19:00 1952美食街晚餐</span>
+                        <span>• 19:00-21:00 九龙岗民国小镇拍照打卡</span>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3>🏛️ Day 2：八公山 + 寿县古城深度游</h3>
+                    <div class="attraction-info">
+                        <span><strong>上午 (8:00-12:00)</strong></span>
+                        <span>• 8:00 酒店早餐</span>
+                        <span>• 9:00-12:00 八公山风景区深度游览</span>
+                        <span>&nbsp;&nbsp;- 豆腐文化园体验</span>
+                        <span>&nbsp;&nbsp;- 登山观景</span>
+                        <span>&nbsp;&nbsp;- 淝水古战场遗址</span>
+                        <span><strong>中午 (12:00-13:30)</strong></span>
+                        <span>• 八公山景区内餐厅品尝豆腐宴</span>
+                        <span><strong>下午 (13:30-17:00)</strong></span>
+                        <span>• 13:30 前往寿县（车程40分钟）</span>
+                        <span>• 14:30-17:00 寿县古城深度游</span>
+                        <span>&nbsp;&nbsp;- 古城墙登城观景</span>
+                        <span>&nbsp;&nbsp;- 古街巷漫步</span>
+                        <span>&nbsp;&nbsp;- 传统建筑群参观</span>
+                        <span><strong>返程 (17:00-19:00)</strong></span>
+                        <span>• 17:00 返回合肥</span>
+                        <span>• 19:00 到达合肥</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 实用建议 -->
+            <section id="tips" class="section">
+                <h2>🌤️ 实用建议</h2>
+                
+                <div class="transportation-grid">
+                    <div class="transport-card">
+                        <h4>👔 天气穿搭建议</h4>
+                        <div class="attraction-info">
+                            <span><strong>🌸 春季（3-5月）：</strong> 温和舒适，长袖+薄外套</span>
+                            <span><strong>☀️ 夏季（6-8月）：</strong> 炎热潮湿，防晒用品必备</span>
+                            <span><strong>🍂 秋季（9-11月）：</strong> 秋高气爽，最佳旅游季节</span>
+                            <span><strong>❄️ 冬季（12-2月）：</strong> 寒冷干燥，厚外套保暖</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>⚠️ 防坑小贴士</h4>
+                        <div class="attraction-info">
+                            <span><strong>交通方面：</strong></span>
+                            <span>• 八公山景区停车位有限，建议早到</span>
+                            <span>• 寿县古城内禁行机动车</span>
+                            <span><strong>景点方面：</strong></span>
+                            <span>• 八公山登山需穿舒适登山鞋</span>
+                            <span>• 博物馆需提前预约</span>
+                            <span><strong>消费方面：</strong></span>
+                            <span>• 景区餐饮价格偏高，可自备零食</span>
+                            <span>• 特产购买货比三家</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>🎁 特产推荐</h4>
+                        <div class="attraction-info">
+                            <span><strong>八公山豆腐干 ⭐⭐⭐⭐⭐</strong></span>
+                            <span>• 正宗豆腐发源地特产</span>
+                            <span><strong>淮南酥梨 ⭐⭐⭐⭐</strong></span>
+                            <span>• 9-10月最佳，建议现场采摘</span>
+                            <span><strong>寿县古城工艺品 ⭐⭐⭐</strong></span>
+                            <span>• 传统手工艺品，具有纪念意义</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>📞 应急联系方式</h4>
+                        <div class="attraction-info">
+                            <span><strong>淮南旅游咨询热线：</strong> 0554-12345</span>
+                            <span><strong>景区投诉电话：</strong> 12301</span>
+                            <span><strong>紧急救援：</strong> 110/120/119</span>
+                            <span><strong>交通咨询：</strong> 0554-2688888</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 预算参考 -->
+            <section id="budget" class="section">
+                <h2>💰 预算参考</h2>
+                
+                <div class="info-card">
+                    <h3>两人两天预算表</h3>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                        <thead>
+                            <tr style="background: #f0fff0;">
+                                <th style="border: 1px solid #ddd; padding: 0.75rem; text-align: left;">类型</th>
+                                <th style="border: 1px solid #ddd; padding: 0.75rem; text-align: left;">交通费</th>
+                                <th style="border: 1px solid #ddd; padding: 0.75rem; text-align: left;">住宿费</th>
+                                <th style="border: 1px solid #ddd; padding: 0.75rem; text-align: left;">门票费</th>
+                                <th style="border: 1px solid #ddd; padding: 0.75rem; text-align: left;">餐饮费</th>
+                                <th style="border: 1px solid #ddd; padding: 0.75rem; text-align: left;">其他费</th>
+                                <th style="border: 1px solid #ddd; padding: 0.75rem; text-align: left; font-weight: bold;">总计</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem; font-weight: bold;">经济型</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem;">¥100-200</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem;">¥280-360</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem;">¥120-160</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem;">¥200-300</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem;">¥100-150</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem; font-weight: bold; color: #2E8B57;">¥800-1170</td>
+                            </tr>
+                            <tr style="background: #f9f9f9;">
+                                <td style="border: 1px solid #ddd; padding: 0.75rem; font-weight: bold;">舒适型</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem;">¥200-300</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem;">¥400-560</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem;">¥160-200</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem;">¥300-500</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem;">¥150-250</td>
+                                <td style="border: 1px solid #ddd; padding: 0.75rem; font-weight: bold; color: #2E8B57;">¥1210-1810</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="info-card">
+                    <h3>💡 节省小贴士</h3>
+                    <div class="attraction-info">
+                        <span>1. <strong>交通：</strong> 选择城际巴士比自驾更经济</span>
+                        <span>2. <strong>住宿：</strong> 工作日价格比周末便宜30-50%</span>
+                        <span>3. <strong>餐饮：</strong> 当地小店比景区餐厅便宜一半</span>
+                        <span>4. <strong>门票：</strong> 关注景区官方优惠活动</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 结语 -->
+            <section class="section">
+                <div class="info-card" style="text-align: center; background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); border: none;">
+                    <h3 style="color: #2E8B57; margin-bottom: 1rem;">🎉 结语</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem;">
+                        淮南作为"豆腐之乡"，既有深厚的历史文化底蕴，又有美丽的自然风光。八公山的地质奇观、寿县的古城风韵、淮南的豆腐文化，都值得细细品味。建议安排2-3天行程，慢慢体验这座城市的独特魅力。
+                    </p>
+                    <p style="font-size: 1.3rem; font-weight: bold; color: #2E8B57;">
+                        祝您在淮南有一个愉快的旅程！🎈
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        /*
+         * 页面交互功能脚本
+         * 功能：实现平滑滚动和页面交互
+         */
+        
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 返回顶部功能
+        window.addEventListener('scroll', function() {
+            const backBtn = document.querySelector('.back-btn');
+            if (window.pageYOffset > 300) {
+                backBtn.style.opacity = '0.9';
+            } else {
+                backBtn.style.opacity = '1';
+            }
+        });
+
+        // 添加页面加载动画
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '1';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+        });
+    </script>
+</body>
+</html> 

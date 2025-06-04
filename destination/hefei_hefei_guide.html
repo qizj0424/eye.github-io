@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 
+     * 合肥周边游周末攻略页面
+     * 功能：展示详细的合肥及周边地区两日游攻略信息
+     * 包含景点推荐、交通指南、住宿建议等全方位旅游信息
+     * 适合自由行游客参考使用
+     -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="合肥周边游周末攻略 - 详细的两日游攻略，包含交通、景点、住宿、美食等全方位信息">
+    <meta name="keywords" content="合肥旅游,周边游,周末攻略,三河古镇,包公园,旅游指南">
+    <title>合肥周边游周末攻略 - 详细两日游指南</title>
+    <style>
+        /* 
+         * 合肥周边游攻略页面样式
+         * 功能：展示美观的旅游攻略信息和实用建议
+         * 包含响应式布局设计和无障碍优化
+         */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #667eea;
+            padding: 0.75rem 1.25rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 标题美化样式 */
+        .guide-title-wrapper {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+            padding: 2.5rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .guide-title-wrapper::before {
+            content: '';
+            position: absolute;
+            left: -50px;
+            top: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .guide-title-wrapper::after {
+            content: '';
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .guide-title {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-align: center;
+        }
+        
+        .guide-title .icon {
+            font-size: 2.8rem;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+        }
+        
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
+        }
+        
+        /* 目录导航 */
+        .table-of-contents {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #667eea;
+        }
+        
+        .table-of-contents h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .toc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+            list-style: none;
+        }
+        
+        .toc-list li a {
+            color: #764ba2;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .toc-list li a:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            transform: translateX(5px);
+        }
+        
+        /* 章节样式 */
+        .section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 100px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+        
+        .section h4 {
+            color: #667eea;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.75rem 0;
+        }
+        
+        /* 信息卡片样式 */
+        .info-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .transportation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .transport-card {
+            background: white;
+            border: 2px solid #e8f2ff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .transport-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+        
+        .transport-card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .rating {
+            color: #ffa500;
+            font-size: 1.2rem;
+        }
+        
+        /* 景点网格 */
+        .attraction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .attraction-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 5px solid #764ba2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .attraction-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .attraction-card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .attraction-info {
+            display: grid;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .attraction-info span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .price {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .free {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        /* 住宿推荐样式 */
+        .hotel-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 2px solid #e8f2ff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .hotel-card h5 {
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .hotel-price {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        /* 行程安排样式 */
+        .schedule-day {
+            background: linear-gradient(135deg, #e8f2ff 0%, #f0f8ff 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .schedule-day h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .time-slot {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-left: 3px solid #764ba2;
+        }
+        
+        .time-slot h5 {
+            color: #764ba2;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 提示框样式 */
+        .tip-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border: 1px solid #dc3545;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        /* 预算表格 */
+        .budget-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .budget-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .budget-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .budget-table tr:hover {
+            background: #f8f9ff;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .guide-title {
+                font-size: 1.8rem;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .transportation-grid,
+            .attraction-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .toc-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-btn {
+                position: static;
+                display: block;
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+        }
+        
+        /* 无障碍设计 */
+        a:focus,
+        button:focus {
+            outline: 3px solid #667eea;
+            outline-offset: 2px;
+        }
+        
+        /* 滚动行为 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 打印样式 */
+        @media print {
+            .back-btn {
+                display: none;
+            }
+            
+            body {
+                background: white;
+            }
+            
+            .content {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← 返回首页</a>
+    
+    <div class="container">
+        <header class="guide-title-wrapper">
+            <h1 class="guide-title">
+                <span class="icon">🏃‍♀️🌸</span>
+                合肥周边游周末攻略
+            </h1>
+        </header>
+
+        <main class="content">
+            <!-- 目录导航 -->
+            <nav class="table-of-contents" role="navigation" aria-label="攻略目录">
+                <h3>📋 攻略目录</h3>
+                <ul class="toc-list">
+                    <li><a href="#destinations">📍 目的地推荐</a></li>
+                    <li><a href="#transportation">🚄 出行规划</a></li>
+                    <li><a href="#local-transport">🚇 市内交通</a></li>
+                    <li><a href="#attractions">🎯 景点推荐</a></li>
+                    <li><a href="#accommodation">🏨 住宿建议</a></li>
+                    <li><a href="#photo-spots">📸 网红打卡地</a></li>
+                    <li><a href="#itinerary">📅 两日行程安排</a></li>
+                    <li><a href="#tips">🌤️ 实用建议</a></li>
+                    <li><a href="#budget">💰 预算参考</a></li>
+                </ul>
+            </nav>
+
+            <!-- 目的地推荐 -->
+            <section id="destinations" class="section">
+                <h2>📍 目的地推荐</h2>
+                
+                <div class="info-card">
+                    <h3>主要游览区域</h3>
+                    <div class="transportation-grid">
+                        <div class="transport-card">
+                            <h4>🏛️ 合肥市区</h4>
+                            <p>包河区、庐阳区核心景点，历史文化深厚，交通便利，适合文化探索之旅。</p>
+                        </div>
+                        <div class="transport-card">
+                            <h4>🏞️ 近郊景点</h4>
+                            <p>巢湖、三河古镇、紫蓬山，自然风光与古镇韵味并存，适合休闲度假。</p>
+                        </div>
+                        <div class="transport-card">
+                            <h4>🎪 特色小镇</h4>
+                            <p>肥西三河古镇、长丰草莓小镇，体验地方特色文化和农业观光。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 出行规划 -->
+            <section id="transportation" class="section">
+                <h2>🚄 出行规划</h2>
+                
+                <h3>到达合肥交通方式</h3>
+                
+                <div class="transportation-grid">
+                    <div class="transport-card">
+                        <h4>🚄 高铁/动车 <span class="rating">⭐⭐⭐⭐⭐（推荐）</span></h4>
+                        <div class="attraction-info">
+                            <span><strong>🚉 合肥南站</strong>（主要站点）</span>
+                            <span>北京南 → 合肥南：4小时，二等座 <span class="price">¥284</span></span>
+                            <span>上海虹桥 → 合肥南：3小时，二等座 <span class="price">¥154</span></span>
+                            <span>南京南 → 合肥南：1.5小时，二等座 <span class="price">¥79</span></span>
+                            <span>武汉 → 合肥南：2小时，二等座 <span class="price">¥108</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>✈️ 飞机 <span class="rating">⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span><strong>🛫 合肥新桥国际机场</strong></span>
+                            <span>北京 → 合肥：2小时，<span class="price">¥300-800</span></span>
+                            <span>上海 → 合肥：1.5小时，<span class="price">¥200-600</span></span>
+                            <span>广州 → 合肥：2小时，<span class="price">¥400-900</span></span>
+                            <span>机场大巴到市区约1小时，<span class="price">¥20</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>🚗 自驾 <span class="rating">⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>✅ 适合周边城市游客</span>
+                            <span>🅿️ 停车相对方便，景区多有停车场</span>
+                            <span>💰 油费+过路费约<span class="price">¥200-400</span>（视距离而定）</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 市内交通 -->
+            <section id="local-transport" class="section">
+                <h2>🚇 市内交通</h2>
+                
+                <div class="info-card">
+                    <h3>🚇 地铁系统</h3>
+                    <div class="attraction-info">
+                        <span><strong>1号线：</strong> 连接合肥南站-大东门-合肥火车站</span>
+                        <span><strong>2号线：</strong> 连接南岗-三十埠</span>
+                        <span><strong>3号线：</strong> 连接幸福坝-相城路</span>
+                        <span><strong>4号线：</strong> 连接鸡鸣山路-桔园洲</span>
+                        <span><strong>5号线：</strong> 连接桂花园-贵阳路</span>
+                    </div>
+                </div>
+                
+                <div class="transportation-grid">
+                    <div class="transport-card">
+                        <h4>💳 交通卡 & 移动支付</h4>
+                        <div class="attraction-info">
+                            <span><strong>合肥通卡：</strong> 地铁、公交通用</span>
+                            <span><strong>移动支付：</strong> 支持支付宝、微信乘车码</span>
+                            <span><strong>地铁票价：</strong> 起步价2元，最高6元</span>
+                            <span><strong>公交票价：</strong> 1-2元</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>🚕 其他交通方式</h4>
+                        <div class="attraction-info">
+                            <span><strong>出租车：</strong> 起步价8元</span>
+                            <span><strong>网约车：</strong> 滴滴、美团等</span>
+                            <span><strong>共享单车：</strong> 哈啰、美团单车</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 景点推荐 -->
+            <section id="attractions" class="section">
+                <h2>🎯 景点推荐</h2>
+                
+                <h3>🔥 热门景点</h3>
+                <div class="attraction-grid">
+                    <article class="attraction-card">
+                        <h4>1. 包公园 <span class="rating">⭐⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>📍 <strong>地址：</strong> 包河区芜湖路72号</span>
+                            <span>🎫 <strong>门票：</strong> <span class="free">免费</span></span>
+                            <span>🕐 <strong>开放时间：</strong> 6:00-22:00</span>
+                            <span>⏰ <strong>游玩时长：</strong> 2-3小时</span>
+                            <span>🚇 <strong>交通：</strong> 地铁1号线包公园站</span>
+                            <span>✨ <strong>特色：</strong> 包公文化主题公园，包公祠、包公墓</span>
+                        </div>
+                    </article>
+                    
+                    <article class="attraction-card">
+                        <h4>2. 李鸿章故居 <span class="rating">⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>📍 <strong>地址：</strong> 庐阳区淮河路208号</span>
+                            <span>🎫 <strong>门票：</strong> <span class="price">¥20</span></span>
+                            <span>🕐 <strong>开放时间：</strong> 8:00-18:00</span>
+                            <span>⏰ <strong>游玩时长：</strong> 1-2小时</span>
+                            <span>🚇 <strong>交通：</strong> 地铁1号线大东门站</span>
+                            <span>✨ <strong>特色：</strong> 晚清重臣李鸿章家宅，典型徽派建筑</span>
+                        </div>
+                    </article>
+                    
+                    <article class="attraction-card">
+                        <h4>3. 安徽博物院 <span class="rating">⭐⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>📍 <strong>地址：</strong> 蜀山区怀宁路268号</span>
+                            <span>🎫 <strong>门票：</strong> <span class="free">免费（需预约）</span></span>
+                            <span>🕐 <strong>开放时间：</strong> 9:00-17:00（周一闭馆）</span>
+                            <span>⏰ <strong>游玩时长：</strong> 2-3小时</span>
+                            <span>🚇 <strong>交通：</strong> 地铁2号线安农大站</span>
+                            <span>📱 <strong>预约方式：</strong> 官方微信公众号或官网</span>
+                        </div>
+                    </article>
+                    
+                    <article class="attraction-card">
+                        <h4>4. 逍遥津公园 <span class="rating">⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>📍 <strong>地址：</strong> 庐阳区寿春路16号</span>
+                            <span>🎫 <strong>门票：</strong> <span class="free">免费</span></span>
+                            <span>🕐 <strong>开放时间：</strong> 6:00-22:00</span>
+                            <span>⏰ <strong>游玩时长：</strong> 1-2小时</span>
+                            <span>🚇 <strong>交通：</strong> 地铁2号线四牌楼站</span>
+                            <span>✨ <strong>特色：</strong> 三国古战场遗址，适合休闲漫步</span>
+                        </div>
+                    </article>
+                </div>
+                
+                <h3>🌟 周边特色景点</h3>
+                <div class="attraction-grid">
+                    <article class="attraction-card">
+                        <h4>1. 三河古镇 <span class="rating">⭐⭐⭐⭐⭐</span>（强烈推荐）</h4>
+                        <div class="attraction-info">
+                            <span>📍 <strong>地址：</strong> 肥西县三河镇</span>
+                            <span>🎫 <strong>门票：</strong> 古镇<span class="free">免费</span>，景点联票<span class="price">¥60</span></span>
+                            <span>🕐 <strong>开放时间：</strong> 全天</span>
+                            <span>⏰ <strong>游玩时长：</strong> 半天-1天</span>
+                            <span>🚌 <strong>交通：</strong> 合肥南站乘坐三河专线，约1小时</span>
+                            <span>✨ <strong>特色：</strong> 2500年历史古镇，徽派建筑，古街美食</span>
+                        </div>
+                    </article>
+                    
+                    <article class="attraction-card">
+                        <h4>2. 巢湖风景区 <span class="rating">⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>📍 <strong>地址：</strong> 巢湖市</span>
+                            <span>🎫 <strong>门票：</strong> <span class="free">免费</span>（部分景点收费）</span>
+                            <span>🚗 <strong>交通：</strong> 自驾约1小时，或乘坐城际巴士</span>
+                            <span>✨ <strong>特色：</strong> 中国五大淡水湖之一，湖光山色</span>
+                        </div>
+                    </article>
+                    
+                    <article class="attraction-card">
+                        <h4>3. 紫蓬山 <span class="rating">⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>📍 <strong>地址：</strong> 肥西县紫蓬山风景区</span>
+                            <span>🎫 <strong>门票：</strong> <span class="price">¥10</span></span>
+                            <span>🕐 <strong>开放时间：</strong> 8:00-17:30</span>
+                            <span>⏰ <strong>游玩时长：</strong> 半天</span>
+                            <span>🚗 <strong>交通：</strong> 自驾45分钟，或乘坐公交</span>
+                            <span>✨ <strong>特色：</strong> 登山观景，紫蓬山寺，自然风光</span>
+                        </div>
+                    </article>
+                </div>
+                
+                <h3>🎪 小众打卡地</h3>
+                <div class="attraction-grid">
+                    <article class="attraction-card">
+                        <h4>1. 1912街区 <span class="rating">⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>📍 <strong>地址：</strong> 庐阳区长江中路</span>
+                            <span>✨ <strong>特色：</strong> 民国风情街区，酒吧、咖啡厅聚集地</span>
+                            <span>🌅 <strong>最佳时间：</strong> 傍晚-夜晚</span>
+                            <span>🚇 <strong>交通：</strong> 地铁1号线大东门站</span>
+                        </div>
+                    </article>
+                    
+                    <article class="attraction-card">
+                        <h4>2. 天鹅湖 <span class="rating">⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>📍 <strong>地址：</strong> 政务区</span>
+                            <span>🎫 <strong>门票：</strong> <span class="free">免费</span></span>
+                            <span>✨ <strong>特色：</strong> 政务新区核心景观，适合夜景拍摄</span>
+                            <span>🚇 <strong>交通：</strong> 地铁2号线天鹅湖站</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- 住宿建议 -->
+            <section id="accommodation" class="section">
+                <h2>🏨 住宿建议</h2>
+                
+                <h3>推荐住宿区域</h3>
+                
+                <div class="info-card">
+                    <h4>1. 市中心区域（庐阳区/瑶海区）</h4>
+                    <div class="attraction-info">
+                        <span><strong>优势：</strong> 交通便利，景点集中，美食丰富</span>
+                        <span><strong>地铁线路：</strong> 1、2号线交汇处</span>
+                        <span><strong>价格区间：</strong> 经济型<span class="price">¥120-200</span>，商务型<span class="price">¥250-400</span></span>
+                    </div>
+                    
+                    <div class="transportation-grid">
+                        <div class="hotel-card">
+                            <h5>汉庭酒店（淮河路步行街店）</h5>
+                            <p class="hotel-price">¥158/晚</p>
+                            <div class="attraction-info">
+                                <span>📍 地址：淮河路步行街，步行可达李鸿章故居</span>
+                                <span>🏨 设施：免费WiFi，24小时前台，近地铁站</span>
+                            </div>
+                        </div>
+                        <div class="hotel-card">
+                            <h5>如家酒店（长江中路店）</h5>
+                            <p class="hotel-price">¥138/晚</p>
+                            <div class="attraction-info">
+                                <span>📍 地址：长江中路，近1912街区</span>
+                                <span>🏨 设施：干净整洁，交通便利</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h4>2. 包河区（推荐）</h4>
+                    <div class="attraction-info">
+                        <span><strong>优势：</strong> 靠近包公园、政务区，环境较好</span>
+                        <span><strong>地铁线路：</strong> 1号线沿线</span>
+                        <span><strong>价格区间：</strong> <span class="price">¥180-350</span></span>
+                    </div>
+                    
+                    <div class="transportation-grid">
+                        <div class="hotel-card">
+                            <h5>全季酒店（包河万达店）</h5>
+                            <p class="hotel-price">¥228/晚</p>
+                            <div class="attraction-info">
+                                <span>📍 地址：马鞍山路，近包河万达</span>
+                                <span>🏨 设施：设计感强，服务优质，停车方便</span>
+                            </div>
+                        </div>
+                        <div class="hotel-card">
+                            <h5>桔子酒店（政务区店）</h5>
+                            <p class="hotel-price">¥198/晚</p>
+                            <div class="attraction-info">
+                                <span>📍 地址：政务区，近天鹅湖</span>
+                                <span>🏨 设施：时尚设计，免费早餐</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 网红打卡地推荐 -->
+            <section id="photo-spots" class="section">
+                <h2>📸 网红打卡地推荐</h2>
+                
+                <h3>📷 拍照圣地</h3>
+                <div class="attraction-grid">
+                    <article class="attraction-card">
+                        <h4>1. 天鹅湖音乐喷泉 <span class="rating">⭐⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>📍 <strong>地址：</strong> 政务区天鹅湖</span>
+                            <span>🕐 <strong>最佳时间：</strong> 晚上8:00-8:30（喷泉表演）</span>
+                            <span>📸 <strong>拍照角度：</strong> 湖心岛对面，可拍倒影</span>
+                            <span>🚇 <strong>交通：</strong> 地铁2号线天鹅湖站</span>
+                        </div>
+                    </article>
+                    
+                    <article class="attraction-card">
+                        <h4>2. 1912街区 <span class="rating">⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>🎨 <strong>风格：</strong> 民国复古风</span>
+                            <span>🕐 <strong>最佳时间：</strong> 黄昏时分，灯光刚亮起</span>
+                            <span>📸 <strong>推荐机位：</strong> 街区入口牌坊，复古建筑群</span>
+                        </div>
+                    </article>
+                    
+                    <article class="attraction-card">
+                        <h4>3. 三河古镇古街 <span class="rating">⭐⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>🎨 <strong>风格：</strong> 江南水乡，徽派建筑</span>
+                            <span>🕐 <strong>最佳时间：</strong> 清晨或傍晚</span>
+                            <span>📸 <strong>推荐机位：</strong> 古桥上俯拍，临水建筑倒影</span>
+                        </div>
+                    </article>
+                    
+                    <article class="attraction-card">
+                        <h4>4. 包公园荷花池 <span class="rating">⭐⭐⭐⭐</span></h4>
+                        <div class="attraction-info">
+                            <span>🌸 <strong>最佳季节：</strong> 6-8月荷花盛开期</span>
+                            <span>📸 <strong>拍照元素：</strong> 荷花、古亭、倒影</span>
+                            <span>🎨 <strong>滤镜建议：</strong> 清新自然风格</span>
+                        </div>
+                    </article>
+                </div>
+                
+                <h3>🍽️ 美食打卡地</h3>
+                <div class="transportation-grid">
+                    <div class="transport-card">
+                        <h4>🛍️ 淮河路步行街</h4>
+                        <div class="attraction-info">
+                            <span>✨ <strong>特色：</strong> 传统小吃聚集地</span>
+                            <span>🍴 <strong>推荐美食：</strong> 庐州烤鸭、小笼包、臭豆腐</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>🍺 罍街</h4>
+                        <div class="attraction-info">
+                            <span>📍 <strong>地址：</strong> 庐阳区</span>
+                            <span>✨ <strong>特色：</strong> 夜市美食街，啤酒文化</span>
+                            <span>🕐 <strong>推荐时间：</strong> 傍晚-夜晚</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 两日行程安排 -->
+            <section id="itinerary" class="section">
+                <h2>📅 两日行程安排</h2>
+                
+                <article class="schedule-day">
+                    <h4>🌅 Day 1：合肥市区文化之旅</h4>
+                    
+                    <div class="time-slot">
+                        <h5>🌄 上午 (9:00-12:00)</h5>
+                        <ul>
+                            <li>9:00 酒店出发，地铁至大东门站</li>
+                            <li>9:30-11:00 李鸿章故居参观</li>
+                            <li>11:00-12:00 淮河路步行街逛街，品尝小吃</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <h5>🍽️ 中午 (12:00-13:30)</h5>
+                        <ul>
+                            <li>在淮河路品尝合肥特色美食</li>
+                            <li>推荐：庐州烤鸭、小笼包</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <h5>🌞 下午 (13:30-17:30)</h5>
+                        <ul>
+                            <li>13:30 地铁至包公园站</li>
+                            <li>14:00-16:00 包公园深度游览</li>
+                            <li>16:00-17:30 逍遥津公园休闲漫步</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <h5>🌃 晚上 (17:30-21:00)</h5>
+                        <ul>
+                            <li>17:30 前往1912街区</li>
+                            <li>18:00-19:30 街区内晚餐</li>
+                            <li>20:00-21:00 天鹅湖观赏音乐喷泉</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>🏨 住宿：</strong> 市中心酒店
+                    </div>
+                </article>
+                
+                <article class="schedule-day">
+                    <h4>🏛️ Day 2：三河古镇深度游</h4>
+                    
+                    <div class="time-slot">
+                        <h5>🌄 上午 (8:00-12:00)</h5>
+                        <ul>
+                            <li>8:00 酒店早餐</li>
+                            <li>9:00 合肥南站乘坐三河专线</li>
+                            <li>10:00 到达三河古镇</li>
+                            <li>10:00-12:00 古镇漫步，参观古建筑群</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <h5>🍽️ 中午 (12:00-13:30)</h5>
+                        <ul>
+                            <li>在古镇品尝特色美食</li>
+                            <li>推荐：三河米饺、酥烧饼、茶干</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <h5>🌞 下午 (13:30-16:30)</h5>
+                        <ul>
+                            <li>13:30-15:00 深度游览古镇景点</li>
+                            <li style="margin-left: 20px;">• 杨振宁旧居</li>
+                            <li style="margin-left: 20px;">• 孙立人故居</li>
+                            <li style="margin-left: 20px;">• 古码头</li>
+                            <li>15:00-16:30 古镇拍照打卡，购买特产</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <h5>🚌 返程 (16:30-18:00)</h5>
+                        <ul>
+                            <li>16:30 乘坐返程班车</li>
+                            <li>18:00 到达合肥，根据交通时间安排返程</li>
+                        </ul>
+                    </div>
+                </article>
+            </section>
+
+            <!-- 实用建议 -->
+            <section id="tips" class="section">
+                <h2>🌤️ 其他实用建议</h2>
+                
+                <h3>👔 天气 & 穿搭建议</h3>
+                <div class="transportation-grid">
+                    <div class="transport-card">
+                        <h4>🌸 春季 (3-5月)</h4>
+                        <div class="attraction-info">
+                            <span><strong>天气：</strong> 温和舒适，偶有小雨</span>
+                            <span><strong>穿搭：</strong> 薄外套+长裤，准备雨具</span>
+                            <span><strong>温度：</strong> 15-25°C</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>☀️ 夏季 (6-8月)</h4>
+                        <div class="attraction-info">
+                            <span><strong>天气：</strong> 炎热多雨</span>
+                            <span><strong>穿搭：</strong> 轻薄透气衣物，防晒用品</span>
+                            <span><strong>温度：</strong> 25-35°C</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>🍂 秋季 (9-11月) <span class="rating">⭐⭐⭐⭐⭐（最佳季节）</span></h4>
+                        <div class="attraction-info">
+                            <span><strong>天气：</strong> 凉爽宜人，秋高气爽</span>
+                            <span><strong>穿搭：</strong> 长袖+薄外套</span>
+                            <span><strong>温度：</strong> 15-25°C</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h4>❄️ 冬季 (12-2月)</h4>
+                        <div class="attraction-info">
+                            <span><strong>天气：</strong> 寒冷干燥</span>
+                            <span><strong>穿搭：</strong> 厚外套，保暖衣物</span>
+                            <span><strong>温度：</strong> 0-10°C</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>⚠️ 防坑小贴士</h3>
+                <div class="warning-box">
+                    <h4>🚇 交通方面</h4>
+                    <ol>
+                        <li><strong>高峰期避开地铁1号线：</strong>上下班时间非常拥挤</li>
+                        <li><strong>三河古镇班车：</strong>末班车时间注意，避免滞留</li>
+                        <li><strong>停车费用：</strong>市中心停车较贵，建议选择地铁出行</li>
+                    </ol>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>🎯 景点方面</h4>
+                    <ol>
+                        <li><strong>安徽博物院：</strong>一定要提前预约，当天很难买到票</li>
+                        <li><strong>包公园：</strong>免费但停车收费，建议地铁前往</li>
+                        <li><strong>三河古镇：</strong>周末人多，建议早上早点到达</li>
+                    </ol>
+                </div>
+                
+                <div class="tip-box">
+                    <h4>🎁 特产推荐</h4>
+                    <ul>
+                        <li><strong>三河茶干：</strong>古镇特色小食</li>
+                        <li><strong>庐州烤鸭：</strong>合肥传统美食</li>
+                        <li><strong>巢湖银鱼：</strong>当地水产特色</li>
+                        <li><strong>徽墨酥：</strong>传统糕点</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4>📞 应急联系方式</h4>
+                    <div class="attraction-info">
+                        <span><strong>旅游投诉热线：</strong>12301</span>
+                        <span><strong>合肥旅游咨询：</strong>0551-12345</span>
+                        <span><strong>紧急救援：</strong>110/120/119</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 预算参考 -->
+            <section id="budget" class="section">
+                <h2>💰 预算参考</h2>
+                
+                <table class="budget-table">
+                    <thead>
+                        <tr>
+                            <th>类型</th>
+                            <th>交通费</th>
+                            <th>住宿费</th>
+                            <th>门票费</th>
+                            <th>餐饮费</th>
+                            <th>其他费</th>
+                            <th>总计</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>经济型（两人两天）</strong></td>
+                            <td>¥200-400</td>
+                            <td>¥300-400</td>
+                            <td>¥100-150</td>
+                            <td>¥300-500</td>
+                            <td>¥100-200</td>
+                            <td class="price"><strong>¥1000-1650</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>舒适型（两人两天）</strong></td>
+                            <td>¥400-600</td>
+                            <td>¥500-800</td>
+                            <td>¥150-200</td>
+                            <td>¥500-800</td>
+                            <td>¥200-300</td>
+                            <td class="price"><strong>¥1750-2700</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="tip-box">
+                    <p><strong>💡 温馨提示：</strong>出行前请关注当地天气和景区开放情况，合理安排行程。建议下载高德地图、大众点评等APP辅助出行。</p>
+                </div>
+            </section>
+            
+            <footer style="text-align: center; margin: 2rem 0; padding: 2rem; background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%); border-radius: 15px;">
+                <h3 style="color: #667eea; margin-bottom: 1rem;">🎉 祝您在合肥有一个愉快的周末之旅！</h3>
+                <p style="color: #666; font-size: 0.9rem;">本攻略由AI智能生成，信息仅供参考，实际情况请以官方发布为准。</p>
+            </footer>
+        </main>
+    </div>
+</body>
+</html> 
