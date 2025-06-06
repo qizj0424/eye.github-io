@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 
+     * 合肥到马鞍山自由行旅游攻略页面
+     * 功能：为自由行游客提供详细的合肥-马鞍山旅游全攻略
+     * 包含交通、住宿、景点、美食、行程等全方位指南
+     * 适用人群：年轻人、周末短途游、亲子游等
+     * 更新时间：2025年6月5日
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合肥到马鞍山自由行攻略 | 智能旅游规划助手</title>
+    <!-- 引入html2canvas库用于截图功能 -->
+    <script src="html2canvas.min.js"></script>
+    <style>
+        /* 页面基础样式，参考六安/芜湖攻略 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .guide-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .guide-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            background: #fff;
+            color: #667eea;
+            padding: 0.75rem 1.25rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            background: #667eea;
+            color: #fff;
+        }
+        .screenshot-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        .screenshot-btn:hover { transform: scale(1.05); }
+        .content-section {
+            background: white;
+            margin-bottom: 25px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            animation: fadeIn 0.6s ease-out;
+        }
+        .content-section:hover { transform: translateY(-2px); }
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .info-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 18px 16px;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
+        }
+        .highlight-box {
+            background: #e8f0fe;
+            border-left: 5px solid #667eea;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .food-item {
+            background: #f3e9ff;
+            border-radius: 8px;
+            padding: 12px 10px;
+            text-align: center;
+        }
+        .schedule-day {
+            margin-bottom: 18px;
+        }
+        .day-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        .time-slot {
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-left: 3px solid #764ba2;
+        }
+        .tips-container {
+            margin-bottom: 12px;
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #764ba2;
+            margin-bottom: 5px;
+        }
+        .tips-list {
+            margin-left: 18px;
+            margin-bottom: 0;
+        }
+        @media (max-width: 768px) {
+            .container { margin: 10px; padding: 10px; }
+            .header { padding: 20px 10px; }
+            .content-section { padding: 15px; }
+            .guide-title { font-size: 1.5rem; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面主容器 -->
+    <div class="container">
+        <!-- 页面头部，含标题和副标题 -->
+        <header class="header">
+            <h1 class="guide-title">🏞️ 合肥到马鞍山自由行攻略</h1>
+            <p class="guide-subtitle">2天1夜精品路线 | 江城风光深度体验</p>
+        </header>
+
+        <!-- 返回首页按钮 -->
+        <a href="../index.html" class="back-button">← 返回首页</a>
+
+        <!-- 出行规划部分 -->
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🚄</span>出行规划</h2>
+            <div class="highlight-box">
+                <strong>💡 推荐方案：</strong> 自驾或高铁/动车，快速便捷，性价比高
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🚆 高铁/动车</h4>
+                    <p>目前合肥至马鞍山暂无直达高铁/动车班次，建议关注后续线路开通。</p>
+                    <p>可选择合肥南/合肥站至芜湖/南京南后转车，或选择普通火车。</p>
+                </div>
+                <div class="info-card">
+                    <h4>🚂 普通火车</h4>
+                    <p>合肥站/合肥南站 → 马鞍山站/马鞍山东站</p>
+                    <p>车程约2小时，票价约30-50元，需提前查询班次。</p>
+                    <p>优势：经济实惠，适合预算有限游客。</p>
+                </div>
+                <div class="info-card">
+                    <h4>🚗 自驾出行</h4>
+                    <p>距离：约150公里</p>
+                    <p>时间：约2小时</p>
+                    <p>路线：合肥→G4001合肥绕城高速→G5011芜合高速→G4221沪武高速→马鞍山</p>
+                    <p>过路费：约60元</p>
+                    <p>优势：时间灵活，沿途可自由停靠。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 市内交通部分 -->
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🚌</span>马鞍山市内交通</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🚍 公交</h4>
+                    <p>公交线路覆盖主城区及主要景点。</p>
+                    <p>票价：1-2元，支持现金、交通卡、支付宝/微信扫码。</p>
+                    <p>主要公交枢纽：马鞍山站、马鞍山东站、汽车客运站。</p>
+                </div>
+                <div class="info-card">
+                    <h4>🚇 地铁</h4>
+                    <p>S2号线（宁马线）在建，未来可直达南京。</p>
+                    <p>目前以公交、出租、网约车为主。</p>
+                </div>
+                <div class="info-card">
+                    <h4>💳 交通卡/扫码乘车</h4>
+                    <p>支持"安徽交通卡"及支付宝、微信扫码乘车。</p>
+                    <p>安徽交通卡可在马鞍山ETC客服中心办理。</p>
+                </div>
+                <div class="info-card">
+                    <h4>🚖 出租/网约车</h4>
+                    <p>滴滴、美团等平台覆盖全市。</p>
+                    <p>起步价约8元/2公里。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 景点推荐部分 -->
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🎯</span>景点推荐</h2>
+            <h3>🔥 热门景点</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>⭐ 采石矶</h4>
+                    <p>地址：采石镇唐贤街1号</p>
+                    <p>门票：约60元</p>
+                    <p>需预约：部分节假日需预约</p>
+                    <p>建议游玩时长：2-3小时</p>
+                    <p>特色：长江名胜，李白诗篇，江景壮观</p>
+                </div>
+                <div class="info-card">
+                    <h4>🦁 安徽大青山野生动物世界</h4>
+                    <p>地址：太白镇永宁村花山</p>
+                    <p>门票：约120元</p>
+                    <p>建议游玩时长：3-4小时</p>
+                    <p>适合亲子游，动物种类丰富</p>
+                </div>
+                <div class="info-card">
+                    <h4>⛰️ 褒禅山景区</h4>
+                    <p>地址：环峰镇褒山村</p>
+                    <p>门票：约50元</p>
+                    <p>建议游玩时长：2小时</p>
+                    <p>特色：山水风光，历史文化</p>
+                </div>
+                <div class="info-card">
+                    <h4>🏺 凌家滩考古遗址公园</h4>
+                    <p>地址：铜闸镇五联行政村</p>
+                    <p>门票：约30元</p>
+                    <p>建议游玩时长：1.5小时</p>
+                    <p>特色：新石器时代遗址，考古爱好者必去</p>
+                </div>
+            </div>
+            <h3>🌱 小众景点</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🏘️ 运漕古镇</h4>
+                    <p>地址：运漕镇西沿河街</p>
+                    <p>门票：免费</p>
+                    <p>建议游玩时长：1.5小时</p>
+                    <p>特色：古镇风情，江南水乡</p>
+                </div>
+                <div class="info-card">
+                    <h4>🌳 濮塘国家度假公园</h4>
+                    <p>地址：花山路</p>
+                    <p>门票：约30元</p>
+                    <p>建议游玩时长：2小时</p>
+                    <p>特色：自然生态，休闲度假</p>
+                </div>
+                <div class="info-card">
+                    <h4>🌅 天空之境（石臼湖）</h4>
+                    <p>地址：石臼湖东湖村</p>
+                    <p>门票：免费</p>
+                    <p>建议游玩时长：1小时</p>
+                    <p>特色：湖面倒影，拍照圣地</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 住宿建议部分 -->
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🏨</span>住宿建议</h2>
+            <div class="highlight-box">
+                <strong>推荐区域：</strong>马鞍山站、马鞍山东站、万达广场周边，交通便利，生活配套齐全
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>清沐连锁酒店（解放路火车站店）</h4>
+                    <p>地址：解放路53号，近马鞍山站</p>
+                    <p>价格：约150元/晚</p>
+                    <p>优势：交通便利，性价比高</p>
+                </div>
+                <div class="info-card">
+                    <h4>清沐酒店（马鞍山东站红星美凯龙大润发店）</h4>
+                    <p>地址：雨山东路与江东大道交叉口</p>
+                    <p>价格：约180元/晚</p>
+                    <p>优势：靠近高铁东站，设施齐全</p>
+                </div>
+                <div class="info-card">
+                    <h4>锦江商务酒店（望江路）</h4>
+                    <p>地址：文昌南路301号</p>
+                    <p>价格：约160元/晚</p>
+                    <p>优势：市区中心，出行方便</p>
+                </div>
+                <div class="info-card">
+                    <h4>汉爵华阳酒店</h4>
+                    <p>地址：环峰镇华阳西路52号</p>
+                    <p>价格：约200元/晚</p>
+                    <p>优势：环境安静，服务好</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 网红打卡地部分 -->
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">📸</span>网红打卡地推荐</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>长江不夜城</h4>
+                    <p>地址：采石街道九华西路与牛渚路交口</p>
+                    <p>交通：公交101路直达</p>
+                    <p>拍照亮点：夜景灯光、江边风情</p>
+                </div>
+                <div class="info-card">
+                    <h4>天空之境（石臼湖）</h4>
+                    <p>地址：石臼湖东湖村</p>
+                    <p>交通：自驾/打车</p>
+                    <p>拍照亮点：湖面倒影，天空与湖水融为一体</p>
+                </div>
+                <div class="info-card">
+                    <h4>太湖山国家森林公园-网红打卡处</h4>
+                    <p>地址：太湖山林场东南角</p>
+                    <p>交通：自驾/包车</p>
+                    <p>拍照亮点：森林氧吧，山景美拍</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 每日行程安排部分 -->
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">📅</span>每日行程安排建议</h2>
+            <div class="schedule-day">
+                <div class="day-title">Day1：市区文化+江景体验</div>
+                <div class="time-slot">
+                    <span class="time">08:00</span> 合肥出发（自驾/火车）<br>
+                    <span class="time">10:30</span> 抵达马鞍山，酒店check-in<br>
+                    <span class="time">11:00</span> 采石矶景区游览<br>
+                    <span class="time">13:30</span> 午餐（推荐：田园粗菜馆、光海·乡记酸菜鱼）<br>
+                    <span class="time">15:00</span> 运漕古镇漫步<br>
+                    <span class="time">17:00</span> 长江不夜城拍照打卡<br>
+                    <span class="time">19:00</span> 晚餐（推荐：时尚莱迪富美食广场）<br>
+                    <span class="time">20:30</span> 入住酒店休息
+                </div>
+                <div class="day-title">Day2：自然生态+亲子休闲</div>
+                <div class="time-slot">
+                    <span class="time">08:30</span> 早餐后前往大青山野生动物世界<br>
+                    <span class="time">12:00</span> 午餐（推荐：胖胖糊.休闲小吃、肥牛先生健康养生当涂店）<br>
+                    <span class="time">13:30</span> 濮塘国家度假公园/天空之境拍照<br>
+                    <span class="time">16:00</span> 凌家滩考古遗址公园参观<br>
+                    <span class="time">18:00</span> 返回合肥或市区自由活动
+                </div>
+            </div>
+        </section>
+
+        <!-- 美食推荐部分 -->
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🍜</span>美食推荐</h2>
+            <h3>🥟 必尝美食</h3>
+            <div class="food-grid">
+                <div class="food-item"><h4>光海·乡记酸菜鱼</h4></div>
+                <div class="food-item"><h4>田园粗菜馆</h4></div>
+                <div class="food-item"><h4>吕记老鸭汤</h4></div>
+                <div class="food-item"><h4>肥牛先生健康养生当涂店</h4></div>
+                <div class="food-item"><h4>梁记粥铺</h4></div>
+                <div class="food-item"><h4>诗城宴</h4></div>
+                <div class="food-item"><h4>马鞍山板面、小笼包、烧饼等地方小吃</h4></div>
+            </div>
+            <h3>🍴 推荐美食地标</h3>
+            <div class="info-grid">
+                <div class="info-card"><h4>时尚莱迪富美食广场（八佰伴店）</h4></div>
+                <div class="info-card"><h4>湖西路、太白大道、雨山路美食街</h4></div>
+            </div>
+        </section>
+
+        <!-- 天气与穿搭建议部分 -->
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🌤️</span>天气与穿搭建议</h2>
+            <ul>
+                <li>6月初马鞍山天气以晴到多云为主，白天气温高达34℃，夜间23℃左右。</li>
+                <li>建议穿着轻薄透气的夏装，注意防晒（帽子、墨镜、防晒霜）。</li>
+                <li>备好雨具，近期有降雨可能。</li>
+                <li>户外游玩建议携带驱蚊水、补水用品。</li>
+            </ul>
+        </section>
+
+        <!-- 防坑小贴士部分 -->
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">⚠️</span>防坑小贴士</h2>
+            <div class="tips-container">
+                <div class="tips-title">交通篇</div>
+                <ul class="tips-list">
+                    <li>自驾注意高速限速，节假日高峰易堵车，建议错峰出行。</li>
+                    <li>火车票需提前购买，关注班次变动。</li>
+                </ul>
+            </div>
+            <div class="tips-container">
+                <div class="tips-title">住宿篇</div>
+                <ul class="tips-list">
+                    <li>住宿建议提前预订，选择评价高、交通便利的酒店。</li>
+                </ul>
+            </div>
+            <div class="tips-container">
+                <div class="tips-title">景点篇</div>
+                <ul class="tips-list">
+                    <li>部分景点需预约，建议提前在官方平台查询。</li>
+                    <li>夏季蚊虫较多，注意防蚊防晒。</li>
+                </ul>
+            </div>
+            <div class="tips-container">
+                <div class="tips-title">美食篇</div>
+                <ul class="tips-list">
+                    <li>美食选择人气高、评价好的餐厅，避免路边无证摊点。</li>
+                </ul>
+            </div>
+            <div class="tips-container">
+                <div class="tips-title">行程篇</div>
+                <ul class="tips-list">
+                    <li>关注天气变化，合理安排行程。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="content-section" style="text-align: center; background: #f8f9fa;">
+            <p><strong>🎉 祝您在马鞍山度过愉快的旅程！</strong></p>
+            <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+                本攻略内容基于2025年6月信息整理，实际出行前请确认最新的票价、开放时间等信息。<br>
+                攻略编制时间：2025年6月5日 | 下次更新：根据季节变化和景点开放情况调整
+            </p>
+            <a href="../index.html" class="back-button" style="margin-top: 20px;">← 返回首页继续规划</a>
+        </footer>
+    </div>
+    <!-- 截图按钮 -->
+    <button class="screenshot-btn" id="screenshotBtn">📸 截图攻略</button>
+    <script>
+        // 截图功能实现，参考芜湖攻略
+        document.getElementById('screenshotBtn').onclick = function() {
+            html2canvas(document.querySelector('.container')).then(function(canvas) {
+                var link = document.createElement('a');
+                link.download = 'hefei_maanshan_guide.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        };
+    </script>
+</body>
+</html> 

@@ -35,6 +35,8 @@
             width: 100%;
             max-width: 800px;
             animation: fadeIn 0.8s ease-out;
+            display: flex;
+            flex-direction: column;
         }
 
         @keyframes fadeIn {
@@ -143,7 +145,11 @@
             border: 1px solid #ffeaa7;
             border-radius: 12px;
             padding: 20px;
-            margin-top: 20px;
+            margin: 20px 0;
+            width: 100%;
+            clear: both;
+            display: block;
+            box-sizing: border-box;
         }
 
         .tips-header {
@@ -222,6 +228,11 @@
 
             .btn-subtitle {
                 font-size: 12px;
+            }
+
+            .tips-container {
+                margin-top: 15px;
+                padding: 15px;
             }
         }
 
@@ -423,7 +434,7 @@
             </form>
         </div>
 
-        <!-- 推荐攻略按钮区域 -->
+                                                                                <!-- 推荐攻略按钮区域 -->
         <div class="recommendation-container">
             <div class="recommendation-header">
                 <span class="icon">🌟</span>
@@ -446,11 +457,59 @@
                     </div>
                 </a>
 
+                <a href="destination/hefei_bozhou_guide.html" class="recommendation-btn">
+                    <span class="icon">🏛️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-亳州周末攻略</div>
+                        <div class="btn-subtitle">探索千年古城中医药文化</div>
+                    </div>
+                </a>
+
+                <a href="destination/hefei_chuzhou_guide.html" class="recommendation-btn">
+                    <span class="icon">🏛️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-滁州周末攻略</div>
+                        <div class="btn-subtitle">探寻醉翁亭文化之旅</div>
+                    </div>
+                </a>
+
+                <a href="destination/hefei_hefei_guide.html" class="recommendation-btn">
+                    <span class="icon">🏛️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-合肥周末攻略</div>
+                        <div class="btn-subtitle">体验淝水风投之城</div>
+                    </div>
+                </a>
+
+                <a href="destination/hefei_huainan_guide.html" class="recommendation-btn">
+                    <span class="icon">🏛️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-淮南周末攻略</div>
+                        <div class="btn-subtitle">品味豆腐发源之乡</div>
+                    </div>
+                </a>
+
                 <a href="destination/hefei_huangshan_guide.html" class="recommendation-btn">
                     <span class="icon">⛰️</span>
                     <div class="btn-content">
                         <div class="btn-title">合肥-黄山端午攻略</div>
                         <div class="btn-subtitle">登临天下第一奇山</div>
+                    </div>
+                </a>
+
+                <a href="destination/hefei_liuan_guide.html" class="recommendation-btn">
+                    <span class="icon">🏞️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-六安周末攻略</div>
+                        <div class="btn-subtitle">皖西风光深度体验</div>
+                    </div>
+                </a>
+
+                <a href="destination/hefei_maanshan_guide.html" class="recommendation-btn">
+                    <span class="icon">🏔️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-马鞍山周末攻略</div>
+                        <div class="btn-subtitle">长江三矶诗韵之旅</div>
                     </div>
                 </a>
 
@@ -478,11 +537,16 @@
                     </div>
                 </a>
 
+                <a href="destination/hefei_wuhu_guide.html" class="recommendation-btn">
+                    <span class="icon">🌊</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-芜湖周末攻略</div>
+                        <div class="btn-subtitle">皖南风光二日游</div>
+                    </div>
+                </a>
+
             </div>
         </div>
-
-                </div>
-
         <!-- 温馨提示区域 -->
         <div class="tips-container">
             <div class="tips-header">

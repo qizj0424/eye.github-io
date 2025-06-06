@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <script src="html2canvas.min.js"></script>
+    <!-- 
+     * 合肥到亳州周末游攻略页面
+     * 功能：为用户提供详细的合肥到亳州两日游旅行攻略信息
+     * 包含交通、住宿、景点、美食等全方位指南
+     -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合肥到亳州周末游攻略 | 智能旅游规划助手</title>
+    <style>
+        /* 
+         * 旅游攻略页面样式
+         * 功能：提供清晰、美观的攻略展示界面
+         * 支持响应式设计，适配各种设备
+         */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .guide-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .guide-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content-section {
+            background: white;
+            margin-bottom: 25px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #ff8a80;
+        }
+
+        .price-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .price-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .price-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .price-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .schedule-day {
+            background: #e8f4fd;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .day-title {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .time-slot {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .food-item {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .tips-container {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tips-title {
+            color: #155724;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .tips-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .tips-list li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .tips-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .contact-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #dc3545;
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .weather-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .weather-card h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .attraction-card {
+            background: #f3e5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #9c27b0;
+        }
+
+        .attraction-rating {
+            color: #ff9800;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .transport-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .transport-table th,
+        .transport-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .transport-table th {
+            background: #667eea;
+            color: white;
+        }
+
+        .transport-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            .guide-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .price-table {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页头部分 -->
+        <div class="header">
+            <h1 class="guide-title">合肥到亳州周末游攻略 🚄</h1>
+            <p class="guide-subtitle">探索千年古城，体验中医药文化之旅</p>
+        </div>
+
+        <!-- 出行规划部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🚗</span>
+                出行规划
+            </h2>
+            
+            <div class="highlight-box">
+                <h3>🚄 推荐交通方式：高速列车（G字头）</h3>
+                <p><strong>时间</strong>：1.5-2小时 | <strong>价格</strong>：二等座152.5-185.5元 | <strong>班次</strong>：一天20+班次</p>
+            </div>
+
+            <h3>交通对比</h3>
+            <table class="transport-table">
+                <thead>
+                    <tr>
+                        <th>交通方式</th>
+                        <th>时间</th>
+                        <th>价格</th>
+                        <th>班次</th>
+                        <th>推荐指数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>高速列车(G字头)</td>
+                        <td>1.5-2小时</td>
+                        <td>152.5-185.5元</td>
+                        <td>20+班次/天</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>普通列车(K字头)</td>
+                        <td>4-5小时</td>
+                        <td>50.5元</td>
+                        <td>较少</td>
+                        <td>⭐⭐⭐</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>推荐班次</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🚄 去程推荐</h4>
+                    <p><strong>G1732</strong>: 07:10→09:10 (2小时)<br>
+                    <strong>G1734</strong>: 09:35→11:35 (2小时)<br>
+                    <strong>G1736</strong>: 13:42→15:42 (2小时)<br>
+                    <strong>G1738</strong>: 16:25→18:25 (2小时)</p>
+                </div>
+                <div class="info-card">
+                    <h4>🚄 返程推荐</h4>
+                    <p><strong>G1731</strong>: 08:12→10:17<br>
+                    <strong>G1733</strong>: 12:20→14:25<br>
+                    <strong>G1735</strong>: 15:50→17:55<br>
+                    <strong>G1737</strong>: 19:05→21:10</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 市内交通部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🚌</span>
+                亳州市内交通
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🚌 公交系统</h4>
+                    <p><strong>运营时间</strong>：6:00-22:00<br>
+                    <strong>票价</strong>：普通2元，空调3元<br>
+                    <strong>支付</strong>：支付宝、微信扫码<br>
+                    <strong>主要线路</strong>：1路(火车站-华佗故里)、5路(火车站-花戏楼)、10路(市中心环线)</p>
+                </div>
+                <div class="info-card">
+                    <h4>🚕 出租车/网约车</h4>
+                    <p><strong>起步价</strong>：8元(3公里内)<br>
+                    <strong>价格</strong>：约2.5元/公里<br>
+                    <strong>网约车</strong>：滴滴、高德均可使用</p>
+                </div>
+                <div class="info-card">
+                    <h4>🚲 共享单车</h4>
+                    <p><strong>品牌</strong>：哈啰单车、美团单车<br>
+                    <strong>价格</strong>：1.5元/15分钟<br>
+                    <strong>适用</strong>：市区短途，景点连接</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 景点推荐部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🏛️</span>
+                景点推荐
+            </h2>
+            
+            <h3>🌟 必游景点</h3>
+            
+            <div class="attraction-card">
+                <div class="attraction-rating">⭐⭐⭐⭐⭐</div>
+                <h4>花戏楼</h4>
+                <p><strong>门票</strong>：45元 | <strong>时间</strong>：8:00-18:00 | <strong>游览</strong>：2-3小时</p>
+                <p><strong>特色</strong>：明清古建筑群，精美砖雕木雕，建议提前网上购票</p>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-rating">⭐⭐⭐⭐</div>
+                <h4>华佗故里</h4>
+                <p><strong>门票</strong>：35元 | <strong>时间</strong>：8:00-17:30 | <strong>游览</strong>：2小时</p>
+                <p><strong>特色</strong>：中医药文化展示，华佗纪念馆，中药材种植园体验</p>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-rating">⭐⭐⭐⭐</div>
+                <h4>曹操运兵道</h4>
+                <p><strong>门票</strong>：25元 | <strong>时间</strong>：8:30-17:00 | <strong>游览</strong>：1.5小时</p>
+                <p><strong>特色</strong>：地下军事遗迹，历史文化价值高，地下探秘体验</p>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-rating">⭐⭐⭐</div>
+                <h4>南京巷钱庄</h4>
+                <p><strong>门票</strong>：20元 | <strong>时间</strong>：8:00-17:30 | <strong>游览</strong>：1小时</p>
+                <p><strong>特色</strong>：古代金融业展示，徽商文化体验</p>
+            </div>
+
+            <h3>🎯 小众景点</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>亳州博物馆 ⭐⭐⭐⭐</h4>
+                    <p><strong>门票</strong>：免费(需预约)<br>
+                    <strong>时间</strong>：9:00-17:00(周一闭馆)<br>
+                    <strong>特色</strong>：地方历史文物，文化底蕴深厚</p>
+                </div>
+                <div class="info-card">
+                    <h4>道德中宫 ⭐⭐⭐</h4>
+                    <p><strong>门票</strong>：25元<br>
+                    <strong>时间</strong>：8:00-17:30<br>
+                    <strong>特色</strong>：道教文化圣地，老子文化</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 住宿建议部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🏨</span>
+                住宿建议
+            </h2>
+            
+            <div class="price-table">
+                <div class="price-card">
+                    <h4>经济型</h4>
+                    <div class="price">150-250元/晚</div>
+                    <p><strong>7天连锁酒店</strong><br>
+                    距火车站步行5分钟</p>
+                    <p><strong>如家酒店</strong><br>
+                    位置便利，近市中心</p>
+                </div>
+
+                <div class="price-card">
+                    <h4>舒适型</h4>
+                    <div class="price">250-400元/晚</div>
+                    <p><strong>维也纳酒店</strong><br>
+                    近万达广场，购物方便</p>
+                    <p><strong>锦江之星</strong><br>
+                    含早餐，性价比不错</p>
+                </div>
+
+                <div class="price-card">
+                    <h4>豪华型</h4>
+                    <div class="price">400-600元/晚</div>
+                    <p><strong>皇冠假日酒店</strong><br>
+                    五星级标准，服务优质</p>
+                    <p><strong>设施完善</strong><br>
+                    商务出行首选</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 网红打卡地部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📍</span>
+                网红打卡地推荐
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>📸 花戏楼古建筑群</h4>
+                    <p><strong>位置</strong>：花戏楼路<br>
+                    <strong>交通</strong>：公交5路直达<br>
+                    <strong>特色</strong>：明清建筑，雕梁画栋<br>
+                    <strong>最佳时间</strong>：上午9-11点，下午3-5点</p>
+                </div>
+                <div class="info-card">
+                    <h4>📸 亳州老街</h4>
+                    <p><strong>位置</strong>：市中心古城区<br>
+                    <strong>交通</strong>：步行或共享单车<br>
+                    <strong>特色</strong>：明清街道，传统建筑<br>
+                    <strong>推荐</strong>：街口牌坊，古建筑群</p>
+                </div>
+                <div class="info-card">
+                    <h4>📸 华佗中医药文化园</h4>
+                    <p><strong>位置</strong>：华佗故里景区内<br>
+                    <strong>特色</strong>：中药材种植，古风建筑<br>
+                    <strong>拍摄</strong>：药材花田，古典建筑</p>
+                </div>
+                <div class="info-card">
+                    <h4>🍜 药都大市场美食街</h4>
+                    <p><strong>位置</strong>：药都大道中段<br>
+                    <strong>特色</strong>：当地特色小吃集中地<br>
+                    <strong>推荐时间</strong>：晚上6-9点，灯火通明</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 每日行程安排部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📅</span>
+                每日行程安排
+            </h2>
+            
+            <div class="schedule-day">
+                <div class="day-title">第一天：文化古迹游</div>
+                
+                <div class="time-slot">
+                    <span class="time">上午（8:00-12:00）</span>
+                    <p>07:10 合肥南站出发（G1732）<br>
+                    09:10 抵达亳州火车站<br>
+                    09:30 酒店入住，简单休整<br>
+                    10:00 前往花戏楼景区<br>
+                    10:30-12:30 游览花戏楼，拍照打卡</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">下午（13:00-18:00）</span>
+                    <p>13:00 附近午餐，品尝亳州特色菜<br>
+                    14:30 前往曹操运兵道<br>
+                    15:00-16:30 探索地下遗迹<br>
+                    17:00 游览南京巷钱庄<br>
+                    18:00 老街晚餐，体验当地夜生活</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">晚上（19:00-21:00）</span>
+                    <p>19:00 漫步亳州老街，购买特产<br>
+                    20:30 回酒店休息</p>
+                </div>
+            </div>
+
+            <div class="schedule-day">
+                <div class="day-title">第二天：中医药文化游</div>
+                
+                <div class="time-slot">
+                    <span class="time">上午（8:00-12:00）</span>
+                    <p>08:00 酒店早餐<br>
+                    09:00 前往华佗故里<br>
+                    09:30-11:30 深度游览，了解中医药文化<br>
+                    11:45 参观亳州博物馆（如时间允许）</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">下午（13:00-17:00）</span>
+                    <p>13:00 特色午餐<br>
+                    14:30 前往道德中宫<br>
+                    15:00-16:30 感受道教文化<br>
+                    17:00 市区购物，买伴手礼<br>
+                    18:00 前往火车站</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">晚上</span>
+                    <p>19:05 乘坐G1737返回合肥<br>
+                    21:10 抵达合肥南站，行程结束</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 美食推荐部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🍜</span>
+                美食推荐
+            </h2>
+            
+            <h3>🥟 必尝特色美食</h3>
+            <div class="food-grid">
+                <div class="food-item">
+                    <h4>亳州牛肉汤</h4>
+                    <p>汤鲜肉嫩，营养丰富<br>
+                    <strong>推荐</strong>：老马牛肉汤馆<br>
+                    <strong>价格</strong>：15-25元/碗</p>
+                </div>
+                <div class="food-item">
+                    <h4>亳州焖饼</h4>
+                    <p>饼薄馅多，口感独特<br>
+                    <strong>推荐</strong>：张记焖饼<br>
+                    <strong>价格</strong>：12-18元/份</p>
+                </div>
+                <div class="food-item">
+                    <h4>华佗五禽戏养生汤</h4>
+                    <p>药膳结合，养生功效<br>
+                    <strong>推荐</strong>：华佗养生馆<br>
+                    <strong>价格</strong>：38-58元/份</p>
+                </div>
+                <div class="food-item">
+                    <h4>亳州酒</h4>
+                    <p>古井贡酒产地，历史悠久<br>
+                    <strong>推荐</strong>：古井贡酒专卖店<br>
+                    <strong>价格</strong>：50-500元不等</p>
+                </div>
+                <div class="food-item">
+                    <h4>亳白芍</h4>
+                    <p>中药材，亳州特产<br>
+                    <strong>推荐</strong>：药都大市场<br>
+                    <strong>价格</strong>：根据品质而定</p>
+                </div>
+            </div>
+
+            <h3>🍴 推荐餐厅</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>亳州印象餐厅</h4>
+                    <p>地道皖北菜，环境优雅</p>
+                </div>
+                <div class="info-card">
+                    <h4>华佗药膳坊</h4>
+                    <p>药膳特色，养生美食</p>
+                </div>
+                <div class="info-card">
+                    <h4>老亳州酒楼</h4>
+                    <p>传统徽菜，口味正宗</p>
+                </div>
+                <div class="info-card">
+                    <h4>花戏楼美食街</h4>
+                    <p>各种小吃集中</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 费用预算部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">💰</span>
+                费用预算（人均）
+            </h2>
+            
+            <div class="price-table">
+                <div class="price-card">
+                    <h4>经济型</h4>
+                    <div class="price">350-500元</div>
+                    <p>• 交通：305元（高铁往返）</p>
+                    <p>• 住宿：180元/晚</p>
+                    <p>• 餐饮：120元</p>
+                    <p>• 景点：190元</p>
+                    <p>• 其他：80元</p>
+                </div>
+
+                <div class="price-card">
+                    <h4>舒适型</h4>
+                    <div class="price">500-750元</div>
+                    <p>• 交通：305元（高铁往返）</p>
+                    <p>• 住宿：320元/晚</p>
+                    <p>• 餐饮：200元</p>
+                    <p>• 景点：220元（含导览）</p>
+                    <p>• 其他：150元</p>
+                </div>
+
+                <div class="price-card">
+                    <h4>豪华型</h4>
+                    <div class="price">750-1200元</div>
+                    <p>• 交通：371元（一等座往返）</p>
+                    <p>• 住宿：500元/晚</p>
+                    <p>• 餐饮：350元</p>
+                    <p>• 景点：280元（VIP服务）</p>
+                    <p>• 其他：250元</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 天气与穿搭建议部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🌤️</span>
+                天气与穿搭建议
+            </h2>
+            
+            <div class="weather-grid">
+                <div class="weather-card">
+                    <h4>春季（3-5月）</h4>
+                    <p><strong>天气</strong>：温和多雨，温差较大<br>
+                    <strong>穿搭</strong>：薄外套+长袖，备雨具<br>
+                    <strong>注意</strong>：花粉过敏者注意防护</p>
+                </div>
+                <div class="weather-card">
+                    <h4>夏季（6-8月）</h4>
+                    <p><strong>天气</strong>：炎热多雨，湿度大<br>
+                    <strong>穿搭</strong>：轻薄透气衣物，防晒用品<br>
+                    <strong>建议</strong>：多补充水分，避免中暑</p>
+                </div>
+                <div class="weather-card">
+                    <h4>秋季（9-11月）</h4>
+                    <p><strong>天气</strong>：凉爽干燥，昼夜温差大<br>
+                    <strong>穿搭</strong>：薄毛衣+外套，层次搭配<br>
+                    <strong>优势</strong>：最佳旅游季节，天气宜人</p>
+                </div>
+                <div class="weather-card">
+                    <h4>冬季（12-2月）</h4>
+                    <p><strong>天气</strong>：寒冷干燥，偶有雪天<br>
+                    <strong>穿搭</strong>：厚外套+保暖内衣<br>
+                    <strong>注意</strong>：部分景点冬季开放时间缩短</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 防坑小贴士部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">⚠️</span>
+                防坑小贴士
+            </h2>
+            
+            <div class="tips-container">
+                <div class="tips-title">交通篇</div>
+                <ul class="tips-list">
+                    <li>提前购票：周末高铁票紧张，建议提前7-15天购买</li>
+                    <li>确认车站：亳州火车站是主要站点，注意不要走错</li>
+                    <li>保存票据：电子票务时代，保存好购票信息</li>
+                    <li>天气关注：春秋季节天气变化大，注意列车正点率</li>
+                </ul>
+            </div>
+
+            <div class="tips-container">
+                <div class="tips-title">住宿篇</div>
+                <ul class="tips-list">
+                    <li>提前预订：周末和节假日房价上涨，提前预订有优惠</li>
+                    <li>查看位置：选择距离景区或火车站较近的酒店</li>
+                    <li>确认设施：老城区部分酒店设施较旧，提前了解</li>
+                    <li>价格对比：多平台比较价格，寻找性价比最高的选择</li>
+                </ul>
+            </div>
+
+            <div class="tips-container">
+                <div class="tips-title">景点篇</div>
+                <ul class="tips-list">
+                    <li>门票预订：部分景点支持网上预订，可享受折扣</li>
+                    <li>避开高峰：周末上午人流较多，建议错峰游览</li>
+                    <li>导游服务：花戏楼等景点建议请导游或使用语音导览</li>
+                    <li>拍照礼仪：文物古迹拍照要遵守规定，不要触摸文物</li>
+                </ul>
+            </div>
+
+            <div class="tips-container">
+                <div class="tips-title">购物篇</div>
+                <ul class="tips-list">
+                    <li>特产选择：亳白芍、古井贡酒是正宗特产</li>
+                    <li>价格比较：药材市场价格差异大，货比三家</li>
+                    <li>真伪辨别：购买中药材时要注意品质和真伪</li>
+                    <li>快递邮寄：重物可选择快递到家，方便携带</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 实用信息部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📱</span>
+                实用信息
+            </h2>
+            
+            <h3>📞 紧急联系方式</h3>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <strong>亳州旅游投诉热线</strong><br>
+                    0558-12301
+                </div>
+                <div class="contact-item">
+                    <strong>亳州火车站问询</strong><br>
+                    0558-5555555
+                </div>
+                <div class="contact-item">
+                    <strong>亳州市人民医院</strong><br>
+                    0558-5122707
+                </div>
+                <div class="contact-item">
+                    <strong>报警电话</strong><br>
+                    110
+                </div>
+                <div class="contact-item">
+                    <strong>急救电话</strong><br>
+                    120
+                </div>
+            </div>
+
+            <h3>💡 便民服务</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>网络通信</h4>
+                    <p><strong>Wi-Fi覆盖</strong>：火车站、主要景点、酒店均有免费Wi-Fi<br>
+                    <strong>移动信号</strong>：各大运营商信号良好<br>
+                    <strong>充电设施</strong>：火车站、景区设有充电桩</p>
+                </div>
+                <div class="info-card">
+                    <h4>金融服务</h4>
+                    <p><strong>银行ATM</strong>：市区分布密集，各大银行均有<br>
+                    <strong>24小时药店</strong>：仁和大药房<br>
+                    <strong>超市</strong>：大润发、永辉超市等连锁店</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 行程亮点总结部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🎯</span>
+                行程亮点总结
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🏛️ 文化体验</h4>
+                    <p>• 探索花戏楼明清建筑艺术精华<br>
+                    • 了解华佗中医药文化传承<br>
+                    • 体验曹操运兵道历史遗迹<br>
+                    • 感受道家文化发源地魅力</p>
+                </div>
+                <div class="info-card">
+                    <h4>🍜 美食之旅</h4>
+                    <p>• 品尝正宗亳州牛肉汤<br>
+                    • 体验药膳养生料理<br>
+                    • 购买古井贡酒和亳白芍特产</p>
+                </div>
+                <div class="info-card">
+                    <h4>📸 拍照打卡</h4>
+                    <p>• 古建筑群摄影创作<br>
+                    • 中医药文化园艺术照<br>
+                    • 老街夜景氛围照片</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="content-section" style="text-align: center; background: #f8f9fa;">
+            <p><strong>🎉 祝您在亳州度过愉快的周末时光！</strong></p>
+            <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+                本攻略内容基于2025年6月信息整理，实际出行前请确认最新的票价、开放时间等信息。<br>
+                攻略编制时间：2025年6月5日 | 下次更新：根据季节变化和景点开放情况调整
+            </p>
+            <a href="../index.html" class="back-button" style="margin-top: 20px;">← 返回首页继续规划</a>
+        </footer>
+    </div>
+</body>
+</html> 

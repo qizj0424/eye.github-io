@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <script src="html2canvas.min.js"></script>
+    <!-- 
+     * 合肥到六安周末游攻略页面
+     * 功能：为用户提供详细的合肥到六安两日游旅行攻略信息
+     * 包含交通、住宿、景点、美食等全方位指南
+     -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合肥到六安周末游攻略 | 智能旅游规划助手</title>
+    <style>
+        /* 
+         * 旅游攻略页面样式
+         * 功能：提供清晰、美观的攻略展示界面
+         * 支持响应式设计，适配各种设备
+         */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .guide-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .guide-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content-section {
+            background: white;
+            margin-bottom: 25px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #ff8a80;
+        }
+
+        .price-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .price-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .price-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .price-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .schedule-day {
+            background: #e8f4fd;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .day-title {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .time-slot {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .food-item {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .tips-container {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tips-title {
+            color: #155724;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips-list li {
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #155724;
+        }
+
+        .tips-list li::before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .contact-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .guide-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price-table {
+                grid-template-columns: 1fr;
+            }
+
+            .food-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面容器 -->
+    <div class="container">
+        <!-- 页面标题 -->
+        <header class="header">
+            <h1 class="guide-title">🏞️ 合肥到六安周末游攻略</h1>
+            <p class="guide-subtitle">2天1夜精品路线 | 皖西风光深度体验</p>
+        </header>
+
+        <!-- 返回按钮 -->
+        <a href="../index.html" class="back-button">← 返回首页</a>
+
+        <!-- 出行规划部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🚄</span>
+                出行规划
+            </h2>
+            
+            <div class="highlight-box">
+                <strong>💡 推荐方案：</strong> 高铁往返，快速便捷，性价比高
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🚆 高铁动车（推荐）</h4>
+                    <p><strong>合肥南 → 六安：</strong></p>
+                    <p>• D5643（07:22-07:46，24分钟）</p>
+                    <p>• G1443（08:27-08:52，25分钟）</p>
+                    <p>• 二等座：32元，一等座：52元</p>
+                    <p><strong>合肥 → 六安：</strong></p>
+                    <p>• G1741（08:15-08:57，42分钟）</p>
+                    <p>• 二等座：34元，一等座：55元</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>🚂 普通火车</h4>
+                    <p>• K8363（07:30-08:33，1小时3分钟）</p>
+                    <p>• K305（07:49-08:52，1小时3分钟）</p>
+                    <p>• 硬座：15.5元，硬卧：61.5元</p>
+                    <p>• 优势：价格便宜，适合预算有限的游客</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>🚗 自驾出行</h4>
+                    <p>• 距离：约80公里</p>
+                    <p>• 时间：约1.5小时</p>
+                    <p>• 路线：合肥→G40沪陕高速→六安</p>
+                    <p>• 过路费：约35元</p>
+                    <p>• 优势：时间自由，可沿途停靠</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 市内交通部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🚌</span>
+                六安市内交通
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🚍 公共交通</h4>
+                    <p>• 公交线路覆盖主要景点</p>
+                    <p>• 支持微信、支付宝扫码乘车</p>
+                    <p>• 票价：普通公交1-2元</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>🚖 打车出行</h4>
+                    <p>• 滴滴、美团打车方便</p>
+                    <p>• 起步价约8元/2公里</p>
+                    <p>• 出租车起步价8元</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>🚴 共享单车</h4>
+                    <p>• 哈啰单车、美团单车</p>
+                    <p>• 价格：1.5元/30分钟</p>
+                    <p>• 适合市区短途出行</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 景点推荐部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🎯</span>
+                景点推荐
+            </h2>
+            
+            <h3>🔥 热门必游景点</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>⭐ 天堂寨风景区</h4>
+                    <p>• 门票：115元（含景区交通）</p>
+                    <p>• 开放时间：07:30-17:30</p>
+                    <p>• 游玩时长：4-6小时</p>
+                    <p>• 特色：华东地区最后一片原始森林，瀑布群壮观</p>
+                    <p>• 交通：六安客运站乘坐专线大巴，约2小时</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>⭐ 万佛湖风景区</h4>
+                    <p>• 门票：80元（含游船）</p>
+                    <p>• 开放时间：08:00-17:00</p>
+                    <p>• 游玩时长：3-4小时</p>
+                    <p>• 特色："安徽千岛湖"，湖光山色，适合休闲游</p>
+                    <p>• 交通：市区乘坐专线公交或包车前往</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>⭐ 皖西博物馆</h4>
+                    <p>• 门票：免费（需预约）</p>
+                    <p>• 开放时间：09:00-17:00（周一闭馆）</p>
+                    <p>• 游玩时长：1-2小时</p>
+                    <p>• 特色：了解皖西地区历史文化</p>
+                    <p>• 交通：市区内公交可达</p>
+                </div>
+            </div>
+
+            <h3>🌟 小众特色景点</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>佛子岭水库</h4>
+                    <p>• 门票：免费</p>
+                    <p>• 特色：新中国第一坝，适合摄影</p>
+                    <p>• 游玩时长：1-2小时</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>六安茶谷</h4>
+                    <p>• 门票：50元</p>
+                    <p>• 特色：茶文化体验，春季采茶体验</p>
+                    <p>• 游玩时长：2-3小时</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 住宿建议部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🏨</span>
+                住宿建议
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>维也纳酒店（六安万达广场店）</h4>
+                    <p>• 价格：280-350元/晚</p>
+                    <p>• 位置：万达广场附近，交通便利</p>
+                    <p>• 设施：商务型酒店，干净舒适</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>汉庭酒店（六安火车站店）</h4>
+                    <p>• 价格：180-220元/晚</p>
+                    <p>• 位置：火车站附近，出行方便</p>
+                    <p>• 优势：性价比高，连锁品牌</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>如家酒店（六安梅山路店）</h4>
+                    <p>• 价格：160-200元/晚</p>
+                    <p>• 位置：市中心，周边配套齐全</p>
+                    <p>• 特色：经济实惠，适合预算有限游客</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>住宿区域建议：</strong><br>
+                • 火车站周边：交通便利，适合火车出行游客<br>
+                • 万达广场周边：购物餐饮方便，现代化设施齐全<br>
+                • 市政府周边：市中心位置，到各景点距离适中
+            </div>
+        </section>
+
+        <!-- 网红打卡地部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📸</span>
+                网红打卡地推荐
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>📷 万佛湖观景台</h4>
+                    <p>• 拍照亮点：湖光山色全景，日出日落绝佳拍摄点</p>
+                    <p>• 最佳时间：早上7-8点，傍晚6-7点</p>
+                    <p>• 交通：万佛湖景区内，乘坐游船可达</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>💦 天堂寨瀑布群</h4>
+                    <p>• 拍照亮点：多级瀑布，水雾朦胧仙境效果</p>
+                    <p>• 最佳时间：上午10-11点光线最佳</p>
+                    <p>• 小贴士：带好防水装备</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>🏮 六安老街</h4>
+                    <p>• 拍照亮点：古色古香建筑，传统文化氛围</p>
+                    <p>• 特色：古建筑群，适合古风拍照</p>
+                    <p>• 美食：沿街小吃，边走边拍</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>🌉 佛子岭大坝</h4>
+                    <p>• 拍照亮点：工程奇迹，历史纪念意义</p>
+                    <p>• 最佳角度：大坝正面全景，侧面水流</p>
+                    <p>• 时间：全天候适合拍摄</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 行程安排部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📅</span>
+                两日行程安排
+            </h2>
+            
+            <div class="schedule-day">
+                <div class="day-title">第一天：市区文化游</div>
+                
+                <div class="time-slot">
+                    <span class="time">上午（09:00-12:00）</span>
+                    <p>08:00 从合肥南乘坐高铁出发<br>
+                    08:30 抵达六安，酒店check-in<br>
+                    09:30 游览皖西博物馆<br>
+                    11:00 漫步六安老街，体验当地文化</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">下午（13:00-17:00）</span>
+                    <p>13:00 品尝六安本地美食<br>
+                    14:30 前往佛子岭水库<br>
+                    16:00 佛子岭大坝拍照打卡<br>
+                    17:00 返回市区</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">晚上（18:00-21:00）</span>
+                    <p>18:00 六安特色晚餐<br>
+                    19:30 万达广场购物休闲<br>
+                    21:00 回酒店休息</p>
+                </div>
+            </div>
+
+            <div class="schedule-day">
+                <div class="day-title">第二天：自然风光游</div>
+                
+                <div class="time-slot">
+                    <span class="time">上午（07:00-12:00）</span>
+                    <p>07:00 早餐后出发<br>
+                    08:00 前往万佛湖风景区<br>
+                    09:00 乘船游湖，拍照打卡<br>
+                    11:30 湖边休闲，欣赏湖光山色</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">下午（13:00-17:00）</span>
+                    <p>13:00 湖边午餐<br>
+                    14:00 如时间充裕可前往六安茶谷（可选）<br>
+                    16:00 返回市区，购买特产<br>
+                    17:30 前往火车站</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">晚上</span>
+                    <p>18:30 乘坐高铁返回合肥<br>
+                    19:30 抵达合肥，行程结束</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 美食推荐部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🍜</span>
+                美食推荐
+            </h2>
+            
+            <h3>🥟 必尝美食</h3>
+            <div class="food-grid">
+                <div class="food-item">
+                    <h4>六安瓜片茶</h4>
+                    <p>中国十大名茶之一</p>
+                </div>
+                <div class="food-item">
+                    <h4>万佛湖鱼头</h4>
+                    <p>当地特色鱼类制作</p>
+                </div>
+                <div class="food-item">
+                    <h4>霍山石斛</h4>
+                    <p>滋补佳品</p>
+                </div>
+                <div class="food-item">
+                    <h4>六安酱鸭</h4>
+                    <p>传统卤制品</p>
+                </div>
+                <div class="food-item">
+                    <h4>山野菜</h4>
+                    <p>天然绿色蔬菜</p>
+                </div>
+            </div>
+
+            <h3>🍴 推荐餐厅</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>万佛湖大酒店</h4>
+                    <p>正宗湖鲜菜</p>
+                </div>
+                <div class="info-card">
+                    <h4>六安老字号餐厅</h4>
+                    <p>传统皖西菜</p>
+                </div>
+                <div class="info-card">
+                    <h4>茶谷人家</h4>
+                    <p>农家乐体验</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 费用预算部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">💰</span>
+                费用预算（人均）
+            </h2>
+            
+            <div class="price-table">
+                <div class="price-card">
+                    <h4>经济型</h4>
+                    <div class="price">400-600元</div>
+                    <p>• 交通：64元（高铁往返）</p>
+                    <p>• 住宿：180元/晚</p>
+                    <p>• 餐饮：150元</p>
+                    <p>• 景点：165元</p>
+                    <p>• 其他：100元</p>
+                </div>
+
+                <div class="price-card">
+                    <h4>舒适型</h4>
+                    <div class="price">600-900元</div>
+                    <p>• 交通：110元（一等座往返）</p>
+                    <p>• 住宿：280元/晚</p>
+                    <p>• 餐饮：250元</p>
+                    <p>• 景点：245元</p>
+                    <p>• 其他：150元</p>
+                </div>
+
+                <div class="price-card">
+                    <h4>豪华型</h4>
+                    <div class="price">900-1500元</div>
+                    <p>• 交通：194元（商务座往返）</p>
+                    <p>• 住宿：350元/晚</p>
+                    <p>• 餐饮：400元</p>
+                    <p>• 景点：300元</p>
+                    <p>• 其他：250元</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 防坑小贴士部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">⚠️</span>
+                防坑小贴士
+            </h2>
+            
+            <div class="tips-container">
+                <div class="tips-title">交通篇</div>
+                <ul class="tips-list">
+                    <li>提前购票：周末高铁票较紧张，建议提前购买</li>
+                    <li>注意站点：合肥南和合肥站不同，确认好发车站点</li>
+                    <li>保存车票：电子票需保存好，避免无法检票</li>
+                </ul>
+            </div>
+
+            <div class="tips-container">
+                <div class="tips-title">住宿篇</div>
+                <ul class="tips-list">
+                    <li>提前预订：周末酒店紧俏，建议提前1周预订</li>
+                    <li>查看评价：选择评分高、评价好的酒店</li>
+                    <li>确认位置：选择交通便利的区域住宿</li>
+                </ul>
+            </div>
+
+            <div class="tips-container">
+                <div class="tips-title">景点篇</div>
+                <ul class="tips-list">
+                    <li>门票预订：部分景点需要提前在线预约</li>
+                    <li>天气关注：山区景点受天气影响较大</li>
+                    <li>时间安排：合理安排行程，避免赶路匆忙</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 紧急联系方式部分 -->
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📞</span>
+                紧急联系方式
+            </h2>
+            
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <strong>六安旅游咨询热线</strong><br>
+                    0564-12301
+                </div>
+                <div class="contact-item">
+                    <strong>六安火车站咨询</strong><br>
+                    0564-3266000
+                </div>
+                <div class="contact-item">
+                    <strong>六安市人民医院</strong><br>
+                    0564-3338000
+                </div>
+                <div class="contact-item">
+                    <strong>报警电话</strong><br>
+                    110
+                </div>
+                <div class="contact-item">
+                    <strong>急救电话</strong><br>
+                    120
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="content-section" style="text-align: center; background: #f8f9fa;">
+            <p><strong>🎉 祝您在六安度过愉快的周末时光！</strong></p>
+            <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+                本攻略内容基于2025年6月信息整理，实际出行前请确认最新的票价、开放时间等信息。<br>
+                攻略编制时间：2025年6月5日 | 下次更新：根据季节变化和景点开放情况调整
+            </p>
+            <a href="../index.html" class="back-button" style="margin-top: 20px;">← 返回首页继续规划</a>
+        </footer>
+    </div>
+</body>
+</html> 

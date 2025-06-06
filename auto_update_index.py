@@ -33,7 +33,14 @@ class IndexUpdater:
             "hefei_wuhan_guide.html": ["🌸", "合肥-武汉端午攻略", "探索江城风情"],
             "hefei_tongling_guide.html": ["🏭", "合肥-铜陵端午攻略", "体验铜都历史"],
             "hefei_huangshan_guide.html": ["⛰️", "合肥-黄山端午攻略", "登临天下第一奇山"],
-            "hefei_anqing_guide.html": ["🏛️", "合肥-安庆端午攻略", "感受历史文化名城"]
+            "hefei_anqing_guide.html": ["🏛️", "合肥-安庆端午攻略", "感受历史文化名城"],
+            "hefei_chuzhou_guide.html": ["🏛️", "合肥-滁州周末攻略", "探寻醉翁亭文化之旅"],
+            "hefei_hefei_guide.html": ["🏛️", "合肥-合肥周末攻略", "体验淝水风投之城"],
+            "hefei_huainan_guide.html": ["🏛️", "合肥-淮南周末攻略", "品味豆腐发源之乡"],
+            "hefei_liuan_guide.html": ["🏞️", "合肥-六安周末攻略", "皖西风光深度体验"],
+            "hefei_wuhu_guide.html": ["🌊", "合肥-芜湖周末攻略", "皖南风光二日游"],
+            "hefei_maanshan_guide.html": ["🏔️", "合肥-马鞍山周末攻略", "长江三矶诗韵之旅"],
+            "hefei_bozhou_guide.html": ["🏛️", "合肥-亳州周末攻略", "探索千年古城中医药文化"]
         }
     
     def scan_destination_files(self):
@@ -119,6 +126,16 @@ class IndexUpdater:
             icon, main_title, subtitle = "⛰️", "合肥-黄山攻略", "登临天下第一奇山"
         elif "hefei" in filename and "anqing" in filename:
             icon, main_title, subtitle = "🏛️", "合肥-安庆攻略", "感受历史文化名城"
+        elif "hefei" in filename and "chuzhou" in filename:
+            icon, main_title, subtitle = "🏛️", "合肥-滁州攻略", "探寻醉翁亭文化之旅"
+        elif "hefei" in filename and "liuan" in filename:
+            icon, main_title, subtitle = "🏞️", "合肥-六安攻略", "皖西风光深度体验"
+        elif "hefei" in filename and "wuhu" in filename:
+            icon, main_title, subtitle = "🌊", "合肥-芜湖攻略", "皖南风光二日游"
+        elif "hefei" in filename and "maanshan" in filename:
+            icon, main_title, subtitle = "🏔️", "合肥-马鞍山攻略", "长江三矶诗韵之旅"
+        elif "hefei" in filename and "bozhou" in filename:
+            icon, main_title, subtitle = "🏛️", "合肥-亳州攻略", "探索千年古城中医药文化"
         else:
             # 通用处理
             icon = "🎪"
@@ -165,6 +182,7 @@ class IndexUpdater:
         # 添加推荐攻略区域结束标签
         html_parts.append('            </div>')
         html_parts.append('        </div>')
+        html_parts.append('')
         
         return '\n'.join(html_parts)
     
@@ -181,13 +199,15 @@ class IndexUpdater:
             
             # 查找推荐攻略区域的开始和结束位置
             start_pattern = r'        <!-- 推荐攻略按钮区域 -->'
-            end_pattern = r'        </div>\s*\n\s*<!-- 温馨提示区域 -->'
+            end_marker = r'        <!-- 温馨提示区域 -->'
             
             start_match = re.search(start_pattern, content)
-            end_match = re.search(end_pattern, content)
+            end_match = re.search(end_marker, content)
             
             if not start_match or not end_match:
                 print("错误：无法找到推荐攻略区域的标记")
+                print(f"start_match: {start_match}")
+                print(f"end_match: {end_match}")
                 return False
             
             # 替换推荐攻略区域内容
@@ -195,7 +215,7 @@ class IndexUpdater:
             after_section = content[end_match.start():]
             
             # 重新构建文件内容
-            new_content = before_section + new_recommendation_html + '\n\n        ' + after_section
+            new_content = before_section + new_recommendation_html + after_section
             
             # 备份原文件
             backup_file = self.index_file.with_suffix('.html.backup')
