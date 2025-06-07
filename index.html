@@ -319,6 +319,115 @@
         .recommendation-btn:hover .btn-subtitle {
             color: #555;
         }
+
+        /* 快速选择热门攻略样式 */
+        .quick-select-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .select-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 20px;
+            align-items: end;
+            margin-bottom: 15px;
+        }
+
+        .select-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .select-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .quick-select {
+            padding: 12px 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+            cursor: pointer;
+        }
+
+        .quick-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .quick-select:disabled {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .quick-go-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .quick-go-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .quick-go-btn:disabled {
+            background: #dee2e6;
+            color: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .quick-tip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+            background: #f8f9ff;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .select-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .quick-go-btn {
+                width: 100%;
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -528,6 +637,49 @@
             </form>
         </div>
 
+        <!-- 快速攻略选择区域 -->
+        <div class="recommendation-container">
+            <div class="recommendation-header">
+                <span class="icon">🚀</span>
+                快速选择热门攻略
+            </div>
+            <div class="quick-select-container">
+                <div class="select-row">
+                    <div class="select-group">
+                        <label class="select-label">
+                            <span class="icon">📍</span>
+                            出发地
+                        </label>
+                        <select class="quick-select" id="quickDeparture">
+                            <option value="">请选择出发地</option>
+                            <option value="北京">北京</option>
+                            <option value="合肥">合肥</option>
+                        </select>
+                    </div>
+                    
+                    <div class="select-group">
+                        <label class="select-label">
+                            <span class="icon">🎯</span>
+                            目的地
+                        </label>
+                        <select class="quick-select" id="quickDestination">
+                            <option value="">请选择目的地</option>
+                        </select>
+                    </div>
+                    
+                    <div class="select-group">
+                        <button class="quick-go-btn" id="quickGoBtn" onclick="goToGuide()">
+                            <span class="icon">✨</span>
+                            查看攻略
+                        </button>
+                    </div>
+                </div>
+                <div class="quick-tip">
+                    <span class="icon">💡</span>
+                    根据您的出发地选择，为您推荐最适合的目的地攻略
+                </div>
+            </div>
+        </div>
                                                                                 <!-- 推荐攻略按钮区域 -->
         <div class="recommendation-container">
             <div class="recommendation-header">
@@ -540,14 +692,6 @@
                     <div class="btn-content">
                         <div class="btn-title">北京-成都五一攻略</div>
                         <div class="btn-subtitle">体验古都到天府的魅力</div>
-                    </div>
-                </a>
-
-                <a href="destination/fuyang_weekend_guide.html" class="recommendation-btn">
-                    <span class="icon">🏛️</span>
-                    <div class="btn-content">
-                        <div class="btn-title">合肥-阜阳周末攻略</div>
-                        <div class="btn-subtitle">探索皖北水乡皖北水乡</div>
                     </div>
                 </a>
 
@@ -580,6 +724,14 @@
                     <div class="btn-content">
                         <div class="btn-title">合肥-滁州周末攻略</div>
                         <div class="btn-subtitle">探寻醉翁亭文化之旅</div>
+                    </div>
+                </a>
+
+                <a href="destination/hefei_fuyang_guide.html" class="recommendation-btn">
+                    <span class="icon">🎪</span>
+                    <div class="btn-content">
+                        <div class="btn-title">阜阳市周末游攻略</div>
+                        <div class="btn-subtitle">精彩旅程等您探索</div>
                     </div>
                 </a>
 
@@ -652,6 +804,14 @@
                     <div class="btn-content">
                         <div class="btn-title">合肥-芜湖周末攻略</div>
                         <div class="btn-subtitle">皖南风光二日游</div>
+                    </div>
+                </a>
+
+                <a href="destination/hefei_xuancheng_guide.html" class="recommendation-btn">
+                    <span class="icon">🏞️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-宣城周末攻略</div>
+                        <div class="btn-subtitle">诗意皖南山水二日游</div>
                     </div>
                 </a>
 
@@ -759,6 +919,93 @@
             }, 2000); // 2秒延迟模拟处理时间
         }
         
+        // 攻略文件映射关系（基于destination目录中的实际文件）
+        const guideMapping = {
+            '北京': {
+                '成都': 'beijing_chengdu_guide.html',
+            },
+            '合肥': {
+                '安庆': 'hefei_anqing_guide.html',
+                '亳州': 'hefei_bozhou_guide.html',
+                '池州': 'hefei_chizhou_guide.html',
+                '滁州': 'hefei_chuzhou_guide.html',
+                '阜阳': 'hefei_fuyang_guide.html',
+                '合肥': 'hefei_hefei_guide.html',
+                '淮南': 'hefei_huainan_guide.html',
+                '黄山': 'hefei_huangshan_guide.html',
+                '六安': 'hefei_liuan_guide.html',
+                '马鞍山': 'hefei_maanshan_guide.html',
+                '南京': 'hefei_nanjing_guide.html',
+                '铜陵': 'hefei_tongling_guide.html',
+                '武汉': 'hefei_wuhan_guide.html',
+                '芜湖': 'hefei_wuhu_guide.html',
+                '宣城': 'hefei_xuancheng_guide.html',
+            },
+        };
+
+        /**
+         * 更新目的地选择框
+         */
+        function updateDestinations() {
+            const departureSelect = document.getElementById('quickDeparture');
+            const destinationSelect = document.getElementById('quickDestination');
+            const goButton = document.getElementById('quickGoBtn');
+            
+            const departure = departureSelect.value;
+            
+            // 清空目的地选择框
+            destinationSelect.innerHTML = '<option value="">请选择目的地</option>';
+            
+            // 禁用按钮
+            goButton.disabled = true;
+            
+            if (departure && guideMapping[departure]) {
+                // 启用目的地选择框
+                destinationSelect.disabled = false;
+                
+                // 填充目的地选项
+                Object.keys(guideMapping[departure]).forEach(destination => {
+                    const option = document.createElement('option');
+                    option.value = destination;
+                    option.textContent = destination;
+                    destinationSelect.appendChild(option);
+                });
+            } else {
+                // 禁用目的地选择框
+                destinationSelect.disabled = true;
+            }
+        }
+
+        /**
+         * 检查是否可以启用按钮
+         */
+        function checkGoButton() {
+            const departure = document.getElementById('quickDeparture').value;
+            const destination = document.getElementById('quickDestination').value;
+            const goButton = document.getElementById('quickGoBtn');
+            
+            if (departure && destination && guideMapping[departure] && guideMapping[departure][destination]) {
+                goButton.disabled = false;
+            } else {
+                goButton.disabled = true;
+            }
+        }
+
+        /**
+         * 跳转到对应的攻略页面
+         */
+        function goToGuide() {
+            const departure = document.getElementById('quickDeparture').value;
+            const destination = document.getElementById('quickDestination').value;
+            
+            if (departure && destination && guideMapping[departure] && guideMapping[departure][destination]) {
+                const filename = guideMapping[departure][destination];
+                window.location.href = `destination/${filename}`;
+            } else {
+                alert('请选择完整的出发地和目的地！');
+            }
+        }
+
         // 页面加载完成后的初始化
         document.addEventListener('DOMContentLoaded', function() {
             console.log('智能旅游规划助手页面加载完成');
@@ -772,6 +1019,34 @@
                     }
                 });
             });
+
+            // 为快速选择功能添加事件监听
+            const quickDeparture = document.getElementById('quickDeparture');
+            const quickDestination = document.getElementById('quickDestination');
+            
+            if (quickDeparture) {
+                quickDeparture.addEventListener('change', function() {
+                    updateDestinations();
+                    checkGoButton();
+                });
+            }
+            
+            if (quickDestination) {
+                quickDestination.addEventListener('change', function() {
+                    checkGoButton();
+                });
+            }
+
+            // 初始状态设置
+            const goButton = document.getElementById('quickGoBtn');
+            if (goButton) {
+                goButton.disabled = true;
+            }
+            
+            const destinationSelect = document.getElementById('quickDestination');
+            if (destinationSelect) {
+                destinationSelect.disabled = true;
+            }
         });
     </script>
 </body>
