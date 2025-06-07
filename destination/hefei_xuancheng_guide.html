@@ -1,1 +1,955 @@
- 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <script src="html2canvas.min.js"></script>
+    <!-- 
+     * 合肥到宣城周末游攻略页面
+     * 功能：为用户提供详细的合肥到宣城两日游旅行攻略信息
+     * 包含交通、住宿、景点、美食等全方位指南
+     -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合肥到宣城周末游攻略 | 智能旅游规划助手</title>
+    <style>
+        /* 
+         * 旅游攻略页面样式
+         * 功能：提供清晰、美观的攻略展示界面
+         * 支持响应式设计，适配各种设备
+         */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .guide-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .guide-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content-section {
+            background: white;
+            margin-bottom: 25px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #ff8a80;
+        }
+
+        .price-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .price-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .price-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .price-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .schedule-day {
+            background: #e8f4fd;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .day-title {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .time-slot {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .food-item {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .tips-container {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tips-title {
+            color: #155724;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips-list li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .tips-list li:before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+        }
+
+        .weather-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .weather-card {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .travel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .travel-table th,
+        .travel-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .travel-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .travel-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .export-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .export-button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .guide-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .back-button,
+            .export-button {
+                position: static;
+                margin: 10px;
+                width: auto;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            margin-top: 40px;
+            border-radius: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-button">
+        ← 返回首页
+    </a>
+    
+    <button class="export-button" onclick="exportToImage()">
+        📸 导出图片
+    </button>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="guide-title">🏞️ 合肥-宣城周末游攻略</h1>
+            <p class="guide-subtitle">诗意皖南山水二日游</p>
+        </div>
+
+        <!-- 行程概览 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📋</span>
+                行程概览
+            </h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🎯 基本信息</h4>
+                    <p><strong>出发地：</strong>合肥市</p>
+                    <p><strong>目的地：</strong>宣城市</p>
+                    <p><strong>行程时长：</strong>2天1夜</p>
+                    <p><strong>适合人群：</strong>情侣、朋友、家庭</p>
+                </div>
+                <div class="info-card">
+                    <h4>💰 预算参考</h4>
+                    <p><strong>经济游：</strong>500-650元/人</p>
+                    <p><strong>舒适游：</strong>650-800元/人</p>
+                    <p><strong>豪华游：</strong>800-1200元/人</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 交通出行 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🚄</span>
+                交通出行
+            </h2>
+            
+            <h3 style="color: #667eea; margin: 20px 0 15px 0;">高铁班次（推荐）</h3>
+            <table class="travel-table">
+                <thead>
+                    <tr>
+                        <th>车次</th>
+                        <th>出发时间</th>
+                        <th>到达时间</th>
+                        <th>历时</th>
+                        <th>二等座价格</th>
+                        <th>一等座价格</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>G3135</td>
+                        <td>18:07</td>
+                        <td>19:16</td>
+                        <td>1小时09分</td>
+                        <td>¥102</td>
+                        <td>¥167</td>
+                    </tr>
+                    <tr>
+                        <td>G3189</td>
+                        <td>18:15</td>
+                        <td>19:22</td>
+                        <td>1小时07分</td>
+                        <td>¥102</td>
+                        <td>¥167</td>
+                    </tr>
+                    <tr>
+                        <td>G2557</td>
+                        <td>18:30</td>
+                        <td>19:37</td>
+                        <td>1小时07分</td>
+                        <td>¥94</td>
+                        <td>¥153</td>
+                    </tr>
+                    <tr>
+                        <td>G7427</td>
+                        <td>20:37</td>
+                        <td>21:44</td>
+                        <td>1小时07分</td>
+                        <td>¥81</td>
+                        <td>¥133</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <strong>🎯 推荐方案：</strong>选择傍晚时分的G3135或G3189，既能错开工作时间，又能在宣城享受美好的夜晚。
+            </div>
+
+            <h3 style="color: #667eea; margin: 20px 0 15px 0;">市内交通</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🚌 公交出行</h4>
+                    <p>主要线路：1、2、3、5路连接主要景点</p>
+                    <p>票价：1-2元，支持扫码支付</p>
+                    <p>运营时间：6:00-22:00</p>
+                </div>
+                <div class="info-card">
+                    <h4>🚗 出租车/网约车</h4>
+                    <p>起步价：6元起</p>
+                    <p>主要平台：滴滴、高德、美团</p>
+                    <p>市区景点间车费：10-25元</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 景点推荐 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🏞️</span>
+                精选景点推荐
+            </h2>
+            
+            <h3 style="color: #667eea; margin: 20px 0 15px 0;">🌟 必游景点</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>⛰️ 敬亭山风景名胜区</h4>
+                    <p><strong>门票：</strong>75元</p>
+                    <p><strong>开放时间：</strong>8:00-17:30</p>
+                    <p><strong>游玩时长：</strong>3-4小时</p>
+                    <p><strong>特色：</strong>李白诗中"相看两不厌，只有敬亭山"的诗意之地</p>
+                    <p><strong>亮点：</strong>登山观景、诗词文化、自然风光</p>
+                </div>
+                <div class="info-card">
+                    <h4>🌸 桃花潭旅游度假区</h4>
+                    <p><strong>门票：</strong>80元</p>
+                    <p><strong>开放时间：</strong>8:00-17:00</p>
+                    <p><strong>游玩时长：</strong>半天</p>
+                    <p><strong>特色：</strong>李白《赠汪伦》的创作地</p>
+                    <p><strong>亮点：</strong>诗词文化、江南水乡、古建筑群</p>
+                </div>
+                <div class="info-card">
+                    <h4>🏛️ 查济古建筑群</h4>
+                    <p><strong>门票：</strong>68元</p>
+                    <p><strong>开放时间：</strong>8:00-17:30</p>
+                    <p><strong>游玩时长：</strong>2-3小时</p>
+                    <p><strong>特色：</strong>保存完好的明清古村落</p>
+                    <p><strong>亮点：</strong>徽派建筑、古巷石桥、民俗文化</p>
+                </div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 20px 0 15px 0;">🌿 特色景点</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🌙 月亮湾风景区</h4>
+                    <p><strong>门票：</strong>免费</p>
+                    <p><strong>特色：</strong>山水相依，适合摄影</p>
+                    <p><strong>推荐指数：</strong>⭐⭐⭐⭐</p>
+                </div>
+                <div class="info-card">
+                    <h4>🕳️ 龙泉洞风景区</h4>
+                    <p><strong>门票：</strong>45元</p>
+                    <p><strong>特色：</strong>喀斯特地貌，溶洞奇观</p>
+                    <p><strong>推荐指数：</strong>⭐⭐⭐</p>
+                </div>
+                <div class="info-card">
+                    <h4>🏞️ 青龙湾原生态旅游度假区</h4>
+                    <p><strong>门票：</strong>50元</p>
+                    <p><strong>特色：</strong>湖光山色，生态旅游</p>
+                    <p><strong>推荐指数：</strong>⭐⭐⭐⭐</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 住宿推荐 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🏨</span>
+                住宿推荐
+            </h2>
+            
+            <h3 style="color: #667eea; margin: 20px 0 15px 0;">💰 经济型酒店（150-250元/晚）</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>尚客优精选酒店（宣城高铁站店）</h4>
+                    <p><strong>位置优势：</strong>距离高铁站2公里，交通便利</p>
+                    <p><strong>设施：</strong>免费WiFi、空调、24小时热水</p>
+                    <p><strong>周边：</strong>餐厅、便利店齐全</p>
+                </div>
+                <div class="info-card">
+                    <h4>文旅COCO精选酒店（国购广场店）</h4>
+                    <p><strong>位置优势：</strong>市中心位置，购物便利</p>
+                    <p><strong>设施：</strong>现代化装修，设施齐全</p>
+                    <p><strong>周边：</strong>商场、餐厅丰富</p>
+                </div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 20px 0 15px 0;">🌟 舒适型酒店（250-400元/晚）</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>鳌峰大酒店</h4>
+                    <p><strong>位置优势：</strong>梅溪路核心地段</p>
+                    <p><strong>设施：</strong>商务级别，服务优质</p>
+                    <p><strong>特色：</strong>老牌酒店，信誉度高</p>
+                </div>
+                <div class="info-card">
+                    <h4>宣城柒天主题酒店</h4>
+                    <p><strong>位置优势：</strong>水阳江南大道，环境优美</p>
+                    <p><strong>设施：</strong>主题房间，个性化服务</p>
+                    <p><strong>特色：</strong>年轻化设计，适合情侣</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 网红打卡地 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📸</span>
+                网红打卡地推荐
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>📜 敬亭山诗词石刻</h4>
+                    <p><strong>拍摄建议：</strong>清晨或黄昏光线最佳</p>
+                    <p><strong>交通：</strong>公交3路可达</p>
+                    <p><strong>打卡点：</strong>李白雕像、诗词石刻</p>
+                </div>
+                <div class="info-card">
+                    <h4>🌉 桃花潭古桥</h4>
+                    <p><strong>拍摄建议：</strong>春季桃花盛开时最美</p>
+                    <p><strong>特色：</strong>古桥流水，诗意江南</p>
+                    <p><strong>最佳角度：</strong>桥上俯拍、桥下仰拍</p>
+                </div>
+                <div class="info-card">
+                    <h4>🌃 梅溪公园夜景</h4>
+                    <p><strong>拍摄建议：</strong>晚上7-9点灯光效果最佳</p>
+                    <p><strong>特色：</strong>城市公园，现代与自然结合</p>
+                    <p><strong>设备建议：</strong>三脚架夜景拍摄</p>
+                </div>
+                <div class="info-card">
+                    <h4>🏛️ 宣城古城墙遗址</h4>
+                    <p><strong>特色：</strong>历史文化，古韵悠长</p>
+                    <p><strong>拍摄建议：</strong>下午斜阳时分</p>
+                    <p><strong>周边：</strong>可与老街文化一起打卡</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 美食攻略 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🍜</span>
+                美食攻略
+            </h2>
+            
+            <h3 style="color: #667eea; margin: 20px 0 15px 0;">🏮 特色徽菜</h3>
+            <div class="food-grid">
+                <div class="food-item">
+                    <h4>徽碗·皖南菜（大唐凤凰城店）</h4>
+                    <p><strong>招牌菜：</strong>红烧臭鳜鱼、毛豆腐、腊味双拼</p>
+                    <p><strong>人均消费：</strong>80-120元</p>
+                    <p><strong>特色：</strong>正宗徽菜，口味地道</p>
+                </div>
+                <div class="food-item">
+                    <h4>皖南大院·徽宴餐厅</h4>
+                    <p><strong>招牌菜：</strong>宣城板鸭、山核桃烧鸡、野菜时蔬</p>
+                    <p><strong>人均消费：</strong>100-150元</p>
+                    <p><strong>环境：</strong>古色古香，用餐氛围好</p>
+                </div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 20px 0 15px 0;">🥘 地方小吃</h3>
+            <div class="food-grid">
+                <div class="food-item">
+                    <h4>丁师傅205老面馆</h4>
+                    <p><strong>特色：</strong>宣城传统面条，汤鲜面劲</p>
+                    <p><strong>人均消费：</strong>20-35元</p>
+                    <p><strong>推荐：</strong>牛肉面、排骨面</p>
+                </div>
+                <div class="food-item">
+                    <h4>老虎土菜馆（始于1980年）</h4>
+                    <p><strong>特色：</strong>农家土菜，味道纯正</p>
+                    <p><strong>人均消费：</strong>60-90元</p>
+                    <p><strong>推荐：</strong>土鸡汤、野菜炒蛋</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 行程安排 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📅</span>
+                精选行程安排
+            </h2>
+            
+            <div class="schedule-day">
+                <div class="day-title">第一天：诗意山水游</div>
+                
+                <div class="time-slot">
+                    <span class="time">18:07-19:16</span>
+                    <strong>🚄 合肥南-宣城高铁</strong>
+                    <p>建议乘坐G3135次列车，傍晚到达</p>
+                </div>
+                
+                <div class="time-slot">
+                    <span class="time">19:30-20:30</span>
+                    <strong>🏨 酒店入住 + 简单休息</strong>
+                    <p>推荐入住高铁站附近酒店，交通便利</p>
+                </div>
+                
+                <div class="time-slot">
+                    <span class="time">20:30-21:30</span>
+                    <strong>🍜 宣城夜宵</strong>
+                    <p>地点：梅溪路美食街</p>
+                    <p>推荐：丁师傅205老面馆</p>
+                    <p>消费：25-40元/人</p>
+                </div>
+                
+                <div class="time-slot">
+                    <span class="time">21:30-22:30</span>
+                    <strong>🌃 梅溪公园夜游</strong>
+                    <p>欣赏城市夜景，公园漫步</p>
+                    <p>拍摄夜景照片打卡</p>
+                </div>
+            </div>
+
+            <div class="schedule-day">
+                <div class="day-title">第二天：文化探访游</div>
+                
+                <div class="time-slot">
+                    <span class="time">08:00-09:00</span>
+                    <strong>🍳 酒店早餐</strong>
+                    <p>酒店自助早餐或附近早餐店</p>
+                </div>
+                
+                <div class="time-slot">
+                    <span class="time">09:00-12:00</span>
+                    <strong>⛰️ 敬亭山风景区</strong>
+                    <p>交通：打车15分钟（约25元）</p>
+                    <p>游玩亮点：登山健身，欣赏山景，寻访李白诗踪</p>
+                    <p>拍照点：李白雕像、诗词石刻</p>
+                </div>
+                
+                <div class="time-slot">
+                    <span class="time">12:00-13:30</span>
+                    <strong>🍽️ 山下农家乐午餐</strong>
+                    <p>推荐：味江南·千年炭火菜</p>
+                    <p>特色菜：炭火土鸡、野菜时蔬</p>
+                    <p>消费：60-80元/人</p>
+                </div>
+                
+                <div class="time-slot">
+                    <span class="time">14:00-17:00</span>
+                    <strong>🏛️ 桃花潭度假区</strong>
+                    <p>交通：从敬亭山打车约40分钟（60-80元）</p>
+                    <p>游玩亮点：重温《赠汪伦》诗境、古桥流水摄影、江南水乡风情</p>
+                    <p>建议停留：3小时</p>
+                </div>
+                
+                <div class="time-slot">
+                    <span class="time">17:30-18:30</span>
+                    <strong>🍜 特色晚餐</strong>
+                    <p>推荐：徽碗·皖南菜</p>
+                    <p>必点：红烧臭鳜鱼、毛豆腐</p>
+                    <p>消费：80-120元/人</p>
+                </div>
+                
+                <div class="time-slot">
+                    <span class="time">21:03-22:12</span>
+                    <strong>🚄 返程</strong>
+                    <p>建议乘坐G3264次列车</p>
+                    <p>提前到达高铁站，购买特产</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 费用预算 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">💰</span>
+                费用预算明细
+            </h2>
+            
+            <div class="price-table">
+                <div class="price-card">
+                    <h4>🚄 交通费用</h4>
+                    <div class="price">160-340元</div>
+                    <p>高铁往返（二等座-商务座）</p>
+                    <p>市内交通：50-80元/天</p>
+                    <p>景区交通：60-100元</p>
+                </div>
+                
+                <div class="price-card">
+                    <h4>🏨 住宿费用</h4>
+                    <div class="price">150-400元</div>
+                    <p>经济型：150-250元/晚</p>
+                    <p>舒适型：250-400元/晚</p>
+                </div>
+                
+                <div class="price-card">
+                    <h4>🎫 门票费用</h4>
+                    <div class="price">155-255元</div>
+                    <p>敬亭山：75元</p>
+                    <p>桃花潭：80元</p>
+                    <p>其他景点：50-100元</p>
+                </div>
+                
+                <div class="price-card">
+                    <h4>🍜 餐饮费用</h4>
+                    <div class="price">160-310元</div>
+                    <p>正餐：60-120元/餐/人</p>
+                    <p>小食：20-40元/餐/人</p>
+                    <p>特色美食：80-150元/餐/人</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>📊 总预算参考</h4>
+                <p><strong>经济游：</strong>500-650元/人</p>
+                <p><strong>舒适游：</strong>650-800元/人</p>
+                <p><strong>豪华游：</strong>800-1200元/人</p>
+            </div>
+        </div>
+
+        <!-- 天气建议 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🌤️</span>
+                天气建议
+            </h2>
+            
+            <h3 style="color: #667eea; margin: 20px 0 15px 0;">近期天气预报</h3>
+            <div class="weather-info">
+                <div class="weather-card">
+                    <h4>6月7日（周六）</h4>
+                    <p>🌧️ 暴雨转大雨</p>
+                    <p>27°C - 23°C</p>
+                    <p>东南风 1-3级</p>
+                </div>
+                <div class="weather-card">
+                    <h4>6月8日（周日）</h4>
+                    <p>🌦️ 中雨</p>
+                    <p>25°C - 21°C</p>
+                    <p>东北风 1-3级</p>
+                </div>
+                <div class="weather-card">
+                    <h4>6月9日（周一）</h4>
+                    <p>🌧️ 小雨</p>
+                    <p>29°C - 22°C</p>
+                    <p>东北风 1-3级</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>🧳 穿搭建议</h4>
+                <p><strong>雨季出行：</strong>必备雨具，防水鞋服</p>
+                <p><strong>春秋季：</strong>薄外套+长裤，早晚温差大</p>
+                <p><strong>夏季：</strong>防晒衣+遮阳帽，注意防晒</p>
+                <p><strong>登山装备：</strong>运动鞋、背包、水杯</p>
+            </div>
+        </div>
+
+        <!-- 实用小贴士 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">⚠️</span>
+                实用小贴士
+            </h2>
+            
+            <div class="tips-container">
+                <div class="tips-title">📱 出行必备</div>
+                <ul class="tips-list">
+                    <li>导航APP：高德地图、百度地图</li>
+                    <li>订票APP：12306、携程、美团</li>
+                    <li>支付方式：微信、支付宝普及度高</li>
+                </ul>
+            </div>
+
+            <div class="tips-container">
+                <div class="tips-title">🎫 购票攻略</div>
+                <ul class="tips-list">
+                    <li>景区门票：建议提前在携程、美团购买</li>
+                    <li>高铁票：周末需提前3-7天预订</li>
+                    <li>酒店：建议提前1-3天预订</li>
+                </ul>
+            </div>
+
+            <div class="tips-container">
+                <div class="tips-title">📷 拍照技巧</div>
+                <ul class="tips-list">
+                    <li>敬亭山：清晨雾气最适合拍摄仙境感</li>
+                    <li>桃花潭：春季桃花、秋季红叶最美</li>
+                    <li>古建筑：用好光影对比，突出历史感</li>
+                </ul>
+            </div>
+
+            <div class="tips-container">
+                <div class="tips-title">🌧️ 雨季特别提醒</div>
+                <ul class="tips-list">
+                    <li>防滑鞋：山路湿滑，选择防滑鞋底</li>
+                    <li>雨具：雨伞、雨衣必备</li>
+                    <li>室内景点：雨天可选择博物馆、茶馆</li>
+                    <li>交通：雨天行车注意安全，适当延长行程时间</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 紧急联系 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📞</span>
+                紧急联系方式
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🏛️ 政府部门</h4>
+                    <p>宣城旅游热线：0563-3021111</p>
+                    <p>宣城火车站：0563-3025222</p>
+                </div>
+                <div class="info-card">
+                    <h4>🏥 医疗急救</h4>
+                    <p>宣城市人民医院：0563-3034306</p>
+                    <p>医疗急救：120</p>
+                </div>
+                <div class="info-card">
+                    <h4>🚨 应急电话</h4>
+                    <p>报警电话：110</p>
+                    <p>交通事故：122</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📝 贴心提示：宣城是一座充满诗意的江南小城，慢节奏游览更能体会其文化韵味。建议合理安排时间，不要匆忙赶景点，留出时间品茶、赏景、感受当地人文风情。</p>
+            <hr style="margin: 20px 0; border: none; border-top: 1px solid #ddd;">
+            <p style="font-size: 0.9rem;">
+                <strong>最后更新时间：</strong>2025年6月7日 | 
+                <strong>攻略版本：</strong>v1.0 | 
+                <strong>适用季节：</strong>全年，雨季需特别注意天气变化
+            </p>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * 导出攻略为图片功能
+         * 使用html2canvas库将攻略内容转换为图片并下载
+         */
+        async function exportToImage() {
+            const button = document.querySelector('.export-button');
+            const originalText = button.textContent;
+            
+            try {
+                button.textContent = '📸 正在生成...';
+                button.disabled = true;
+                
+                // 隐藏按钮
+                document.querySelector('.back-button').style.display = 'none';
+                button.style.display = 'none';
+                
+                const canvas = await html2canvas(document.body, {
+                    height: window.innerHeight,
+                    width: window.innerWidth,
+                    useCORS: true,
+                    scale: 2
+                });
+                
+                // 恢复按钮
+                document.querySelector('.back-button').style.display = 'inline-flex';
+                button.style.display = 'block';
+                
+                const link = document.createElement('a');
+                link.download = '合肥-宣城周末游攻略.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                
+            } catch (error) {
+                console.error('导出失败:', error);
+                alert('导出失败，请重试');
+            } finally {
+                button.textContent = originalText;
+                button.disabled = false;
+                document.querySelector('.back-button').style.display = 'inline-flex';
+                button.style.display = 'block';
+            }
+        }
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加滚动效果
+            const sections = document.querySelectorAll('.content-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
