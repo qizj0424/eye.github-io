@@ -423,9 +423,9 @@
 
         /**
          * 加载旅游规划数据
-         * 从localStorage读取规划数据并渲染到页面
+         * 从localStorage读取规划数据并生成智能旅游攻略
          */
-        function loadPlanData() {
+        async function loadPlanData() {
             const loadingContainer = document.getElementById('loadingContainer');
             const errorContainer = document.getElementById('errorContainer');
             const planContent = document.getElementById('planContent');
@@ -433,31 +433,660 @@
             // 显示加载状态
             loadingContainer.style.display = 'block';
             
-            // 模拟加载延迟
-            setTimeout(() => {
-                try {
-                    // 从localStorage获取规划数据
-                    const planData = localStorage.getItem('travelPlanData');
-                    
-                    if (!planData) {
-                        throw new Error('未找到规划数据');
-                    }
-                    
-                    const data = JSON.parse(planData);
-                    
-                    // 渲染规划内容
-                    renderPlanContent(data);
-                    
-                    // 隐藏加载状态，显示内容
-                    loadingContainer.style.display = 'none';
-                    planContent.style.display = 'block';
-                    
-                } catch (error) {
-                    console.error('加载规划数据失败:', error);
-                    loadingContainer.style.display = 'none';
-                    errorContainer.style.display = 'block';
+            try {
+                // 从localStorage获取规划数据
+                const planData = localStorage.getItem('travelPlanData');
+                
+                if (!planData) {
+                    throw new Error('未找到规划数据');
                 }
-            }, 1500);
+                
+                const data = JSON.parse(planData);
+                console.log('开始生成智能旅游规划:', data);
+                
+                // 生成智能旅游攻略
+                const intelligentPlan = await generateIntelligentPlan(data);
+                
+                // 将智能规划数据合并到原数据中
+                const completePlanData = { ...data, ...intelligentPlan };
+                
+                // 渲染规划内容
+                renderPlanContent(completePlanData);
+                
+                // 隐藏加载状态，显示内容
+                loadingContainer.style.display = 'none';
+                planContent.style.display = 'block';
+                
+            } catch (error) {
+                console.error('生成智能规划失败:', error);
+                loadingContainer.style.display = 'none';
+                errorContainer.style.display = 'block';
+            }
+        }
+
+        /**
+         * 生成智能旅游攻略
+         * @param {Object} data - 基础旅游数据
+         * @returns {Object} 智能规划数据
+         */
+        async function generateIntelligentPlan(data) {
+            const { departure, destination, duration, departureDate } = data;
+            
+            // 更新加载提示
+            document.querySelector('.loading-text').textContent = '正在搜索目的地信息...';
+            
+            try {
+                // 并行获取多种信息
+                const [attractionsInfo, transportInfo, weatherInfo, foodInfo] = await Promise.all([
+                    searchAttractions(destination),
+                    searchTransportation(departure, destination),
+                    getWeatherInfo(destination),
+                    searchLocalFood(destination)
+                ]);
+                
+                console.log('获取的信息:', { attractionsInfo, transportInfo, weatherInfo, foodInfo });
+                
+                return {
+                    attractions: attractionsInfo,
+                    transportation: transportInfo,
+                    weather: weatherInfo,
+                    localFood: foodInfo,
+                    detailedItinerary: generateDetailedItinerary(duration, attractionsInfo, foodInfo),
+                    intelligentSuggestions: generateIntelligentSuggestions(attractionsInfo, weatherInfo, duration)
+                };
+                
+            } catch (error) {
+                console.error('生成智能规划时出错:', error);
+                // 返回默认规划
+                return generateDefaultPlan(data);
+            }
+        }
+
+        /**
+         * 搜索景点信息
+         */
+        async function searchAttractions(destination) {
+            try {
+                // 使用高德地图API搜索景点
+                const response = await searchPlacesAPI(destination, '旅游景点');
+                
+                if (response && response.pois && response.pois.length > 0) {
+                    const attractions = response.pois.slice(0, 5);
+                    return {
+                        main: attractions.slice(0, 3).map(poi => poi.name),
+                        secondary: attractions.slice(3).map(poi => poi.name),
+                        description: `${destination}拥有${attractions.length}个主要旅游景点，包含丰富的历史文化和自然风光`
+                    };
+                } else {
+                    // 如果API搜索失败，使用网络搜索作为备选
+                    return await webSearchAttractions(destination);
+                }
+            } catch (error) {
+                console.error('搜索景点信息失败:', error);
+                return await webSearchAttractions(destination);
+            }
+        }
+
+        /**
+         * 使用网络搜索获取景点信息（备选方案）
+         */
+        async function webSearchAttractions(destination) {
+            try {
+                // 使用内置的搜索引擎搜索景点信息
+                const searchQuery = `${destination} 旅游景点 攻略 必去景点`;
+                
+                // 注意：这里使用虚拟的搜索，实际应用中需要集成真实的搜索API
+                // 可以使用Google Search API、百度搜索API等
+                
+                const knownAttractions = getKnownAttractions(destination);
+                
+                return {
+                    main: knownAttractions.main,
+                    secondary: knownAttractions.secondary,
+                    description: knownAttractions.description
+                };
+            } catch (error) {
+                console.error('网络搜索景点信息失败:', error);
+                return {
+                    main: [`${destination}主要景点`],
+                    secondary: [`${destination}周边景点`],
+                    description: `${destination}旅游景点信息`
+                };
+            }
+        }
+
+        /**
+         * 调用地图API搜索地点
+         */
+        async function searchPlacesAPI(city, keywords) {
+            try {
+                // 模拟API调用（在实际应用中，这里会调用真实的地图API）
+                // 由于浏览器安全限制，真实的API调用需要后端代理
+                
+                console.log(`搜索${city}的${keywords}`);
+                
+                // 返回模拟数据，实际应用中应该调用真实API
+                return null;
+                
+            } catch (error) {
+                console.error('地图API调用失败:', error);
+                return null;
+            }
+        }
+
+        /**
+         * 获取已知景点信息（离线数据库）
+         */
+        function getKnownAttractions(destination) {
+            const attractionsDB = {
+                '北京': {
+                    main: ['故宫博物院', '天安门广场', '长城'],
+                    secondary: ['颐和园', '天坛'],
+                    description: '北京是中国的首都，拥有丰富的历史文化遗产和现代都市风貌'
+                },
+                '上海': {
+                    main: ['外滩', '东方明珠', '南京路'],
+                    secondary: ['豫园', '田子坊'],
+                    description: '上海是中国的经济中心，融合了传统与现代的独特魅力'
+                },
+                '杭州': {
+                    main: ['西湖', '雷峰塔', '灵隐寺'],
+                    secondary: ['千岛湖', '西溪湿地'],
+                    description: '杭州以西湖美景闻名天下，是江南水乡的典型代表'
+                },
+                '成都': {
+                    main: ['宽窄巷子', '锦里', '大熊猫繁育研究基地'],
+                    secondary: ['都江堰', '青城山'],
+                    description: '成都是天府之国的核心，以悠闲的生活方式和美食文化著称'
+                },
+                '西安': {
+                    main: ['兵马俑', '大雁塔', '古城墙'],
+                    secondary: ['华清池', '法门寺'],
+                    description: '西安是十三朝古都，拥有深厚的历史文化底蕴'
+                },
+                '三亚': {
+                    main: ['亚龙湾', '天涯海角', '南山寺'],
+                    secondary: ['蜈支洲岛', '大东海'],
+                    description: '三亚是中国的热带海滨旅游城市，拥有优美的海滩和度假环境'
+                },
+                '桂林': {
+                    main: ['漓江', '象鼻山', '阳朔'],
+                    secondary: ['芦笛岩', '七星公园'],
+                    description: '桂林山水甲天下，以喀斯特地貌和山水风光闻名'
+                },
+                '丽江': {
+                    main: ['丽江古城', '玉龙雪山', '泸沽湖'],
+                    secondary: ['束河古镇', '虎跳峡'],
+                    description: '丽江是纳西族文化的发源地，拥有独特的古城风貌和自然风光'
+                },
+                // 安徽省城市
+                '合肥': {
+                    main: ['包公园', '李鸿章故居', '三河古镇'],
+                    secondary: ['大蜀山', '巢湖', '安徽博物院'],
+                    description: '合肥是安徽省省会，有"江淮首郡、吴楚要冲"之称'
+                },
+                '芜湖': {
+                    main: ['方特欢乐世界', '雕塑公园', '鸠兹古镇'],
+                    secondary: ['赭山风景区', '芜湖长江大桥', '天门山'],
+                    description: '芜湖是长江水运第五大港，有"江城"之称'
+                },
+                '黄山': {
+                    main: ['黄山风景区', '宏村', '西递'],
+                    secondary: ['徽州古城', '齐云山', '呈坎'],
+                    description: '黄山以奇松、怪石、云海、温泉著称，是世界文化与自然双重遗产'
+                },
+                '安庆': {
+                    main: ['天柱山', '迎江寺', '振风塔'],
+                    secondary: ['安庆博物馆', '菱湖公园', '大观亭'],
+                    description: '安庆是安徽省曾经的省会，有"万里长江此封喉，吴楚分疆第一州"之誉'
+                },
+                '池州': {
+                    main: ['九华山', '大愿文化园', '花台'],
+                    secondary: ['升金湖', '牯牛降', '石台县'],
+                    description: '池州是中国佛教四大名山之一九华山所在地，有"千载诗人地"之誉'
+                },
+                '六安': {
+                    main: ['天堂寨', '万佛湖', '皖西博物馆'],
+                    secondary: ['大别山', '霍山', '舒城'],
+                    description: '六安地处大别山北麓，是著名的革命老区和生态旅游区'
+                },
+                '宣城': {
+                    main: ['敬亭山', '谢朓楼', '中国鳄鱼湖'],
+                    secondary: ['太极洞', '绩溪龙川', '泾县桃花潭'],
+                    description: '宣城有"江南通都大邑"之称，是江南文化的重要发源地'
+                },
+                '铜陵': {
+                    main: ['天井湖', '大通古镇', '铜文化博物馆'],
+                    secondary: ['凤凰山', '金牛洞古采矿遗址', '大明寺'],
+                    description: '铜陵是中国古代青铜文化的发祥地之一，有"中国古铜都"之称'
+                },
+                '马鞍山': {
+                    main: ['采石矶', '濮塘风景区', '朱然墓博物馆'],
+                    secondary: ['太白楼', '甄山寺', '雨山湖'],
+                    description: '马鞍山有"钢城"之称，采石矶为"长江三矶"之首'
+                },
+                '淮南': {
+                    main: ['八公山', '龙湖公园', '淮南子文化园'],
+                    secondary: ['焦岗湖', '上窑山', '茅仙洞'],
+                    description: '淮南是豆腐的发明地，有"中国豆腐之乡"的美誉'
+                },
+                '淮北': {
+                    main: ['相山公园', '临涣古城', '龙脊山'],
+                    secondary: ['烈山区', '南湖湿地公园', '隋唐运河古镇'],
+                    description: '淮北是能源之都，有"中原煤城"之称'
+                },
+                '蚌埠': {
+                    main: ['张公山公园', '双墩文化遗址', '龙子湖'],
+                    secondary: ['涂山风景区', '白乳泉', '荆山'],
+                    description: '蚌埠有"珠城"之称，是淮河文化的重要发源地'
+                },
+                '阜阳': {
+                    main: ['文峰塔', '奎星楼', '颍州西湖'],
+                    secondary: ['八里河风景区', '迪沟生态乐园', '尤家花园'],
+                    description: '阜阳有"淮右襟喉，江南屏障"之称，是皖北重要城市'
+                },
+                '宿州': {
+                    main: ['皇藏峪', '五柳风景区', '虞姬墓'],
+                    secondary: ['奇石文化园', '宿州博物馆', '灵璧石'],
+                    description: '宿州是楚汉文化、汉文化的重要发源地之一'
+                },
+                '亳州': {
+                    main: ['花戏楼', '曹操公园', '华祖庵'],
+                    secondary: ['古井酒文化博览园', '白衣律院', '道德中宫'],
+                    description: '亳州是华佗的故乡，中医药文化的重要发源地'
+                },
+                '滁州': {
+                    main: ['醉翁亭', '琅琊山', '明皇陵'],
+                    secondary: ['清流关', '白鹭岛', '花山彩虹瀑布'],
+                    description: '滁州有"金陵锁钥、江淮保障"之称，醉翁亭享有盛名'
+                }
+            };
+            
+            return attractionsDB[destination] || {
+                main: [`${destination}主要景点1`, `${destination}主要景点2`, `${destination}主要景点3`],
+                secondary: [`${destination}特色景点1`, `${destination}特色景点2`],
+                description: `${destination}拥有丰富的旅游资源和文化底蕴`
+            };
+        }
+
+        /**
+         * 搜索交通信息
+         */
+        async function searchTransportation(departure, destination) {
+            try {
+                // 获取具体的交通信息
+                const transportInfo = getTransportInfo(departure, destination);
+                
+                return {
+                    flight: transportInfo.flight,
+                    train: transportInfo.train,
+                    bus: transportInfo.bus,
+                    localTransport: transportInfo.localTransport
+                };
+            } catch (error) {
+                console.error('搜索交通信息失败:', error);
+                return {
+                    flight: `${departure}到${destination}航班信息`,
+                    train: `${departure}到${destination}火车信息`,
+                    bus: `${departure}到${destination}长途汽车信息`,
+                    localTransport: `${destination}市内交通信息`
+                };
+            }
+        }
+
+        /**
+         * 获取交通信息（基于距离和城市级别）
+         */
+        function getTransportInfo(departure, destination) {
+            const cityInfo = {
+                '北京': { level: 1, hasAirport: true, hasHighSpeed: true },
+                '上海': { level: 1, hasAirport: true, hasHighSpeed: true },
+                '广州': { level: 1, hasAirport: true, hasHighSpeed: true },
+                '深圳': { level: 1, hasAirport: true, hasHighSpeed: true },
+                '杭州': { level: 2, hasAirport: true, hasHighSpeed: true },
+                '南京': { level: 2, hasAirport: true, hasHighSpeed: true },
+                '成都': { level: 2, hasAirport: true, hasHighSpeed: true },
+                '重庆': { level: 2, hasAirport: true, hasHighSpeed: true },
+                '西安': { level: 2, hasAirport: true, hasHighSpeed: true },
+                '武汉': { level: 2, hasAirport: true, hasHighSpeed: true },
+                '三亚': { level: 3, hasAirport: true, hasHighSpeed: false },
+                '桂林': { level: 3, hasAirport: true, hasHighSpeed: true },
+                '丽江': { level: 3, hasAirport: true, hasHighSpeed: false },
+                // 安徽省城市
+                '合肥': { level: 2, hasAirport: true, hasHighSpeed: true },
+                '芜湖': { level: 3, hasAirport: false, hasHighSpeed: true },
+                '蚌埠': { level: 3, hasAirport: false, hasHighSpeed: true },
+                '淮南': { level: 3, hasAirport: false, hasHighSpeed: true },
+                '马鞍山': { level: 3, hasAirport: false, hasHighSpeed: true },
+                '淮北': { level: 3, hasAirport: false, hasHighSpeed: true },
+                '铜陵': { level: 3, hasAirport: false, hasHighSpeed: true },
+                '安庆': { level: 3, hasAirport: true, hasHighSpeed: true },
+                '黄山': { level: 3, hasAirport: true, hasHighSpeed: true },
+                '滁州': { level: 3, hasAirport: false, hasHighSpeed: true },
+                '阜阳': { level: 3, hasAirport: true, hasHighSpeed: true },
+                '宿州': { level: 3, hasAirport: false, hasHighSpeed: true },
+                '六安': { level: 3, hasAirport: false, hasHighSpeed: false },
+                '亳州': { level: 3, hasAirport: false, hasHighSpeed: true },
+                '池州': { level: 3, hasAirport: false, hasHighSpeed: true },
+                '宣城': { level: 3, hasAirport: false, hasHighSpeed: true }
+            };
+
+            const depInfo = cityInfo[departure] || { level: 3, hasAirport: false, hasHighSpeed: false };
+            const destInfo = cityInfo[destination] || { level: 3, hasAirport: false, hasHighSpeed: false };
+
+            let flight = '';
+            let train = '';
+            let bus = `${departure}到${destination}长途汽车可达，建议提前查询班次`;
+            let localTransport = '';
+
+            // 航班信息
+            if (depInfo.hasAirport && destInfo.hasAirport) {
+                if (depInfo.level <= 2 && destInfo.level <= 2) {
+                    flight = `${departure}到${destination}有直飞航班，飞行时间约1.5-3小时，建议提前预订`;
+                } else {
+                    flight = `${departure}到${destination}可能需要中转，总行程约3-5小时`;
+                }
+            } else {
+                flight = `${departure}到${destination}建议选择就近机场`;
+            }
+
+            // 火车信息
+            if (depInfo.hasHighSpeed && destInfo.hasHighSpeed) {
+                train = `${departure}到${destination}有高铁直达，行程约2-6小时，舒适便捷`;
+            } else {
+                train = `${departure}到${destination}有普通列车，行程约4-12小时`;
+            }
+
+            // 当地交通
+            if (destInfo.level <= 2) {
+                localTransport = `${destination}交通发达，有地铁、公交、出租车、网约车等多种选择`;
+            } else {
+                localTransport = `${destination}建议使用公交、出租车或包车，部分景点可能需要徒步`;
+            }
+
+            return { flight, train, bus, localTransport };
+        }
+
+        /**
+         * 获取天气信息
+         */
+        async function getWeatherInfo(destination) {
+            try {
+                // 模拟天气信息
+                const weathers = ['晴朗', '多云', '小雨', '阴天'];
+                const temperatures = ['18-25°C', '15-22°C', '20-28°C', '12-18°C'];
+                
+                return {
+                    current: `${destination}当前天气：${weathers[Math.floor(Math.random() * weathers.length)]}`,
+                    forecast: `未来几天温度：${temperatures[Math.floor(Math.random() * temperatures.length)]}`,
+                    suggestion: '建议携带适合的衣物和雨具'
+                };
+            } catch (error) {
+                console.error('获取天气信息失败:', error);
+                return {
+                    current: '天气信息获取中',
+                    forecast: '天气预报获取中',
+                    suggestion: '建议关注天气变化'
+                };
+            }
+        }
+
+        /**
+         * 搜索当地美食
+         */
+        async function searchLocalFood(destination) {
+            try {
+                const foodInfo = getLocalFood(destination);
+                return foodInfo;
+            } catch (error) {
+                console.error('搜索美食信息失败:', error);
+                return {
+                    specialties: [`${destination}当地特色美食`],
+                    restaurants: [`${destination}推荐餐厅`],
+                    streets: [`${destination}美食区域`]
+                };
+            }
+        }
+
+        /**
+         * 获取当地美食信息
+         */
+        function getLocalFood(destination) {
+            const foodDB = {
+                '北京': {
+                    specialties: ['北京烤鸭', '炸酱面', '豆汁焦圈', '涮羊肉', '卤煮火烧'],
+                    restaurants: ['全聚德', '便宜坊', '东来顺', '老北京炸酱面'],
+                    streets: ['王府井小吃街', '南锣鼓巷', '簋街', '前门大街']
+                },
+                '上海': {
+                    specialties: ['小笼包', '生煎包', '红烧肉', '白切鸡', '蟹粉小笼'],
+                    restaurants: ['鼎泰丰', '南翔馒头店', '老正兴', '沈大成'],
+                    streets: ['城隍庙', '田子坊', '新天地', '淮海路']
+                },
+                '杭州': {
+                    specialties: ['西湖醋鱼', '东坡肉', '龙井虾仁', '叫花鸡', '片儿川'],
+                    restaurants: ['楼外楼', '知味观', '奎元馆', '天外天'],
+                    streets: ['河坊街', '南宋御街', '湖滨银泰', '武林路']
+                },
+                '成都': {
+                    specialties: ['麻婆豆腐', '宫保鸡丁', '回锅肉', '火锅', '担担面'],
+                    restaurants: ['陈麻婆豆腐', '蜀九香', '海底捞', '龙抄手'],
+                    streets: ['宽窄巷子', '锦里', '春熙路', '太古里']
+                },
+                '西安': {
+                    specialties: ['肉夹馍', '凉皮', '羊肉泡馍', '胡辣汤', 'biangbiang面'],
+                    restaurants: ['老孙家', '同盛祥', '德发长', '西安饭庄'],
+                    streets: ['回民街', '永兴坊', '大唐不夜城', '大雁塔北广场']
+                },
+                '三亚': {
+                    specialties: ['海南鸡饭', '文昌鸡', '椰子鸡', '海鲜', '清补凉'],
+                    restaurants: ['椰汇', '海棠68', '阿浪海鲜', '第一市场'],
+                    streets: ['第一市场', '春园海鲜广场', '友谊路下岗职工海鲜广场']
+                },
+                '桂林': {
+                    specialties: ['桂林米粉', '啤酒鱼', '荔浦芋扣肉', '马蹄糕', '恭城油茶'],
+                    restaurants: ['崇善米粉', '大师傅啤酒鱼', '阿甘酒家', '正阳汤城'],
+                    streets: ['正阳步行街', '东西巷', '尚水美食街', '中山中路']
+                },
+                '丽江': {
+                    specialties: ['腊排骨', '黑山羊', '纳西烤鱼', '鸡豆凉粉', '酥油茶'],
+                    restaurants: ['阿妈腊排骨', '88号小吃店', '唠叨坊', '云雪丽餐厅'],
+                    streets: ['四方街', '忠义市场', '束河古镇', '白沙古镇']
+                },
+                // 安徽省美食
+                '合肥': {
+                    specialties: ['庐州烤鸭', '包公鱼', '三河米饺', '吴山贡鹅', '李鸿章大杂烩'],
+                    restaurants: ['同庆楼', '淮上明珠', '庐州太太', '老乡鸡'],
+                    streets: ['淮河路步行街', '罍街', '宁国路美食街', '三孝口']
+                },
+                '芜湖': {
+                    specialties: ['芜湖鸭脯', '弋江羊肉', '奎湖飘鱼片', '虾子面', '小笼汤包'],
+                    restaurants: ['金陵春梦', '清真马家', '芜湖耿福兴', '同福茶楼'],
+                    streets: ['步行街', '镜湖区美食街', '凤凰美食街', '万达广场']
+                },
+                '黄山': {
+                    specialties: ['徽州毛豆腐', '石头粿', '黄山烧饼', '徽州刀板香', '问政山笋'],
+                    restaurants: ['老街第一楼', '徽州人家', '汪一挑', '同德仁'],
+                    streets: ['屯溪老街', '黎阳in巷', '新安江滨水旅游区']
+                },
+                '安庆': {
+                    specialties: ['胡玉美蚕豆酱', '江毛水饺', '韦安港茶干', '天柱山瓜片', '桐城小兰花'],
+                    restaurants: ['迎江楼', '胡玉美', '江毛水饺店', '韦安港茶干'],
+                    streets: ['大观区美食街', '迎江寺路', '湖心中路']
+                },
+                '池州': {
+                    specialties: ['九华素食', '石台土鸡', '东至云尖茶', '贵池小河鱼', '青阳豆腐'],
+                    restaurants: ['九华山庄', '祗园素食', '池州宾馆', '东至土菜馆'],
+                    streets: ['翠微路', '青阳路', '九华山美食街']
+                },
+                '六安': {
+                    specialties: ['六安瓜片', '霍山石斛', '金寨板栗', '舒城贡席', '叶集羊肉汤'],
+                    restaurants: ['皖西宾馆', '徽王府', '六安茶叶市场', '金寨农家乐'],
+                    streets: ['人民路美食街', '解放路', '梅山路']
+                },
+                '宣城': {
+                    specialties: ['宣城板鸭', '水阳河蟹', '绩溪火腿', '泾县兰香茶', '宁国山核桃'],
+                    restaurants: ['谢朓楼', '敬亭山庄', '宣纸文化园', '绩溪胡家大院'],
+                    streets: ['状元南路', '宛溪河畔', '敬亭山路']
+                },
+                '铜陵': {
+                    specialties: ['铜陵白姜', '顺安酥糖', '大通茶干', '凤丹', '铜陵野雀舌'],
+                    restaurants: ['天井湖大酒店', '铜化宾馆', '金口岭农家乐'],
+                    streets: ['长江东路', '铜官大道', '北京路']
+                },
+                '马鞍山': {
+                    specialties: ['采石茶干', '黄池小鱼', '当涂大肉面', '博望锅盔', '石臼湖蟹'],
+                    restaurants: ['采石矶茶干厂', '当涂大肉面馆', '博望美食城'],
+                    streets: ['湖南路美食街', '解放路', '雨山路']
+                },
+                '淮南': {
+                    specialties: ['豆腐宴', '八公山豆腐', '淮南牛肉汤', '上窑馓子', '凤台花鼓灯'],
+                    restaurants: ['八公山豆腐村', '淮南宾馆', '凤台农家乐'],
+                    streets: ['朝阳东路', '洞山中路', '田家庵区美食街']
+                },
+                '蚌埠': {
+                    specialties: ['沱湖螃蟹', '五河沱虾', '怀远石榴', '固镇花生', '蚌埠玉雕'],
+                    restaurants: ['淮河明珠', '五河大酒店', '怀远宾馆'],
+                    streets: ['淮河路', '胜利路', '涂山路']
+                },
+                '阜阳': {
+                    specialties: ['格拉条', '枕头馍', '阜阳卷馍', '太和板面', '临泉贡柿'],
+                    restaurants: ['颍州宾馆', '西湖大酒店', '太和板面馆'],
+                    streets: ['颍州路', '人民路', '清河路']
+                },
+                '宿州': {
+                    specialties: ['萧县葡萄', '砀山酥梨', '符离集烧鸡', '夹沟香稻米', '灵璧石'],
+                    restaurants: ['符离集烧鸡店', '萧县葡萄园', '砀山梨园'],
+                    streets: ['淮河路', '胜利路', '汴河路']
+                },
+                '亳州': {
+                    specialties: ['古井贡酒', '亳菊', '华佗五禽戏茶', '涡阳苔干', '蒙城牛肉干'],
+                    restaurants: ['花戏楼酒店', '古井贡酒厂', '华祖庵素食'],
+                    streets: ['汤王大道', '魏武大道', '谯陵路']
+                },
+                '滁州': {
+                    specialties: ['琅琊酥糖', '来安花红', '天长甘露饼', '明光绿豆', '全椒马厂酥笏牌'],
+                    restaurants: ['醉翁亭酒店', '琅琊山庄', '明皇陵宾馆'],
+                    streets: ['南谯路', '琅琊路', '凤阳路']
+                }
+            };
+
+            return foodDB[destination] || {
+                specialties: [`${destination}特色美食`, `${destination}地方小吃`, `${destination}传统菜肴`],
+                restaurants: [`${destination}特色餐厅`, `${destination}老字号`, `${destination}网红店`],
+                streets: [`${destination}美食街`, `${destination}小吃街`, `${destination}夜市`]
+            };
+        }
+
+        /**
+         * 生成详细行程
+         */
+        function generateDetailedItinerary(duration, attractions, food) {
+            const days = parseInt(duration);
+            const itinerary = [];
+            
+            for (let i = 1; i <= days; i++) {
+                let dayPlan = {
+                    day: i,
+                    title: '',
+                    activities: []
+                };
+                
+                if (i === 1) {
+                    dayPlan.title = '抵达与初探';
+                    dayPlan.activities = [
+                        '抵达目的地，办理入住',
+                        '休整适应环境',
+                        '漫步周边，熟悉当地',
+                        `品尝${food.specialties?.[0] || '当地特色美食'}`
+                    ];
+                } else if (i === days && days > 1) {
+                    dayPlan.title = '返程准备';
+                    dayPlan.activities = [
+                        '整理行李，购买纪念品',
+                        '最后的景点游览',
+                        '前往机场/车站',
+                        '返程'
+                    ];
+                } else {
+                    dayPlan.title = `深度游览第${i-1}天`;
+                    dayPlan.activities = [
+                        `参观${attractions.main?.[Math.min(i-2, attractions.main.length-1)] || '主要景点'}`,
+                        `体验当地文化活动`,
+                        `品尝${food.specialties?.[Math.min(i-2, food.specialties.length-1)] || '当地美食'}`,
+                        `购物或休闲活动`
+                    ];
+                }
+                
+                itinerary.push(dayPlan);
+            }
+            
+            return itinerary;
+        }
+
+        /**
+         * 生成智能建议
+         */
+        function generateIntelligentSuggestions(attractions, weather, duration) {
+            const suggestions = [
+                {
+                    title: '🏨 住宿建议',
+                    content: `建议选择交通便利的市中心或景区附近住宿。${duration >= 3 ? '建议提前预订以获得更好的价格。' : '短期旅行可选择商务酒店。'}`
+                },
+                {
+                    title: '🚗 交通指南',
+                    content: '提前了解当地交通方式，建议下载当地交通APP。根据景点分布选择最佳交通方案。'
+                },
+                {
+                    title: '🌤️ 天气准备',
+                    content: `${weather.suggestion || '关注当地天气预报'}。建议携带适合的衣物和必要的防护用品。`
+                },
+                {
+                    title: '💰 预算规划',
+                    content: `${duration}天行程建议预算包含交通、住宿、餐饮、门票等。建议预留10-20%应急资金。`
+                },
+                {
+                    title: '📱 实用工具',
+                    content: '推荐下载地图、翻译、点评类APP。确保手机电量充足，准备充电宝。'
+                },
+                {
+                    title: '🎯 特别提醒',
+                    content: `${attractions.description || '了解当地风俗习惯'}。注意保管个人财物，购买旅行保险。`
+                }
+            ];
+            
+            return suggestions;
+        }
+
+        /**
+         * 生成默认规划（网络搜索失败时使用）
+         */
+        function generateDefaultPlan(data) {
+            return {
+                attractions: {
+                    main: [`${data.destination}主要景点`],
+                    secondary: [`${data.destination}周边景点`],
+                    description: `${data.destination}旅游概况`
+                },
+                transportation: {
+                    flight: '航班信息',
+                    train: '火车信息',
+                    bus: '长途汽车信息',
+                    localTransport: '当地交通信息'
+                },
+                weather: {
+                    current: '当前天气信息',
+                    forecast: '天气预报',
+                    suggestion: '天气建议'
+                },
+                localFood: {
+                    specialties: [`${data.destination}特色美食`],
+                    restaurants: [`${data.destination}推荐餐厅`],
+                    streets: [`${data.destination}美食街`]
+                },
+                detailedItinerary: [],
+                intelligentSuggestions: []
+            };
         }
 
         /**
@@ -489,6 +1118,33 @@
                 { label: '游玩天数', value: `${data.duration}天`, icon: '⏰' }
             ];
             
+            // 如果有天气信息，添加天气概览
+            if (data.weather && data.weather.current) {
+                overviewItems.push({
+                    label: '天气状况',
+                    value: data.weather.current.replace(`${data.destination}当前天气：`, ''),
+                    icon: '🌤️'
+                });
+            }
+            
+            // 如果有交通信息，添加推荐交通方式
+            if (data.transportation) {
+                let recommendedTransport = '查询中';
+                if (data.transportation.train && data.transportation.train.includes('高铁')) {
+                    recommendedTransport = '高铁（推荐）';
+                } else if (data.transportation.flight && data.transportation.flight.includes('直飞')) {
+                    recommendedTransport = '飞机（推荐）';
+                } else {
+                    recommendedTransport = '多种方式可选';
+                }
+                
+                overviewItems.push({
+                    label: '推荐交通',
+                    value: recommendedTransport,
+                    icon: '🚄'
+                });
+            }
+            
             overviewGrid.innerHTML = overviewItems.map(item => `
                 <div class="overview-item">
                     <div class="overview-label">
@@ -506,95 +1162,73 @@
          */
         function renderItinerary(data) {
             const itineraryContent = document.getElementById('itineraryContent');
-            const duration = parseInt(data.duration);
             
             let itineraryHTML = '';
             
-            // 第一天
-            itineraryHTML += `
-                <div class="itinerary-day">
-                    <div class="day-title">📅 第1天：抵达${data.destination}</div>
-                    <div class="day-content">
-                        • 从${data.departure}出发，前往${data.destination}<br>
-                        • 抵达后入住酒店，休整适应环境<br>
-                        • 漫步周边，熟悉当地环境<br>
-                        • 品尝当地特色晚餐
-                    </div>
-                </div>
-            `;
-            
-            // 第二天
-            if (duration >= 2) {
+            // 如果有智能生成的详细行程，使用智能行程
+            if (data.detailedItinerary && data.detailedItinerary.length > 0) {
+                data.detailedItinerary.forEach(dayPlan => {
+                    const dayIcons = ['📅', '🗺️', '🍽️', '🚶', '🎯', '✈️'];
+                    const icon = dayIcons[Math.min(dayPlan.day - 1, dayIcons.length - 1)];
+                    
+                    itineraryHTML += `
+                        <div class="itinerary-day">
+                            <div class="day-title">${icon} 第${dayPlan.day}天：${dayPlan.title}</div>
+                            <div class="day-content">
+                                ${dayPlan.activities.map(activity => `• ${activity}`).join('<br>')}
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                // 使用默认行程生成逻辑
+                const duration = parseInt(data.duration);
+                
+                // 第一天
                 itineraryHTML += `
                     <div class="itinerary-day">
-                        <div class="day-title">🗺️ 第2天：主要景点游览</div>
+                        <div class="day-title">📅 第1天：抵达${data.destination}</div>
                         <div class="day-content">
-                            • 参观${data.destination}标志性景点<br>
-                            • 深度了解当地历史文化<br>
-                            • 体验特色民俗活动<br>
-                            • 购买纪念品和特产
+                            • 从${data.departure}出发，前往${data.destination}<br>
+                            • 抵达后入住酒店，休整适应环境<br>
+                            • 漫步周边，熟悉当地环境<br>
+                            • 品尝当地特色晚餐
                         </div>
                     </div>
                 `;
-            }
-            
-            // 第三天
-            if (duration >= 3) {
-                itineraryHTML += `
-                    <div class="itinerary-day">
-                        <div class="day-title">🍽️ 第3天：深度体验</div>
-                        <div class="day-content">
-                            • 品尝当地特色美食<br>
-                            • 体验传统手工艺制作<br>
-                            • 参观当地博物馆或艺术馆<br>
-                            • 与当地人交流互动
+                
+                // 中间几天
+                for (let day = 2; day < duration; day++) {
+                    const titles = ['主要景点游览', '深度体验', '周边探索', '文化体验', '自由活动'];
+                    const title = titles[Math.min(day - 2, titles.length - 1)];
+                    
+                    itineraryHTML += `
+                        <div class="itinerary-day">
+                            <div class="day-title">🗺️ 第${day}天：${title}</div>
+                            <div class="day-content">
+                                • 参观${data.attractions?.main?.[0] || data.destination + '主要景点'}<br>
+                                • 体验当地文化活动<br>
+                                • 品尝${data.localFood?.specialties?.[0] || '当地特色美食'}<br>
+                                • 购物或休闲活动
+                            </div>
                         </div>
-                    </div>
-                `;
-            }
-            
-            // 第四天及更多
-            if (duration >= 4) {
-                itineraryHTML += `
-                    <div class="itinerary-day">
-                        <div class="day-title">🚶 第4天：周边探索</div>
-                        <div class="day-content">
-                            • 探索${data.destination}周边景点<br>
-                            • 参加户外活动或自然体验<br>
-                            • 购物休闲，享受慢时光<br>
-                            • 拍摄留念照片
+                    `;
+                }
+                
+                // 最后一天
+                if (duration > 1) {
+                    itineraryHTML += `
+                        <div class="itinerary-day">
+                            <div class="day-title">✈️ 第${duration}天：返程准备</div>
+                            <div class="day-content">
+                                • 整理行李，购买最后的纪念品<br>
+                                • 退房办理相关手续<br>
+                                • 前往机场/车站<br>
+                                • 返回${data.departure}，结束愉快旅程
+                            </div>
                         </div>
-                    </div>
-                `;
-            }
-            
-            if (duration > 4) {
-                itineraryHTML += `
-                    <div class="itinerary-day">
-                        <div class="day-title">🎯 第5-${duration-1}天：自由活动</div>
-                        <div class="day-content">
-                            • 根据个人兴趣自由安排<br>
-                            • 深度体验当地生活方式<br>
-                            • 参加季节性特色活动<br>
-                            • 放松身心，享受假期
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // 最后一天
-            if (duration > 1) {
-                itineraryHTML += `
-                    <div class="itinerary-day">
-                        <div class="day-title">✈️ 第${duration}天：返程准备</div>
-                        <div class="day-content">
-                            • 整理行李，购买最后的纪念品<br>
-                            • 退房办理相关手续<br>
-                            • 前往机场/车站<br>
-                            • 返回${data.departure}，结束愉快旅程
-                        </div>
-                    </div>
-                `;
+                    `;
+                }
             }
             
             itineraryContent.innerHTML = itineraryHTML;
@@ -607,32 +1241,40 @@
         function renderSuggestions(data) {
             const suggestionsGrid = document.getElementById('suggestionsGrid');
             
-            const suggestions = [
-                {
-                    title: '🏨 住宿建议',
-                    content: '提前预订住宿可享受优惠价格，建议选择交通便利、评价良好的酒店。根据行程安排选择市中心或景区附近的住宿。'
-                },
-                {
-                    title: '🚗 交通指南',
-                    content: '了解当地交通方式，提前规划最佳路线。可考虑租车、公共交通或包车服务，根据行程灵活选择。'
-                },
-                {
-                    title: '🌤️ 天气准备',
-                    content: '关注目的地天气预报，准备合适的衣物。不同季节有不同的装备需求，建议携带雨具和防晒用品。'
-                },
-                {
-                    title: '💰 预算规划',
-                    content: '合理规划旅行预算，包括交通、住宿、餐饮、门票等费用。建议预留应急资金，享受无忧旅程。'
-                },
-                {
-                    title: '📱 通讯网络',
-                    content: '确保手机有足够流量或办理当地电话卡。下载离线地图和翻译软件，保持与家人的联系。'
-                },
-                {
-                    title: '⚕️ 健康安全',
-                    content: '准备常用药品，了解当地医疗机构位置。购买旅行保险，确保人身和财产安全。'
-                }
-            ];
+            // 如果有智能生成的建议，使用智能建议
+            let suggestions = [];
+            
+            if (data.intelligentSuggestions && data.intelligentSuggestions.length > 0) {
+                suggestions = data.intelligentSuggestions;
+            } else {
+                // 使用默认建议
+                suggestions = [
+                    {
+                        title: '🏨 住宿建议',
+                        content: '提前预订住宿可享受优惠价格，建议选择交通便利、评价良好的酒店。根据行程安排选择市中心或景区附近的住宿。'
+                    },
+                    {
+                        title: '🚗 交通指南',
+                        content: `${data.transportation?.flight || '了解航班信息'}。${data.transportation?.localTransport || '了解当地交通方式'}。`
+                    },
+                    {
+                        title: '🌤️ 天气准备',
+                        content: `${data.weather?.current || '关注目的地天气预报'}。${data.weather?.suggestion || '准备合适的衣物'}。`
+                    },
+                    {
+                        title: '💰 预算规划',
+                        content: '合理规划旅行预算，包括交通、住宿、餐饮、门票等费用。建议预留应急资金，享受无忧旅程。'
+                    },
+                    {
+                        title: '🍽️ 美食推荐',
+                        content: `推荐品尝：${data.localFood?.specialties?.join('、') || '当地特色美食'}。推荐餐厅：${data.localFood?.restaurants?.join('、') || '当地知名餐厅'}。`
+                    },
+                    {
+                        title: '🎯 景点攻略',
+                        content: `主要景点：${data.attractions?.main?.join('、') || '主要旅游景点'}。${data.attractions?.description || '了解当地风俗习惯'}。`
+                    }
+                ];
+            }
             
             suggestionsGrid.innerHTML = suggestions.map(suggestion => `
                 <div class="suggestion-card">
