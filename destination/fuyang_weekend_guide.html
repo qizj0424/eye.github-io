@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <script src="html2canvas.min.js"></script>
+    <!-- 
+     * 阜阳市周末游攻略页面
+     * 功能：为用户提供详细的阜阳市周末游旅行攻略信息
+     * 包含交通、住宿、景点、美食等全方位指南
+     -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阜阳市周末游攻略 | 智能旅游规划助手</title>
+    <style>
+        /* 
+         * 旅游攻略页面样式
+         * 功能：提供清晰、美观的攻略展示界面
+         * 支持响应式设计，适配各种设备
+         */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .guide-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .guide-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content-section {
+            background: white;
+            margin-bottom: 25px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #ff8a80;
+        }
+
+        .price-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .price-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .price-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .price-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .schedule-day {
+            background: #e8f4fd;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .day-title {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .time-slot {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .food-item {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .tips-container {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tips-title {
+            color: #155724;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips-list li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .tips-list li:before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .weather-item {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .season {
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .return-home {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .return-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            color: white;
+            text-decoration: none;
+        }
+
+        .budget-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .budget-type {
+            background: white;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+
+        .budget-total {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 10px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .contact-item {
+            background: #ffe6e6;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .contact-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #dc3545;
+            margin-top: 5px;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .guide-title {
+                font-size: 2rem;
+            }
+            
+            .content-section {
+                padding: 20px;
+            }
+            
+            .return-home {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部标题区域 -->
+        <div class="header">
+            <h1 class="guide-title">🌸 阜阳市周末游攻略</h1>
+            <p class="guide-subtitle">轻松愉快的两日游 | 古韵今风相得益彰</p>
+            <p style="margin-top: 15px; opacity: 0.8;">
+                📅 2天1夜周末游 | 🎯 适合自由行游客、年轻人、亲子游 | 🌤️ 最佳季节：春秋两季
+            </p>
+        </div>
+
+        <!-- 出行规划 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🚄</span>
+                出行规划
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>✈️ 飞机出行</h4>
+                    <p><strong>阜阳西关机场</strong></p>
+                    <p>航线：北京、上海、广州、深圳、杭州等</p>
+                    <p>价格：300-800元（因出发地和时间而异）</p>
+                    <p>机场交通：大巴20元，出租车40-60元</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>🚆 高铁动车（推荐）</h4>
+                    <p><strong>阜阳西站</strong></p>
+                    <p>合肥→阜阳西：1小时15分钟，79元</p>
+                    <p>北京→阜阳西：5小时30分钟，263元</p>
+                    <p>上海→阜阳西：4小时，184元</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>🚂 普通火车</h4>
+                    <p><strong>阜阳站</strong></p>
+                    <p>北京→阜阳：8小时，硬座84元</p>
+                    <p>上海→阜阳：7小时，硬座62元</p>
+                    <p>优势：价格便宜，夜车可节省住宿</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>🚗 自驾出行</h4>
+                    <p>从合肥：约180公里，2.5小时，过路费80元</p>
+                    <p>从郑州：约200公里，3小时，过路费90元</p>
+                    <p>优势：时间自由，可沿途游览</p>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <strong>💡 推荐方案：</strong> 高铁往返，快速便捷，价格适中
+            </div>
+        </div>
+
+        <!-- 市内交通 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🚌</span>
+                阜阳市内交通
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🚌 公共交通</h4>
+                    <p>公交线路完善，覆盖主要景点</p>
+                    <p>支付：微信、支付宝扫码，投币1-2元</p>
+                    <p>1路：火车站-颍州西湖</p>
+                    <p>15路：阜阳西站-市中心</p>
+                    <p>28路：机场-市区</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>🚗 打车出行</h4>
+                    <p>滴滴、美团打车普及</p>
+                    <p>起步价：8元/3公里</p>
+                    <p>夜间加收20%</p>
+                    <p>市内平均费用：15-25元</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>🚲 共享单车</h4>
+                    <p>品牌：哈啰单车、美团单车</p>
+                    <p>价格：1.5元/30分钟</p>
+                    <p>覆盖：市区主要街道和景点</p>
+                    <p>适用：短途出行，环保便民</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 景点推荐 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🎯</span>
+                景点推荐
+            </h2>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">🔥 热门必游景点</h3>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>1. 颍州西湖 ⭐⭐⭐⭐⭐</h4>
+                    <p><strong>门票：</strong>免费</p>
+                    <p><strong>开放时间：</strong>全天开放</p>
+                    <p><strong>游玩时长：</strong>2-3小时</p>
+                    <p><strong>特色：</strong>苏轼诗中与西湖并称的美景</p>
+                    <p><strong>最佳游览：</strong>春季柳絮，夏季荷花</p>
+                    <p><strong>交通：</strong>1路、3路公交直达</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>2. 奎星楼 ⭐⭐⭐⭐</h4>
+                    <p><strong>门票：</strong>20元</p>
+                    <p><strong>开放时间：</strong>08:00-17:30</p>
+                    <p><strong>游玩时长：</strong>1小时</p>
+                    <p><strong>特色：</strong>明代古建筑，阜阳地标</p>
+                    <p><strong>历史价值：</strong>500多年历史</p>
+                    <p><strong>交通：</strong>市中心步行可达</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>3. 阜阳生态园 ⭐⭐⭐⭐</h4>
+                    <p><strong>门票：</strong>30元</p>
+                    <p><strong>开放时间：</strong>08:00-18:00</p>
+                    <p><strong>游玩时长：</strong>2-3小时</p>
+                    <p><strong>特色：</strong>现代化生态旅游景区</p>
+                    <p><strong>亮点：</strong>温室植物园、儿童游乐区</p>
+                    <p><strong>交通：</strong>18路公交直达</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>4. 颍上八里河风景区 ⭐⭐⭐⭐⭐</h4>
+                    <p><strong>门票：</strong>90元（含游船）</p>
+                    <p><strong>开放时间：</strong>08:00-17:30</p>
+                    <p><strong>游玩时长：</strong>4-5小时</p>
+                    <p><strong>特色：</strong>国家5A级景区</p>
+                    <p><strong>亮点：</strong>世界风光、中华文化、锦绣中华</p>
+                    <p><strong>交通：</strong>客运站直达班车，约1小时</p>
+                </div>
+            </div>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">🌟 小众特色景点</h3>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>5. 管仲老街 ⭐⭐⭐</h4>
+                    <p><strong>门票：</strong>免费</p>
+                    <p><strong>特色：</strong>仿古建筑群，购物美食街</p>
+                    <p><strong>推荐：</strong>晚上灯光效果更佳</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>6. 阜阳博物馆 ⭐⭐⭐</h4>
+                    <p><strong>门票：</strong>免费（需预约）</p>
+                    <p><strong>开放时间：</strong>09:00-17:00（周一闭馆）</p>
+                    <p><strong>特色：</strong>了解阜阳历史文化</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>7. 太和温泉度假村 ⭐⭐⭐⭐</h4>
+                    <p><strong>门票：</strong>128元</p>
+                    <p><strong>特色：</strong>天然温泉，养生休闲</p>
+                    <p><strong>推荐：</strong>冬季游览最佳</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 住宿建议 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🏨</span>
+                住宿建议
+            </h2>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">🏨 高端酒店</h3>
+            <div class="price-table">
+                <div class="price-card">
+                    <h4>阜阳中汇假日酒店</h4>
+                    <div class="price">450-600元/晚</div>
+                    <p>位置：市中心商业区</p>
+                    <p>设施：五星级标准</p>
+                    <p>特色：商务出行首选</p>
+                </div>
+                
+                <div class="price-card">
+                    <h4>维也纳国际酒店</h4>
+                    <div class="price">320-420元/晚</div>
+                    <p>位置：万达广场旁</p>
+                    <p>设施：现代化商务酒店</p>
+                    <p>优势：购物方便</p>
+                </div>
+            </div>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">🏨 中档酒店（推荐）</h3>
+            <div class="price-table">
+                <div class="price-card">
+                    <h4>汉庭酒店</h4>
+                    <div class="price">180-250元/晚</div>
+                    <p>位置：火车站附近</p>
+                    <p>优势：交通便利</p>
+                    <p>特色：连锁品牌，性价比高</p>
+                </div>
+                
+                <div class="price-card">
+                    <h4>如家酒店</h4>
+                    <div class="price">160-220元/晚</div>
+                    <p>位置：市中心</p>
+                    <p>优势：到景点方便</p>
+                    <p>特色：经济实惠</p>
+                </div>
+                
+                <div class="price-card">
+                    <h4>7天酒店</h4>
+                    <div class="price">120-180元/晚</div>
+                    <p>位置：万达广场附近</p>
+                    <p>适合：预算有限的游客</p>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <strong>💡 住宿区域选择建议：</strong><br>
+                • 火车站/高铁站周边：交通最便利，适合短途游客<br>
+                • 万达广场周边：购物餐饮丰富，现代化程度高<br>
+                • 颍州西湖附近：环境优美，适合休闲度假
+            </div>
+        </div>
+
+        <!-- 网红打卡地 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📸</span>
+                网红打卡地推荐
+            </h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>1. 颍州西湖荷花池 📷</h4>
+                    <p><strong>拍照亮点：</strong>夏季荷花盛开，"接天莲叶无穷碧"</p>
+                    <p><strong>最佳时间：</strong>6-8月早晨6-8点</p>
+                    <p><strong>拍照技巧：</strong>利用倒影效果，长焦镜头拍摄</p>
+                    <p><strong>交通：</strong>颍州西湖景区内</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>2. 奎星楼夜景 🌃</h4>
+                    <p><strong>拍照亮点：</strong>古建筑配合现代城市灯光</p>
+                    <p><strong>最佳时间：</strong>晚上7-9点蓝调时刻</p>
+                    <p><strong>角度推荐：</strong>楼下仰拍全景，楼上俯拍夜景</p>
+                    <p><strong>小贴士：</strong>带三脚架拍摄夜景</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>3. 八里河世界风光园 🌍</h4>
+                    <p><strong>拍照亮点：</strong>微缩世界建筑，一次拍遍世界名胜</p>
+                    <p><strong>推荐景点：</strong>埃菲尔铁塔、比萨斜塔、金字塔</p>
+                    <p><strong>最佳时间：</strong>上午10-11点光线充足</p>
+                    <p><strong>创意拍法：</strong>利用错位拍摄创意照片</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>4. 管仲老街夜市 🏮</h4>
+                    <p><strong>拍照亮点：</strong>古风建筑配合夜市烟火气</p>
+                    <p><strong>最佳时间：</strong>晚上7-10点</p>
+                    <p><strong>特色：</strong>红灯笼、古建筑群、美食街景</p>
+                    <p><strong>拍照道具：</strong>古装、团扇增加古风效果</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 两日行程安排 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📅</span>
+                两日行程安排
+            </h2>
+            
+            <div class="schedule-day">
+                <div class="day-title">第一天：古韵文化游</div>
+                
+                <div class="time-slot">
+                    <div class="time">上午（09:00-12:00）</div>
+                    <p>• 08:00 抵达阜阳（高铁/飞机）</p>
+                    <p>• 09:00 酒店check-in，稍作休整</p>
+                    <p>• 09:30 游览奎星楼，登楼俯瞰全城</p>
+                    <p>• 10:30 参观阜阳博物馆，了解历史文化</p>
+                    <p>• 11:30 漫步管仲老街，感受古韵氛围</p>
+                </div>
+                
+                <div class="time-slot">
+                    <div class="time">下午（13:00-17:30）</div>
+                    <p>• 13:00 管仲老街品尝阜阳特色午餐</p>
+                    <p>• 14:30 前往颍州西湖</p>
+                    <p>• 15:00 游览颍州西湖，湖边漫步拍照</p>
+                    <p>• 16:30 西湖亭台楼阁打卡</p>
+                    <p>• 17:30 湖边休憩，欣赏日落美景</p>
+                </div>
+                
+                <div class="time-slot">
+                    <div class="time">晚上（18:00-21:00）</div>
+                    <p>• 18:30 阜阳特色晚餐（格拉条、插花牛肉汤）</p>
+                    <p>• 20:00 万达广场购物休闲</p>
+                    <p>• 21:00 回酒店休息</p>
+                </div>
+            </div>
+            
+            <div class="schedule-day">
+                <div class="day-title">第二天：生态休闲游</div>
+                
+                <div class="time-slot">
+                    <div class="time">上午（08:00-12:00）</div>
+                    <p>• 08:00 早餐后出发</p>
+                    <p>• 08:30 前往颍上八里河风景区</p>
+                    <p>• 09:30 游览世界风光园，拍照打卡</p>
+                    <p>• 11:00 乘船游览八里河，欣赏湖光山色</p>
+                    <p>• 12:00 景区内午餐</p>
+                </div>
+                
+                <div class="time-slot">
+                    <div class="time">下午（13:00-17:00）</div>
+                    <p>• 13:30 游览锦绣中华园</p>
+                    <p>• 15:00 体验游乐项目（可选）</p>
+                    <p>• 16:00 返回阜阳市区</p>
+                    <p>• 17:00 阜阳生态园（时间充裕可游览）</p>
+                </div>
+                
+                <div class="time-slot">
+                    <div class="time">晚上</div>
+                    <p>• 18:00 购买阜阳特产（太和贡椿、界首彩陶等）</p>
+                    <p>• 19:00 前往车站/机场</p>
+                    <p>• 20:00 结束愉快的阜阳周末游</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 美食推荐 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🍜</span>
+                美食推荐
+            </h2>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">🍜 必尝美食</h3>
+            <div class="food-grid">
+                <div class="food-item">
+                    <h4>格拉条</h4>
+                    <p>阜阳最著名小吃，面条配特制卤汁</p>
+                    <p><strong>推荐店铺：</strong>老李格拉条、阜阳格拉条总店</p>
+                    <p><strong>价格：</strong>8-12元/碗</p>
+                </div>
+                
+                <div class="food-item">
+                    <h4>插花牛肉汤</h4>
+                    <p>阜阳传统早餐，汤鲜肉嫩</p>
+                    <p><strong>推荐店铺：</strong>马老三牛肉汤、老字号牛肉汤</p>
+                    <p><strong>价格：</strong>15-20元/碗</p>
+                </div>
+                
+                <div class="food-item">
+                    <h4>阜阳卷馍</h4>
+                    <p>薄饼卷菜，口感丰富</p>
+                    <p><strong>特色：</strong>面皮薄如纸，配菜丰富</p>
+                    <p><strong>价格：</strong>5-8元/个</p>
+                </div>
+                
+                <div class="food-item">
+                    <h4>太和板面</h4>
+                    <p>劲道面条配香辣汤头</p>
+                    <p><strong>特色：</strong>面条宽厚，汤头浓郁</p>
+                    <p><strong>价格：</strong>12-18元/碗</p>
+                </div>
+            </div>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">🥘 地方特产</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>太和贡椿</h4>
+                    <p>历史悠久的腌菜，口感独特</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>界首彩陶</h4>
+                    <p>工艺品，适合作纪念品</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>颍上大米</h4>
+                    <p>优质大米，可邮寄</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>阜阳酥梨</h4>
+                    <p>秋季时令水果，清甜爽口</p>
+                </div>
+            </div>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">🍽️ 推荐餐厅</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>高档餐厅</h4>
+                    <p>• 阜阳国际大酒店中餐厅 - 正宗徽菜，环境优雅</p>
+                    <p>• 金海岸大酒店 - 海鲜粤菜，适合商务宴请</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>特色小吃店</h4>
+                    <p>• 老街美食广场 - 各种阜阳小吃汇集</p>
+                    <p>• 管仲老街夜市 - 夜宵小吃一条街</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 其他建议 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🌤️</span>
+                其他建议
+            </h2>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">天气与穿搭</h3>
+            <div class="weather-grid">
+                <div class="weather-item">
+                    <div class="season">春季（3-5月）</div>
+                    <p>温度：15-25°C</p>
+                    <p>建议：薄外套+长裤</p>
+                </div>
+                
+                <div class="weather-item">
+                    <div class="season">夏季（6-8月）</div>
+                    <p>温度：25-35°C</p>
+                    <p>建议：防晒必备，轻薄衣物</p>
+                </div>
+                
+                <div class="weather-item">
+                    <div class="season">秋季（9-11月）</div>
+                    <p>温度：10-25°C</p>
+                    <p>建议：早晚较凉，分层穿衣</p>
+                </div>
+                
+                <div class="weather-item">
+                    <div class="season">冬季（12-2月）</div>
+                    <p>温度：0-10°C</p>
+                    <p>建议：厚外套和保暖衣物</p>
+                </div>
+            </div>
+            
+            <div class="tips-container">
+                <div class="tips-title">防坑小贴士 ⚠️</div>
+                <ul class="tips-list">
+                    <li>景区门票：提前网上预订可享受优惠</li>
+                    <li>交通出行：避开早晚高峰期，提前预约网约车</li>
+                    <li>住宿预订：周末房价较高，提前预订可获得更好价格</li>
+                    <li>美食选择：选择人气旺的老店，避免景区内高价餐厅</li>
+                    <li>购物消费：特产建议在超市或正规商店购买</li>
+                </ul>
+            </div>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">实用APP推荐 📱</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>地图导航</h4>
+                    <p>高德地图、百度地图</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>出行交通</h4>
+                    <p>12306（火车票）、携程（机票酒店）</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>本地生活</h4>
+                    <p>美团、大众点评</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>天气查询</h4>
+                    <p>天气通、中国天气</p>
+                </div>
+            </div>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">紧急联系方式 📞</h3>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <p>旅游咨询</p>
+                    <div class="contact-number">0558-2266110</div>
+                    <p>阜阳市旅游局</p>
+                </div>
+                
+                <div class="contact-item">
+                    <p>医疗急救</p>
+                    <div class="contact-number">120</div>
+                </div>
+                
+                <div class="contact-item">
+                    <p>报警电话</p>
+                    <div class="contact-number">110</div>
+                </div>
+                
+                <div class="contact-item">
+                    <p>消防电话</p>
+                    <div class="contact-number">119</div>
+                </div>
+            </div>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">预算参考 💰</h3>
+            <div class="budget-section">
+                <div class="budget-type">
+                    <h4>经济型（人均/2天）</h4>
+                    <p>• 交通：150-300元</p>
+                    <p>• 住宿：160-200元</p>
+                    <p>• 餐饮：150-200元</p>
+                    <p>• 门票：100-150元</p>
+                    <div class="budget-total">总计：560-850元</div>
+                </div>
+                
+                <div class="budget-type">
+                    <h4>舒适型（人均/2天）</h4>
+                    <p>• 交通：200-400元</p>
+                    <p>• 住宿：300-400元</p>
+                    <p>• 餐饮：250-350元</p>
+                    <p>• 门票：150-200元</p>
+                    <div class="budget-total">总计：900-1350元</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 结语 -->
+        <div class="footer">
+            <h2>📝 结语</h2>
+            <p style="margin: 20px 0; font-size: 1.1rem; line-height: 1.8;">
+                阜阳是一座历史悠久、文化底蕴深厚的城市，既有古韵悠长的历史文化景观，也有现代都市的时尚气息。这份攻略为您规划了一个轻松愉快的周末游行程，让您在短短两天内领略阜阳的独特魅力。
+            </p>
+            <p style="margin: 20px 0; font-size: 1.1rem; line-height: 1.8;">
+                无论是漫步颍州西湖感受古韵，还是在八里河欣赏世界风光，亦或是品尝地道的格拉条和牛肉汤，阜阳都会给您留下美好的回忆。
+            </p>
+            <h3 style="margin: 30px 0 20px 0; font-size: 1.5rem;">
+                🌸 祝您在阜阳度过一个愉快的周末！ ✨
+            </h3>
+            <p style="margin-top: 30px; opacity: 0.8;">
+                <em>攻略制作时间：2024年 | 如有疑问或需要更多信息，欢迎随时咨询 💫</em>
+            </p>
+        </div>
+
+        <!-- 返回首页按钮 -->
+        <a href="../index.html" class="return-home">🏠 返回首页</a>
+    </div>
+</body>
+</html>

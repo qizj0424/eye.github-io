@@ -449,6 +449,14 @@
                     </div>
                 </a>
 
+                <a href="destination/fuyang_weekend_guide.html" class="recommendation-btn">
+                    <span class="icon">🎪</span>
+                    <div class="btn-content">
+                        <div class="btn-title">fuyang-weekend-guide</div>
+                        <div class="btn-subtitle">精彩旅程等您探索</div>
+                    </div>
+                </a>
+
                 <a href="destination/hefei_anqing_guide.html" class="recommendation-btn">
                     <span class="icon">🏛️</span>
                     <div class="btn-content">
