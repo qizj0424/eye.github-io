@@ -824,11 +824,27 @@
                     </div>
                 </a>
 
+                <a href="destination/nanjing_changzhou_guide.html" class="recommendation-btn">
+                    <span class="icon">🦕</span>
+                    <div class="btn-content">
+                        <div class="btn-title">南京-常州周末攻略</div>
+                        <div class="btn-subtitle">体验恐龙王国的刺激与江南古韵</div>
+                    </div>
+                </a>
+
                 <a href="destination/nanjing_nanjing_guide.html" class="recommendation-btn">
                     <span class="icon">🏮</span>
                     <div class="btn-content">
                         <div class="btn-title">南京周末游攻略</div>
                         <div class="btn-subtitle">探寻六朝古都的魅力</div>
+                    </div>
+                </a>
+
+                <a href="destination/nanjing_suzhou_guide.html" class="recommendation-btn">
+                    <span class="icon">🏮</span>
+                    <div class="btn-content">
+                        <div class="btn-title">南京-苏州周末攻略</div>
+                        <div class="btn-subtitle">探索江南水乡的诗意之美</div>
                     </div>
                 </a>
 
@@ -976,9 +992,11 @@
                 '宣城': 'hefei_xuancheng_guide.html',
             },
             '南京': {
+                '常州': 'nanjing_changzhou_guide.html',
                 '周末游': 'nanjing_nanjing_guide.html',
-                'wuxi': 'nanjing_wuxi_guide.html',
-                'zhenjiang': 'nanjing_zhenjiang_guide.html',
+                'suzhou': 'nanjing_suzhou_guide.html',
+                '无锡': 'nanjing_wuxi_guide.html',
+                '镇江': 'nanjing_zhenjiang_guide.html',
             },
         };
 

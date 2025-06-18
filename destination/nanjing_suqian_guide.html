@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南京-宿迁周末游攻略 - 探寻西楚霸王故里</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .content-section {
+            margin-bottom: 2rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .content-section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .content-section h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #3498db;
+            font-size: 1.8rem;
+        }
+        
+        .content-section h3 {
+            color: #34495e;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.4rem;
+        }
+        
+        .content-section h4 {
+            color: #2980b9;
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+        
+        .content-section p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        .content-section ul, .content-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .content-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .price-tag {
+            background: #e74c3c;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 15px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 0.2rem;
+        }
+        
+        .schedule-day {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+        
+        .schedule-time {
+            font-weight: bold;
+            color: #f39c12;
+        }
+        
+        .weather-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .weather-card {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .tip-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .tip-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .food-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #e67e22;
+        }
+        
+        .attraction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .attraction-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 4px solid #9b59b6;
+        }
+        
+        .budget-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+        
+        .budget-card {
+            background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            color: #2c3e50;
+        }
+        
+        .budget-total {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #27ae60;
+            margin: 1rem 0;
+        }
+        
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .app-category {
+            background: linear-gradient(135deg, #fd79a8, #fdcb6e);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .content-section {
+                padding: 1rem;
+            }
+            
+            .back-button {
+                position: static;
+                margin-bottom: 1rem;
+                display: inline-block;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="back-button" onclick="window.location.href='../index.html'">
+                <span class="emoji">🏠</span>返回首页
+            </button>
+            <h1 class="fade-in"><span class="emoji">🏛️</span>南京-宿迁周末游攻略</h1>
+            <p class="fade-in">探寻西楚霸王故里，畅游江苏最美湖光山色</p>
+        </header>
+
+        <main class="content">
+            <!-- 交通指南 -->
+            <section class="content-section fade-in">
+                <h2><span class="emoji">🚄</span>交通指南</h2>
+                
+                <h3><span class="emoji">🚅</span>火车出行（推荐）</h3>
+                <div class="highlight">
+                    <p><strong>高铁动车：南京→宿迁</strong></p>
+                    <ul>
+                        <li>D5473：08:21-10:49（2小时28分）</li>
+                        <li>D5403：12:27-14:40（2小时13分）</li>
+                        <li>D5407：13:07-15:20（2小时13分）</li>
+                    </ul>
+                    <p><strong>票价：</strong><span class="price-tag">二等座 146-162元</span><span class="price-tag">一等座 232-257元</span></p>
+                    <p><em>建议提前3-7天预订，周末及节假日票源紧张</em></p>
+                </div>
+
+                <h3><span class="emoji">🚗</span>自驾出行</h3>
+                <ul>
+                    <li><strong>路线：</strong>南京→G25长深高速→宿迁出口</li>
+                    <li><strong>距离：</strong>约180公里</li>
+                    <li><strong>时间：</strong>约2.5小时</li>
+                    <li><strong>费用：</strong>过路费约90元，油费约120元</li>
+                </ul>
+
+                <h3><span class="emoji">🚌</span>长途客车</h3>
+                <ul>
+                    <li><strong>发车点：</strong>南京中央门汽车站、南京客运南站</li>
+                    <li><strong>票价：</strong>85-100元</li>
+                    <li><strong>时间：</strong>约3小时</li>
+                    <li><strong>班次：</strong>每小时1-2班</li>
+                </ul>
+            </section>
+
+            <!-- 住宿推荐 -->
+            <section class="content-section fade-in">
+                <h2><span class="emoji">🏨</span>住宿推荐</h2>
+                
+                <div class="attraction-grid">
+                    <div class="attraction-item">
+                        <h4><span class="emoji">🌟</span>亚朵酒店（宿迁市政府店）</h4>
+                        <p><strong>地址：</strong>文汇巷11号</p>
+                        <p><strong>价格：</strong><span class="price-tag">280-350元/晚</span></p>
+                        <p><strong>特色：</strong>品质保证，服务优质，地理位置优越</p>
+                    </div>
+                    
+                    <div class="attraction-item">
+                        <h4><span class="emoji">🏠</span>如家酒店·neo（汽车总站店）</h4>
+                        <p><strong>地址：</strong>西湖路133号</p>
+                        <p><strong>价格：</strong><span class="price-tag">150-200元/晚</span></p>
+                        <p><strong>特色：</strong>交通便利，性价比高</p>
+                    </div>
+                    
+                    <div class="attraction-item">
+                        <h4><span class="emoji">💎</span>故里印象酒店（项王故里景区店）</h4>
+                        <p><strong>地址：</strong>梧桐巷13号楼</p>
+                        <p><strong>价格：</strong><span class="price-tag">200-300元/晚</span></p>
+                        <p><strong>特色：</strong>古色古香，紧邻景区</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 景点攻略 -->
+            <section class="content-section fade-in">
+                <h2><span class="emoji">🎯</span>景点攻略</h2>
+                
+                <h3><span class="emoji">🏛️</span>必游景点</h3>
+                
+                <div class="attraction-grid">
+                    <div class="attraction-item">
+                        <h4>1. 项王故里（5A景区）</h4>
+                        <p><strong>门票：</strong><span class="price-tag">80元</span></p>
+                        <p><strong>开放时间：</strong>8:00-17:30</p>
+                        <p><strong>游览时间：</strong>2-3小时</p>
+                        <p><strong>亮点：</strong></p>
+                        <ul>
+                            <li>项羽纪念馆：了解西楚霸王生平</li>
+                            <li>楚王府：仿汉代建筑群</li>
+                            <li>项府：项羽童年居住地复原</li>
+                            <li>栖凤亭：观景佳地</li>
+                        </ul>
+                        <p><strong>交通：</strong>市区乘101路、113路、203路到项王故里站</p>
+                    </div>
+                    
+                    <div class="attraction-item">
+                        <h4>2. 江苏三台山国家森林公园（4A景区）</h4>
+                        <p><strong>门票：</strong><span class="price-tag">60元</span></p>
+                        <p><strong>开放时间：</strong>8:00-17:00</p>
+                        <p><strong>游览时间：</strong>4-5小时</p>
+                        <p><strong>亮点：</strong></p>
+                        <ul>
+                            <li>衲田花海：四季花海轮番绽放</li>
+                            <li>镜湖景区：湖光山色，倒影如画</li>
+                            <li>天和塔：登高远眺，一览众山小</li>
+                            <li>梅园景区：梅花盛开季节特别美</li>
+                        </ul>
+                        <p><strong>交通：</strong>市区乘旅游专线1路直达</p>
+                    </div>
+                    
+                    <div class="attraction-item">
+                        <h4>3. 骆马湖国家级旅游度假区（4A景区）</h4>
+                        <p><strong>门票：</strong><span class="price-tag">免费</span>（部分项目收费）</p>
+                        <p><strong>开放时间：</strong>全天</p>
+                        <p><strong>游览时间：</strong>半天</p>
+                        <p><strong>亮点：</strong></p>
+                        <ul>
+                            <li>骆马湖沙滩公园：天然沙滩，可戏水游泳</li>
+                            <li>骆马湖海洋乐园：海洋动物表演</li>
+                            <li>骆马湖欢乐世界：水上娱乐项目</li>
+                            <li>罗曼园：浪漫湖滨风光</li>
+                        </ul>
+                        <p><strong>交通：</strong>市区乘902路到骆马湖站</p>
+                    </div>
+                </div>
+
+                <h3><span class="emoji">🎨</span>文化景点</h3>
+                <div class="attraction-grid">
+                    <div class="attraction-item">
+                        <h4>4. 宿迁市博物馆新馆</h4>
+                        <p><strong>门票：</strong><span class="price-tag">免费</span>（需预约）</p>
+                        <p><strong>开放时间：</strong>9:00-17:00（周一闭馆）</p>
+                        <p><strong>亮点：</strong>宿迁历史文化展示，楚汉文化珍品</p>
+                    </div>
+                    
+                    <div class="attraction-item">
+                        <h4>5. 洋河酒厂文化旅游区（4A景区）</h4>
+                        <p><strong>门票：</strong><span class="price-tag">68元</span></p>
+                        <p><strong>开放时间：</strong>8:30-17:00</p>
+                        <p><strong>亮点：</strong>洋河酒文化体验、酿酒工艺参观、品酒体验</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 美食攻略 -->
+            <section class="content-section fade-in">
+                <h2><span class="emoji">🍜</span>美食攻略</h2>
+                
+                <h3><span class="emoji">🥟</span>特色小吃</h3>
+                <div class="food-grid">
+                    <div class="food-item">
+                        <h4>皂河赵家糁汤</h4>
+                        <p>宿迁特色早餐，营养丰富</p>
+                    </div>
+                    <div class="food-item">
+                        <h4>正勋面馆</h4>
+                        <p>地道宿迁面条，汤鲜面筋</p>
+                    </div>
+                    <div class="food-item">
+                        <h4>贾记肉夹馍</h4>
+                        <p>外酥内嫩，肉香四溢</p>
+                    </div>
+                    <div class="food-item">
+                        <h4>范记皮肚大碗面</h4>
+                        <p>特色皮肚，味道鲜美</p>
+                    </div>
+                </div>
+
+                <h3><span class="emoji">🍤</span>特色餐厅</h3>
+                <div class="food-grid">
+                    <div class="food-item">
+                        <h4>陈渔小馆（楚街店）</h4>
+                        <p><strong>地址：</strong>文汇巷16号</p>
+                        <p><strong>推荐：</strong>清蒸鲈鱼、红烧狮子头</p>
+                        <p><strong>人均：</strong><span class="price-tag">80-120元</span></p>
+                    </div>
+                    <div class="food-item">
+                        <h4>海底捞火锅（水韵城店）</h4>
+                        <p><strong>地址：</strong>西湖路66号水韵城5层</p>
+                        <p><strong>推荐：</strong>毛肚、虾滑、各种蘸料</p>
+                        <p><strong>人均：</strong><span class="price-tag">120-180元</span></p>
+                    </div>
+                </div>
+
+                <h3><span class="emoji">🦞</span>宿迁特产</h3>
+                <div class="highlight">
+                    <ul>
+                        <li><strong>骆马湖银鱼：</strong>鲜美无比，营养丰富</li>
+                        <li><strong>泗洪大闸蟹：</strong>膏肥黄满，鲜甜可口</li>
+                        <li><strong>洋河酒：</strong>中国名酒，绵柔香醇</li>
+                        <li><strong>宿迁水蜜桃：</strong>果大肉厚，甜美多汁</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 行程安排 -->
+            <section class="content-section fade-in">
+                <h2><span class="emoji">📋</span>两日游行程安排</h2>
+                
+                <div class="schedule-day">
+                    <h3>Day 1: 历史文化之旅</h3>
+                    <p><span class="schedule-time">上午（8:00-12:00）</span></p>
+                    <ul>
+                        <li>8:00 南京出发（建议乘坐D5473次）</li>
+                        <li>10:49 抵达宿迁站</li>
+                        <li>11:30 酒店入住，休息调整</li>
+                    </ul>
+                    
+                    <p><span class="schedule-time">下午（12:00-18:00）</span></p>
+                    <ul>
+                        <li>12:00 午餐（正勋面馆品尝地道面食）</li>
+                        <li>13:30 游览项王故里景区</li>
+                        <li>16:00 参观宿迁市博物馆新馆</li>
+                        <li>17:30 楚街晚餐（陈渔小馆）</li>
+                    </ul>
+                    
+                    <p><span class="schedule-time">晚上（18:00-22:00）</span></p>
+                    <ul>
+                        <li>19:00 项王故里夜市逛街</li>
+                        <li>20:30 回酒店休息</li>
+                    </ul>
+                </div>
+                
+                <div class="schedule-day">
+                    <h3>Day 2: 自然风光之旅</h3>
+                    <p><span class="schedule-time">上午（8:00-12:00）</span></p>
+                    <ul>
+                        <li>8:00 早餐（皂河赵家糁汤）</li>
+                        <li>9:00 前往三台山国家森林公园</li>
+                        <li>9:30 游览衲田花海、镜湖景区</li>
+                        <li>11:30 登天和塔俯瞰全景</li>
+                    </ul>
+                    
+                    <p><span class="schedule-time">下午（12:00-17:00）</span></p>
+                    <ul>
+                        <li>12:00 园内午餐</li>
+                        <li>13:30 前往骆马湖度假区</li>
+                        <li>14:00 游览沙滩公园、罗曼园</li>
+                        <li>15:30 骆马湖欢乐世界体验</li>
+                        <li>16:30 返回市区</li>
+                    </ul>
+                    
+                    <p><span class="schedule-time">傍晚（17:00-21:00）</span></p>
+                    <ul>
+                        <li>17:00 晚餐（海底捞火锅）</li>
+                        <li>18:30 返回南京（建议乘坐D5419次）</li>
+                        <li>21:25 抵达南京</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 天气穿搭 -->
+            <section class="content-section fade-in">
+                <h2><span class="emoji">🌤️</span>天气穿搭建议</h2>
+                
+                <h3><span class="emoji">📅</span>近期天气</h3>
+                <div class="weather-info">
+                    <div class="weather-card">
+                        <h4>今日（6月18日）</h4>
+                        <p>阴转小雨</p>
+                        <p><strong>25-36°C</strong></p>
+                    </div>
+                    <div class="weather-card">
+                        <h4>明日（6月19日）</h4>
+                        <p>小雨转大雨</p>
+                        <p><strong>24-31°C</strong></p>
+                    </div>
+                    <div class="weather-card">
+                        <h4>后天（6月20日）</h4>
+                        <p>暴雨转中雨</p>
+                        <p><strong>22-25°C</strong></p>
+                    </div>
+                    <div class="weather-card">
+                        <h4>周六（6月21日）</h4>
+                        <p>阴</p>
+                        <p><strong>19-25°C</strong></p>
+                    </div>
+                </div>
+
+                <h3><span class="emoji">👕</span>穿搭建议</h3>
+                <div class="highlight">
+                    <ul>
+                        <li><strong>上衣：</strong>轻薄透气长袖衬衫或T恤</li>
+                        <li><strong>外套：</strong>轻薄防风外套（应对温差）</li>
+                        <li><strong>下装：</strong>长裤或薄款牛仔裤</li>
+                        <li><strong>鞋子：</strong>防滑舒适的运动鞋或休闲鞋</li>
+                        <li><strong>配饰：</strong>🌂 雨伞（必备，近期多雨）、🧴 防晒霜（SPF30+）、🕶️ 太阳镜</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 防坑小贴士 -->
+            <section class="content-section fade-in">
+                <h2><span class="emoji">⚠️</span>防坑小贴士</h2>
+                
+                <div class="tip-warning">
+                    <h3><span class="emoji">🎫</span>景点防坑</h3>
+                    <ul>
+                        <li><strong>项王故里：</strong>正门票价80元，避免路边黄牛</li>
+                        <li><strong>三台山：</strong>观光车可选择性乘坐，步行游览更有趣</li>
+                        <li><strong>骆马湖：</strong>部分娱乐项目另收费，提前了解价格</li>
+                    </ul>
+                </div>
+
+                <div class="tip-warning">
+                    <h3><span class="emoji">🍽️</span>餐饮防坑</h3>
+                    <ul>
+                        <li><strong>特色小吃：</strong>选择人气旺的老店</li>
+                        <li><strong>海鲜：</strong>骆马湖银鱼要选择正规餐厅</li>
+                        <li><strong>洋河酒：</strong>购买正品请到官方专卖店</li>
+                    </ul>
+                </div>
+
+                <div class="tip-warning">
+                    <h3><span class="emoji">🚗</span>交通防坑</h3>
+                    <ul>
+                        <li><strong>火车票：</strong>周末票源紧张，提前订票</li>
+                        <li><strong>出租车：</strong>使用正规计价器，拒绝议价</li>
+                        <li><strong>景区停车：</strong>选择正规停车场，避免乱收费</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 费用预算 -->
+            <section class="content-section fade-in">
+                <h2><span class="emoji">💰</span>费用预算</h2>
+                
+                <div class="budget-comparison">
+                    <div class="budget-card">
+                        <h3><span class="emoji">🎒</span>经济游（1人）</h3>
+                        <ul style="text-align: left;">
+                            <li>交通：火车票 146×2 + 市内交通 = 320元</li>
+                            <li>住宿：经济型酒店 150元/晚 = 150元</li>
+                            <li>门票：项王故里80 + 三台山60 + 洋河68 = 208元</li>
+                            <li>餐饮：正餐80×2 + 小吃30×2 = 220元</li>
+                            <li>其他：购物、零食等 = 100元</li>
+                        </ul>
+                        <div class="budget-total">总计：约998元</div>
+                    </div>
+                    
+                    <div class="budget-card">
+                        <h3><span class="emoji">🎒</span>舒适游（1人）</h3>
+                        <ul style="text-align: left;">
+                            <li>交通：火车票 232×2 + 市内交通 = 500元</li>
+                            <li>住宿：商务酒店 280元/晚 = 280元</li>
+                            <li>门票：项王故里80 + 三台山60 + 洋河68 = 208元</li>
+                            <li>餐饮：正餐120×2 + 小吃40×2 = 320元</li>
+                            <li>其他：购物、娱乐等 = 200元</li>
+                        </ul>
+                        <div class="budget-total">总计：约1508元</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 实用APP推荐 -->
+            <section class="content-section fade-in">
+                <h2><span class="emoji">📱</span>实用APP推荐</h2>
+                
+                <div class="app-grid">
+                    <div class="app-category">
+                        <h3><span class="emoji">🛣️</span>出行类</h3>
+                        <ul>
+                            <li>铁路12306：火车票预订</li>
+                            <li>高德地图：导航、路线规划</li>
+                            <li>滴滴出行：打车服务</li>
+                            <li>宿迁掌上公交：实时公交查询</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="app-category">
+                        <h3><span class="emoji">🎫</span>旅游类</h3>
+                        <ul>
+                            <li>携程旅行：酒店预订、门票购买</li>
+                            <li>美团：餐厅推荐、团购优惠</li>
+                            <li>大众点评：美食评价、生活服务</li>
+                            <li>去哪儿：比价预订</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="app-category">
+                        <h3><span class="emoji">💳</span>支付类</h3>
+                        <ul>
+                            <li>支付宝：移动支付、优惠券</li>
+                            <li>微信支付：便民服务</li>
+                            <li>银联云闪付：银行卡支付</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 特别提醒 -->
+            <section class="content-section fade-in">
+                <h2><span class="emoji">🎯</span>特别提醒</h2>
+                
+                <div class="tip-success">
+                    <h3><span class="emoji">🎪</span>季节性活动</h3>
+                    <ul>
+                        <li><strong>春季（3-5月）：</strong>三台山梅花节、桃花节</li>
+                        <li><strong>夏季（6-8月）：</strong>骆马湖音乐节、啤酒节</li>
+                        <li><strong>秋季（9-11月）：</strong>洋河酒文化节</li>
+                        <li><strong>冬季（12-2月）：</strong>项王故里庙会</li>
+                    </ul>
+                </div>
+
+                <div class="tip-success">
+                    <h3><span class="emoji">📞</span>紧急联系</h3>
+                    <ul>
+                        <li><strong>宿迁旅游热线：</strong>0527-12345</li>
+                        <li><strong>项王故里咨询：</strong>0527-84338888</li>
+                        <li><strong>三台山咨询：</strong>0527-84393999</li>
+                        <li><strong>骆马湖咨询：</strong>0527-84813888</li>
+                    </ul>
+                </div>
+
+                <div class="tip-success">
+                    <h3><span class="emoji">💡</span>贴心提示</h3>
+                    <ul>
+                        <li>宿迁方言较重，普通话通用</li>
+                        <li>银行网点较多，ATM便民</li>
+                        <li>医院：宿迁市第一人民医院（三甲）</li>
+                        <li>购物：水韵城、义乌商贸城</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <h2><span class="emoji">🎉</span>享受宿迁之旅，感受西楚文化的独特魅力！</h2>
+            <p><em>记得分享你的美好时光到朋友圈哦~ <span class="emoji">📸</span></em></p>
+            <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.9rem;">
+                © 2024 Eye周末游攻略 | 为您的每一次出行提供最贴心的指南
+            </p>
+        </footer>
+    </div>
+
+    <script src="html2canvas.min.js"></script>
+    <script>
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            elements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(element);
+            });
+        });
+
+        // 返回顶部功能
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                if (!document.querySelector('.back-to-top')) {
+                    const backToTop = document.createElement('button');
+                    backToTop.className = 'back-to-top';
+                    backToTop.innerHTML = '<span class="emoji">⬆️</span>';
+                    backToTop.style.cssText = `
+                        position: fixed;
+                        bottom: 2rem;
+                        right: 2rem;
+                        background: linear-gradient(135deg, #667eea, #764ba2);
+                        color: white;
+                        border: none;
+                        border-radius: 50%;
+                        width: 50px;
+                        height: 50px;
+                        cursor: pointer;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                        transition: all 0.3s ease;
+                        z-index: 1000;
+                    `;
+                    backToTop.addEventListener('click', () => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                    backToTop.addEventListener('mouseenter', () => {
+                        backToTop.style.transform = 'translateY(-3px) scale(1.1)';
+                    });
+                    backToTop.addEventListener('mouseleave', () => {
+                        backToTop.style.transform = 'translateY(0) scale(1)';
+                    });
+                    document.body.appendChild(backToTop);
+                }
+            } else {
+                const backToTop = document.querySelector('.back-to-top');
+                if (backToTop) {
+                    backToTop.remove();
+                }
+            }
+        });
+    </script>
+</body>
+</html> 
