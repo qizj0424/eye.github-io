@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <script src="html2canvas.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南京到连云港周末游攻略 | 智能旅游规划助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .guide-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .guide-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .content-section {
+            background: white;
+            margin-bottom: 25px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .content-section:hover {
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-icon {
+            font-size: 1.5rem;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .info-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #ff8a80;
+        }
+        .price-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .price-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .price-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+        .price-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+        .schedule-day {
+            background: #e8f4fd;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        .day-title {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .time-slot {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+        }
+        .time {
+            font-weight: bold;
+            color: #28a745;
+        }
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .food-item {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+        .tips-container {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .tips-title {
+            color: #155724;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        .tips-list {
+            list-style: none;
+            padding: 0;
+        }
+        .tips-list li {
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #155724;
+        }
+        .tips-list li::before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+        }
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .guide-title {
+                font-size: 2rem;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .price-table {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="guide-title">🌊 南京-连云港周末游攻略</h1>
+            <p class="guide-subtitle">探寻山海港城的浪漫风情 - 适合自由行游客的连云港两日游深度体验</p>
+        </header>
+
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📍</span>
+                基本信息
+            </h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>出发地</h4>
+                    <p>南京市</p>
+                </div>
+                <div class="info-card">
+                    <h4>目的地</h4>
+                    <p>连云港市</p>
+                </div>
+                <div class="info-card">
+                    <h4>适宜时间</h4>
+                    <p>周末2天</p>
+                </div>
+                <div class="info-card">
+                    <h4>最佳季节</h4>
+                    <p>夏季（6-8月）、秋季（9-11月）</p>
+                </div>
+                <div class="info-card">
+                    <h4>预算参考</h4>
+                    <p>500-1200元/人（不含住宿）</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🌤️</span>
+                天气预报
+            </h2>
+            
+            <div class="tips-container">
+                <div class="tips-title">温馨提示</div>
+                <ul class="tips-list">
+                    <li>海滨城市风大，建议携带防风外套</li>
+                    <li>夏季紫外线强，做好防晒措施</li>
+                    <li>海边潮湿，注意防滑</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🚄</span>
+                出行规划
+            </h2>
+            
+            <h3>火车对比</h3>
+            <p><strong>推荐路线（2025年6月21日示例）</strong>：</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>车次</th>
+                            <th>出发时间</th>
+                            <th>到达时间</th>
+                            <th>历时</th>
+                            <th>硬座价格</th>
+                            <th>二等座价格</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>D182</td>
+                            <td>00:38</td>
+                            <td>06:22</td>
+                            <td>5小时44分</td>
+                            <td>-</td>
+                            <td>116元</td>
+                        </tr>
+                        <tr>
+                            <td>K8352</td>
+                            <td>01:17</td>
+                            <td>08:16</td>
+                            <td>6小时59分</td>
+                            <td>78元</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="highlight-box">
+                <strong>建议选择</strong>：D182动车，虽然出发较早但时间较短
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🎯</span>
+                景点推荐
+            </h2>
+            
+            <h3>🏖️ 海滨风光类（必游）</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>连岛海滨浴场</h4>
+                    <p><strong>门票</strong>：50元，学生票25元</p>
+                    <p><strong>特色</strong>：江苏最大的天然海滨浴场</p>
+                    <p><strong>亮点</strong>：沙滩日光浴、海水游泳、海上项目</p>
+                </div>
+                <div class="info-card">
+                    <h4>花果山风景区</h4>
+                    <p><strong>门票</strong>：90元，学生票45元</p>
+                    <p><strong>特色</strong>：西游记取景地，齐天大圣故里</p>
+                    <p><strong>亮点</strong>：水帘洞、玉女峰、海州古城</p>
+                </div>
+                <div class="info-card">
+                    <h4>海上云台山</h4>
+                    <p><strong>门票</strong>：40元</p>
+                    <p><strong>特色</strong>：山海相依，云雾缭绕</p>
+                    <p><strong>最佳观景</strong>：日出日落时分</p>
+                </div>
+                <div class="info-card">
+                    <h4>海州古城</h4>
+                    <p><strong>门票</strong>：免费</p>
+                    <p><strong>特色</strong>：2000多年历史的古城</p>
+                    <p><strong>推荐</strong>：古街漫步、传统建筑</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🍜</span>
+                美食攻略
+            </h2>
+            
+            <h3>🦀 连云港特色</h3>
+            <div class="food-grid">
+                <div class="food-item">
+                    <h4>海鲜大餐</h4>
+                    <p>螃蟹、对虾、海参</p>
+                </div>
+                <div class="food-item">
+                    <h4>灌云豆丹</h4>
+                    <p>当地特色昆虫美食</p>
+                </div>
+                <div class="food-item">
+                    <h4>东海水晶虾</h4>
+                    <p>透明如水晶的海虾</p>
+                </div>
+                <div class="food-item">
+                    <h4>板浦凉粉</h4>
+                    <p>传统小吃</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📅</span>
+                两日行程安排
+            </h2>
+            
+            <div class="schedule-day">
+                <div class="day-title">Day 1: 花果山文化探索</div>
+                
+                <div class="time-slot">
+                    <span class="time">上午</span>
+                    <p>到达连云港，前往花果山</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">下午</span>
+                    <p>游览水帘洞、玉女峰</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">晚上</span>
+                    <p>海州古城夜游，品尝海鲜</p>
+                </div>
+            </div>
+
+            <div class="schedule-day">
+                <div class="day-title">Day 2: 海滨休闲度假</div>
+                
+                <div class="time-slot">
+                    <span class="time">上午</span>
+                    <p>连岛海滨浴场海水浴</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">下午</span>
+                    <p>海上云台山登高望远</p>
+                </div>
+
+                <div class="time-slot">
+                    <span class="time">返程</span>
+                    <p>傍晚返回南京</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">💰</span>
+                费用预算
+            </h2>
+            
+            <div class="highlight-box">
+                <strong>总预算</strong>：500-1200元/人（不含住宿）
+            </div>
+        </section>
+
+        <footer class="content-section" style="text-align: center; background: #f8f9fa;">
+            <p><strong>🎉 祝您在连云港度过愉快的周末时光！</strong></p>
+            <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+                连云港作为山海港城，拥有独特的海洋文化。夏季是最佳旅游季节，可享受海滨度假乐趣。<br>
+                攻略编制时间：2025年6月18日 | 下次更新：根据季节变化和景点开放情况调整
+            </p>
+            <a href="../index.html" class="back-button" style="margin-top: 20px;">← 返回首页继续规划</a>
+        </footer>
+    </div>
+</body>
+</html> 
