@@ -50,7 +50,8 @@ class IndexUpdater:
             "nanjing_zhenjiang_guide.html": ["🏯", "南京-镇江周末攻略", "江南古韵千年文脉之旅"],
             "nanjing_changzhou_guide.html": ["🦕", "南京-常州周末攻略", "体验恐龙王国的刺激与江南古韵"],
             "nanjing_suzhou_guide.html": ["🏮", "南京-苏州周末攻略", "探索江南水乡的诗意之美"],
-            "nanjing_suqian_guide.html": ["🏛️", "南京-宿迁周末攻略", "探寻西楚霸王故里，感受千年历史文化"]
+            "nanjing_suqian_guide.html": ["🏛️", "南京-宿迁周末攻略", "探寻西楚霸王故里，感受千年历史文化"],
+            "nanjing_yangzhou_guide.html": ["🏮", "南京-扬州周末攻略", "体验古韵扬州，品味千年文化"]
         }
     
     def scan_destination_files(self):
@@ -162,6 +163,8 @@ class IndexUpdater:
             icon, main_title, subtitle = "🏮", "南京-苏州攻略", "探索江南水乡的诗意之美"
         elif "nanjing" in filename and "suqian" in filename:
             icon, main_title, subtitle = "🏛️", "南京-宿迁攻略", "探寻西楚霸王故里，感受千年历史文化"
+        elif "nanjing" in filename and "yangzhou" in filename:
+            icon, main_title, subtitle = "🏮", "南京-扬州攻略", "体验古韵扬州，品味千年文化"
         else:
             # 通用处理
             icon = "🎪"

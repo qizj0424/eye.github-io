@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <script src="html2canvas.min.js"></script>
+    <!-- 
+     * 南京到扬州周末游攻略页面
+     * 功能：为用户提供详细的南京到扬州两日游旅行攻略信息
+     * 包含交通、住宿、景点、美食等全方位指南
+     -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南京到扬州周末游攻略 | 智能旅游规划助手</title>
+    <style>
+        /* 
+         * 旅游攻略页面样式
+         * 功能：提供清晰、美观的攻略展示界面
+         * 支持响应式设计，适配各种设备
+         */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .guide-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .guide-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content-section {
+            background: white;
+            margin-bottom: 25px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #ff8a80;
+        }
+
+        .price-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .price-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .price-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .price-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .schedule-day {
+            background: #e8f4fd;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .day-title {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .time-slot {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .food-item {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .tips-container {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tips-title {
+            color: #155724;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .attraction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .attraction-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+            transition: all 0.3s ease;
+        }
+
+        .attraction-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .star-rating {
+            color: #ffc107;
+            margin: 5px 0;
+        }
+
+        .photo-tip {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+        }
+
+        .back-to-home {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .back-to-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .guide-title {
+                font-size: 2rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .content-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="guide-title">🚄 南京-扬州周末游完整攻略</h1>
+            <p class="guide-subtitle">体验古韵扬州，品味千年文化</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🚅 出行规划</h2>
+            <p><strong>推荐交通：</strong>C3854 南京→扬州 06:00-06:51 (51分钟) 二等座37.5元</p>
+            <p><strong>自驾路线：</strong>南京→G25长深高速→扬州 约91公里，1.5小时</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🎯 必游景点</h2>
+            <p><strong>瘦西湖：</strong>门票60-100元，五亭桥、二十四桥等经典景观</p>
+            <p><strong>个园：</strong>门票30元，清代四大名园之一，竹石文化</p>
+            <p><strong>何园：</strong>门票30元，中国近代园林第一名园</p>
+            <p><strong>东关街：</strong>免费，古街风貌，美食聚集地</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🍜 美食推荐</h2>
+            <p><strong>富春茶社：</strong>扬州早茶鼻祖，蟹粉汤包、千层油糕，人均80-120元</p>
+            <p><strong>三月漫茶社：</strong>环境优雅，性价比高，人均60-90元</p>
+            <p><strong>海德万顺：</strong>精致淮扬菜，狮子头、软兜长鱼，人均150-250元</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📅 两日行程</h2>
+            <p><strong>Day 1：</strong>南京出发→扬州→富春茶社早茶→瘦西湖→个园→东关街</p>
+            <p><strong>Day 2：</strong>三月漫茶社早茶→何园→大运河博物馆→大明寺→返程南京</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">💰 费用预算</h2>
+            <p><strong>人均约875元：</strong>交通75元 + 住宿200元 + 门票150元 + 餐饮300元 + 市内交通50元 + 购物100元</p>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="../index.html" class="back-to-home">🏠 返回首页</a>
+        </div>
+
+        <div class="footer">
+            <h3>🎯 智能旅游规划助手</h3>
+            <p>让每一次旅行都成为美好回忆</p>
+        </div>
+    </div>
+</body>
+</html> 
