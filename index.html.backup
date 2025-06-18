@@ -319,6 +319,115 @@
         .recommendation-btn:hover .btn-subtitle {
             color: #555;
         }
+
+        /* 快速选择热门攻略样式 */
+        .quick-select-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .select-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 20px;
+            align-items: end;
+            margin-bottom: 15px;
+        }
+
+        .select-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .select-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .quick-select {
+            padding: 12px 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+            cursor: pointer;
+        }
+
+        .quick-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .quick-select:disabled {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .quick-go-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .quick-go-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .quick-go-btn:disabled {
+            background: #dee2e6;
+            color: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .quick-tip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+            background: #f8f9ff;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .select-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .quick-go-btn {
+                width: 100%;
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -351,10 +460,12 @@
                         </label>
                         <select class="form-control" id="departure" required>
                             <option value="">请选择出发地</option>
+                            <!-- 一线城市 -->
                             <option value="北京">北京</option>
                             <option value="上海">上海</option>
                             <option value="广州">广州</option>
                             <option value="深圳">深圳</option>
+                            <!-- 省会城市 -->
                             <option value="杭州">杭州</option>
                             <option value="南京">南京</option>
                             <option value="武汉">武汉</option>
@@ -365,7 +476,41 @@
                             <option value="大连">大连</option>
                             <option value="厦门">厦门</option>
                             <option value="昆明">昆明</option>
-                            <option value="其他">其他城市</option>
+                            <option value="长沙">长沙</option>
+                            <option value="郑州">郑州</option>
+                            <option value="沈阳">沈阳</option>
+                            <option value="哈尔滨">哈尔滨</option>
+                            <option value="济南">济南</option>
+                            <option value="福州">福州</option>
+                            <option value="石家庄">石家庄</option>
+                            <option value="太原">太原</option>
+                            <option value="呼和浩特">呼和浩特</option>
+                            <option value="长春">长春</option>
+                            <option value="南昌">南昌</option>
+                            <option value="贵阳">贵阳</option>
+                            <option value="兰州">兰州</option>
+                            <option value="西宁">西宁</option>
+                            <option value="银川">银川</option>
+                            <option value="乌鲁木齐">乌鲁木齐</option>
+                            <option value="拉萨">拉萨</option>
+                            <option value="海口">海口</option>
+                            <!-- 安徽省内城市 -->
+                            <option value="合肥">合肥</option>
+                            <option value="芜湖">芜湖</option>
+                            <option value="蚌埠">蚌埠</option>
+                            <option value="淮南">淮南</option>
+                            <option value="马鞍山">马鞍山</option>
+                            <option value="淮北">淮北</option>
+                            <option value="铜陵">铜陵</option>
+                            <option value="安庆">安庆</option>
+                            <option value="黄山">黄山</option>
+                            <option value="滁州">滁州</option>
+                            <option value="阜阳">阜阳</option>
+                            <option value="宿州">宿州</option>
+                            <option value="六安">六安</option>
+                            <option value="亳州">亳州</option>
+                            <option value="池州">池州</option>
+                            <option value="宣城">宣城</option>
                         </select>
                     </div>
                     
@@ -376,6 +521,7 @@
                         </label>
                         <select class="form-control" id="destination" required>
                             <option value="">请选择目的地</option>
+                            <!-- 热门旅游城市 -->
                             <option value="三亚">三亚</option>
                             <option value="桂林">桂林</option>
                             <option value="丽江">丽江</option>
@@ -383,14 +529,71 @@
                             <option value="九寨沟">九寨沟</option>
                             <option value="黄山">黄山</option>
                             <option value="泰山">泰山</option>
-                            <option value="西湖">杭州西湖</option>
-                            <option value="故宫">北京故宫</option>
-                            <option value="长城">万里长城</option>
-                            <option value="兵马俑">西安兵马俑</option>
+                            <option value="杭州">杭州</option>
+                            <option value="苏州">苏州</option>
+                            <option value="扬州">扬州</option>
+                            <option value="无锡">无锡</option>
+                            <option value="乌镇">乌镇</option>
+                            <option value="周庄">周庄</option>
+                            <option value="凤凰古城">凤凰古城</option>
+                            <option value="大理">大理</option>
+                            <option value="香格里拉">香格里拉</option>
                             <option value="稻城亚丁">稻城亚丁</option>
+                            <!-- 历史文化名城 -->
+                            <option value="北京">北京</option>
+                            <option value="西安">西安</option>
+                            <option value="洛阳">洛阳</option>
+                            <option value="开封">开封</option>
+                            <option value="平遥">平遥</option>
+                            <option value="曲阜">曲阜</option>
+                            <option value="承德">承德</option>
+                            <option value="大同">大同</option>
+                            <!-- 自然风光 -->
+                            <option value="峨眉山">峨眉山</option>
+                            <option value="五台山">五台山</option>
                             <option value="普陀山">普陀山</option>
-                            <option value="鼓浪屿">厦门鼓浪屿</option>
-                            <option value="其他">其他景点</option>
+                            <option value="九华山">九华山</option>
+                            <option value="华山">华山</option>
+                            <option value="衡山">衡山</option>
+                            <option value="嵩山">嵩山</option>
+                            <option value="长白山">长白山</option>
+                            <option value="天山">天山</option>
+                            <option value="庐山">庐山</option>
+                            <!-- 现代都市 -->
+                            <option value="上海">上海</option>
+                            <option value="深圳">深圳</option>
+                            <option value="广州">广州</option>
+                            <option value="成都">成都</option>
+                            <option value="重庆">重庆</option>
+                            <option value="武汉">武汉</option>
+                            <option value="南京">南京</option>
+                            <option value="青岛">青岛</option>
+                            <option value="厦门">厦门</option>
+                            <option value="大连">大连</option>
+                            <option value="昆明">昆明</option>
+                            <!-- 海滨城市 -->
+                            <option value="海口">海口</option>
+                            <option value="威海">威海</option>
+                            <option value="烟台">烟台</option>
+                            <option value="秦皇岛">秦皇岛</option>
+                            <option value="北海">北海</option>
+                            <option value="珠海">珠海</option>
+                            <!-- 安徽省内目的地 -->
+                            <option value="合肥">合肥</option>
+                            <option value="芜湖">芜湖</option>
+                            <option value="安庆">安庆</option>
+                            <option value="池州">池州</option>
+                            <option value="六安">六安</option>
+                            <option value="宣城">宣城</option>
+                            <option value="马鞍山">马鞍山</option>
+                            <option value="铜陵">铜陵</option>
+                            <option value="淮南">淮南</option>
+                            <option value="蚌埠">蚌埠</option>
+                            <option value="阜阳">阜阳</option>
+                            <option value="亳州">亳州</option>
+                            <option value="宿州">宿州</option>
+                            <option value="淮北">淮北</option>
+                            <option value="滁州">滁州</option>
                         </select>
                     </div>
                 </div>
@@ -434,6 +637,50 @@
             </form>
         </div>
 
+        <!-- 快速攻略选择区域 -->
+        <div class="recommendation-container">
+            <div class="recommendation-header">
+                <span class="icon">🚀</span>
+                快速选择热门攻略
+            </div>
+            <div class="quick-select-container">
+                <div class="select-row">
+                    <div class="select-group">
+                        <label class="select-label">
+                            <span class="icon">📍</span>
+                            出发地
+                        </label>
+                        <select class="quick-select" id="quickDeparture">
+                            <option value="">请选择出发地</option>
+                            <option value="北京">北京</option>
+                            <option value="南京">南京</option>
+                            <option value="合肥">合肥</option>
+                        </select>
+                    </div>
+                    
+                    <div class="select-group">
+                        <label class="select-label">
+                            <span class="icon">🎯</span>
+                            目的地
+                        </label>
+                        <select class="quick-select" id="quickDestination">
+                            <option value="">请选择目的地</option>
+                        </select>
+                    </div>
+                    
+                    <div class="select-group">
+                        <button class="quick-go-btn" id="quickGoBtn" onclick="goToGuide()">
+                            <span class="icon">✨</span>
+                            查看攻略
+                        </button>
+                    </div>
+                </div>
+                <div class="quick-tip">
+                    <span class="icon">💡</span>
+                    根据您的出发地选择，为您推荐最适合的目的地攻略
+                </div>
+            </div>
+        </div>
                                                                                 <!-- 推荐攻略按钮区域 -->
         <div class="recommendation-container">
             <div class="recommendation-header">
@@ -446,14 +693,6 @@
                     <div class="btn-content">
                         <div class="btn-title">北京-成都五一攻略</div>
                         <div class="btn-subtitle">体验古都到天府的魅力</div>
-                    </div>
-                </a>
-
-                <a href="destination/fuyang_weekend_guide.html" class="recommendation-btn">
-                    <span class="icon">🎪</span>
-                    <div class="btn-content">
-                        <div class="btn-title">fuyang-weekend-guide</div>
-                        <div class="btn-subtitle">精彩旅程等您探索</div>
                     </div>
                 </a>
 
@@ -473,6 +712,14 @@
                     </div>
                 </a>
 
+                <a href="destination/hefei_chizhou_guide.html" class="recommendation-btn">
+                    <span class="icon">⛰️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-池州周末攻略</div>
+                        <div class="btn-subtitle">佛教圣地九华山之旅</div>
+                    </div>
+                </a>
+
                 <a href="destination/hefei_chuzhou_guide.html" class="recommendation-btn">
                     <span class="icon">🏛️</span>
                     <div class="btn-content">
@@ -481,11 +728,27 @@
                     </div>
                 </a>
 
+                <a href="destination/hefei_fuyang_guide.html" class="recommendation-btn">
+                    <span class="icon">🎪</span>
+                    <div class="btn-content">
+                        <div class="btn-title">阜阳市周末游攻略</div>
+                        <div class="btn-subtitle">精彩旅程等您探索</div>
+                    </div>
+                </a>
+
                 <a href="destination/hefei_hefei_guide.html" class="recommendation-btn">
                     <span class="icon">🏛️</span>
                     <div class="btn-content">
                         <div class="btn-title">合肥-合肥周末攻略</div>
                         <div class="btn-subtitle">体验淝水风投之城</div>
+                    </div>
+                </a>
+
+                <a href="destination/hefei_huaibei_guide.html" class="recommendation-btn">
+                    <span class="icon">🏛️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-淮北周末攻略</div>
+                        <div class="btn-subtitle">探索淮北煤城文化魅力</div>
                     </div>
                 </a>
 
@@ -550,6 +813,38 @@
                     <div class="btn-content">
                         <div class="btn-title">合肥-芜湖周末攻略</div>
                         <div class="btn-subtitle">皖南风光二日游</div>
+                    </div>
+                </a>
+
+                <a href="destination/hefei_xuancheng_guide.html" class="recommendation-btn">
+                    <span class="icon">🏞️</span>
+                    <div class="btn-content">
+                        <div class="btn-title">合肥-宣城周末攻略</div>
+                        <div class="btn-subtitle">诗意皖南山水二日游</div>
+                    </div>
+                </a>
+
+                <a href="destination/nanjing_nanjing_guide.html" class="recommendation-btn">
+                    <span class="icon">🏮</span>
+                    <div class="btn-content">
+                        <div class="btn-title">南京周末游攻略</div>
+                        <div class="btn-subtitle">探寻六朝古都的魅力</div>
+                    </div>
+                </a>
+
+                <a href="destination/nanjing_wuxi_guide.html" class="recommendation-btn">
+                    <span class="icon">🌸</span>
+                    <div class="btn-content">
+                        <div class="btn-title">南京-无锡周末攻略</div>
+                        <div class="btn-subtitle">江南水乡风情二日游</div>
+                    </div>
+                </a>
+
+                <a href="destination/nanjing_zhenjiang_guide.html" class="recommendation-btn">
+                    <span class="icon">🏯</span>
+                    <div class="btn-content">
+                        <div class="btn-title">南京-镇江周末攻略</div>
+                        <div class="btn-subtitle">江南古韵千年文脉之旅</div>
                     </div>
                 </a>
 
@@ -657,6 +952,99 @@
             }, 2000); // 2秒延迟模拟处理时间
         }
         
+        // 攻略文件映射关系（基于destination目录中的实际文件）
+        const guideMapping = {
+            '北京': {
+                '成都': 'beijing_chengdu_guide.html',
+            },
+            '合肥': {
+                '安庆': 'hefei_anqing_guide.html',
+                '亳州': 'hefei_bozhou_guide.html',
+                '池州': 'hefei_chizhou_guide.html',
+                '滁州': 'hefei_chuzhou_guide.html',
+                '阜阳': 'hefei_fuyang_guide.html',
+                '合肥': 'hefei_hefei_guide.html',
+                '淮北': 'hefei_huaibei_guide.html',
+                '淮南': 'hefei_huainan_guide.html',
+                '黄山': 'hefei_huangshan_guide.html',
+                '六安': 'hefei_liuan_guide.html',
+                '马鞍山': 'hefei_maanshan_guide.html',
+                '南京': 'hefei_nanjing_guide.html',
+                '铜陵': 'hefei_tongling_guide.html',
+                '武汉': 'hefei_wuhan_guide.html',
+                '芜湖': 'hefei_wuhu_guide.html',
+                '宣城': 'hefei_xuancheng_guide.html',
+            },
+            '南京': {
+                '周末游': 'nanjing_nanjing_guide.html',
+                'wuxi': 'nanjing_wuxi_guide.html',
+                'zhenjiang': 'nanjing_zhenjiang_guide.html',
+            },
+        };
+
+        /**
+         * 更新目的地选择框
+         */
+        function updateDestinations() {
+            const departureSelect = document.getElementById('quickDeparture');
+            const destinationSelect = document.getElementById('quickDestination');
+            const goButton = document.getElementById('quickGoBtn');
+            
+            const departure = departureSelect.value;
+            
+            // 清空目的地选择框
+            destinationSelect.innerHTML = '<option value="">请选择目的地</option>';
+            
+            // 禁用按钮
+            goButton.disabled = true;
+            
+            if (departure && guideMapping[departure]) {
+                // 启用目的地选择框
+                destinationSelect.disabled = false;
+                
+                // 填充目的地选项
+                Object.keys(guideMapping[departure]).forEach(destination => {
+                    const option = document.createElement('option');
+                    option.value = destination;
+                    option.textContent = destination;
+                    destinationSelect.appendChild(option);
+                });
+            } else {
+                // 禁用目的地选择框
+                destinationSelect.disabled = true;
+            }
+        }
+
+        /**
+         * 检查是否可以启用按钮
+         */
+        function checkGoButton() {
+            const departure = document.getElementById('quickDeparture').value;
+            const destination = document.getElementById('quickDestination').value;
+            const goButton = document.getElementById('quickGoBtn');
+            
+            if (departure && destination && guideMapping[departure] && guideMapping[departure][destination]) {
+                goButton.disabled = false;
+            } else {
+                goButton.disabled = true;
+            }
+        }
+
+        /**
+         * 跳转到对应的攻略页面
+         */
+        function goToGuide() {
+            const departure = document.getElementById('quickDeparture').value;
+            const destination = document.getElementById('quickDestination').value;
+            
+            if (departure && destination && guideMapping[departure] && guideMapping[departure][destination]) {
+                const filename = guideMapping[departure][destination];
+                window.location.href = `destination/${filename}`;
+            } else {
+                alert('请选择完整的出发地和目的地！');
+            }
+        }
+
         // 页面加载完成后的初始化
         document.addEventListener('DOMContentLoaded', function() {
             console.log('智能旅游规划助手页面加载完成');
@@ -670,6 +1058,34 @@
                     }
                 });
             });
+
+            // 为快速选择功能添加事件监听
+            const quickDeparture = document.getElementById('quickDeparture');
+            const quickDestination = document.getElementById('quickDestination');
+            
+            if (quickDeparture) {
+                quickDeparture.addEventListener('change', function() {
+                    updateDestinations();
+                    checkGoButton();
+                });
+            }
+            
+            if (quickDestination) {
+                quickDestination.addEventListener('change', function() {
+                    checkGoButton();
+                });
+            }
+
+            // 初始状态设置
+            const goButton = document.getElementById('quickGoBtn');
+            if (goButton) {
+                goButton.disabled = true;
+            }
+            
+            const destinationSelect = document.getElementById('quickDestination');
+            if (destinationSelect) {
+                destinationSelect.disabled = true;
+            }
         });
     </script>
 </body>

@@ -43,7 +43,12 @@ class IndexUpdater:
             "hefei_bozhou_guide.html": ["🏛️", "合肥-亳州周末攻略", "探索千年古城中医药文化"],
             "fuyang_weekend_guide.html": ["🏛️", "合肥-阜阳周末攻略", "探索皖北水乡皖北水乡"],
             "hefei_chizhou_guide.html": ["⛰️", "合肥-池州周末攻略", "佛教圣地九华山之旅"],
-            "hefei_xuancheng_guide.html": ["🏞️", "合肥-宣城周末攻略", "诗意皖南山水二日游"]
+            "hefei_xuancheng_guide.html": ["🏞️", "合肥-宣城周末攻略", "诗意皖南山水二日游"],
+            "hefei_huaibei_guide.html": ["🏛️", "合肥-淮北周末攻略", "探索淮北煤城文化魅力"],
+            "nanjing_nanjing_guide.html": ["🏮", "南京周末游攻略", "探寻六朝古都的魅力"],
+            "nanjing_wuxi_guide.html": ["🌸", "南京-无锡周末攻略", "江南水乡风情二日游"],
+            "nanjing_zhenjiang_guide.html": ["🏯", "南京-镇江周末攻略", "江南古韵千年文脉之旅"],
+            "nanjing_changzhou_guide.html": ["🦕", "南京-常州周末攻略", "体验恐龙王国的刺激与江南古韵"]
         }
     
     def scan_destination_files(self):
@@ -141,6 +146,16 @@ class IndexUpdater:
             icon, main_title, subtitle = "🏛️", "合肥-亳州攻略", "探索千年古城中医药文化"
         elif "hefei" in filename and "xuancheng" in filename:
             icon, main_title, subtitle = "🏞️", "合肥-宣城攻略", "诗意皖南山水二日游"
+        elif "hefei" in filename and "huaibei" in filename:
+            icon, main_title, subtitle = "🏛️", "合肥-淮北攻略", "探索淮北煤城文化魅力"
+        elif "nanjing" in filename and "nanjing" in filename:
+            icon, main_title, subtitle = "🏮", "南京周末游攻略", "探寻六朝古都的魅力"
+        elif "nanjing" in filename and "wuxi" in filename:
+            icon, main_title, subtitle = "🌸", "南京-无锡攻略", "江南水乡风情二日游"
+        elif "nanjing" in filename and "zhenjiang" in filename:
+            icon, main_title, subtitle = "🏯", "南京-镇江攻略", "江南古韵千年文脉之旅"
+        elif "nanjing" in filename and "changzhou" in filename:
+            icon, main_title, subtitle = "🦕", "南京-常州攻略", "体验恐龙王国的刺激与江南古韵"
         else:
             # 通用处理
             icon = "🎪"
@@ -170,6 +185,15 @@ class IndexUpdater:
             # 特殊处理fuyang_weekend_guide.html
             if filename == 'fuyang_weekend_guide.html':
                 departure_cn = '阜阳'
+                destination_cn = '周末游'
+                if departure_cn not in mapping:
+                    mapping[departure_cn] = {}
+                mapping[departure_cn][destination_cn] = filename
+                continue
+            
+            # 特殊处理nanjing_nanjing_guide.html (南京周末游)
+            if filename == 'nanjing_nanjing_guide.html':
+                departure_cn = '南京'
                 destination_cn = '周末游'
                 if departure_cn not in mapping:
                     mapping[departure_cn] = {}
@@ -217,7 +241,11 @@ class IndexUpdater:
             'wuhan': '武汉',
             'wuhu': '芜湖',
             'xuancheng': '宣城',
+            'wuxi': '无锡',
+            'zhenjiang': '镇江',
+            'changzhou': '常州',
             'chengdu': '成都',
+            'huaibei': '淮北',
             'weekend_guide': '周末游',
             'guide': ''  # 去掉文件名中的guide后缀
         }

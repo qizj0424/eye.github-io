@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南京-镇江周末游攻略 | 江南古韵两日游完整指南</title>
+    <meta name="description" content="南京到镇江旅游攻略，包含交通、住宿、美食、景点推荐。金山寺、西津渡、焦山、北固山等必游景点，镇江锅盖面美食攻略。">
+    <meta name="keywords" content="南京镇江攻略,镇江旅游,金山寺,西津渡,镇江锅盖面,江南旅游">
+    <script src="html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="25" cy="75" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .nav-buttons {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .nav-buttons a {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-buttons a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .content-section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .content-section h2 {
+            color: #667eea;
+            border-left: 4px solid #667eea;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .content-section h3 {
+            color: #764ba2;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.4rem;
+        }
+
+        .content-section h4 {
+            color: #333;
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-card {
+            background: #f8f9ff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-tag {
+            background: #e74c3c;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .rating {
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        .schedule-day {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            margin: 1rem 0;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .schedule-day h4 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .time-block {
+            background: white;
+            margin: 0.5rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .tip-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .transport-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9ff;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .transport-option .method {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .transport-option .details {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .photo-tip {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+        }
+
+        .photo-tip strong {
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-buttons a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>🏯 南京-镇江周末游攻略</h1>
+            <p>江南古韵 · 千年文脉 · 美食之旅</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="nav-buttons">
+            <a href="index.html">🏠 返回首页</a>
+            <a href="#transport">🚗 交通指南</a>
+            <a href="#attractions">🏛️ 景点推荐</a>
+            <a href="#food">🍜 美食攻略</a>
+            <a href="#schedule">📅 行程安排</a>
+        </div>
+
+        <div class="content-section">
+            <h2>📍 基本信息</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>出发地</h4>
+                    <p>南京</p>
+                </div>
+                <div class="info-card">
+                    <h4>目的地</h4>
+                    <p>镇江</p>
+                </div>
+                <div class="info-card">
+                    <h4>最佳出行时间</h4>
+                    <p>2-3天</p>
+                </div>
+                <div class="info-card">
+                    <h4>适合人群</h4>
+                    <p>历史文化爱好者、美食探索者、情侣出游</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section" id="transport">
+            <h2>🚗 出行规划</h2>
+            
+            <h3>🚄 高铁（推荐）</h3>
+            <div class="highlight-box">
+                <strong>最快20分钟直达，班次密集，舒适便捷</strong>
+            </div>
+            <div class="transport-option">
+                <div class="method">车程</div>
+                <div class="details">20-30分钟</div>
+            </div>
+            <div class="transport-option">
+                <div class="method">票价</div>
+                <div class="details">
+                    二等座: 23-41元 | 一等座: 37-65元 | 商务座: 82-129元
+                </div>
+            </div>
+            <div class="transport-option">
+                <div class="method">班次</div>
+                <div class="details">每天50+班次，班次密集</div>
+            </div>
+            <div class="transport-option">
+                <div class="method">发车站</div>
+                <div class="details">南京南站 ↔ 镇江南站 / 南京站 ↔ 镇江站</div>
+            </div>
+            <div class="tip-box">
+                <strong>推荐班次:</strong> G7029(05:36-05:56)、G7031(06:00-06:20)等早班车
+            </div>
+
+            <h3>🚂 普通火车</h3>
+            <div class="transport-option">
+                <div class="method">车程</div>
+                <div class="details">32-59分钟</div>
+            </div>
+            <div class="transport-option">
+                <div class="method">票价</div>
+                <div class="details">
+                    硬座: 12.5元 | 硬卧: 58.5元 | 软卧: 87.5元
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>优势:</strong> 价格便宜，适合预算有限的游客
+            </div>
+
+            <h3>🚗 自驾</h3>
+            <div class="transport-option">
+                <div class="method">距离</div>
+                <div class="details">约65公里</div>
+            </div>
+            <div class="transport-option">
+                <div class="method">车程</div>
+                <div class="details">1小时左右</div>
+            </div>
+            <div class="transport-option">
+                <div class="method">路线</div>
+                <div class="details">南京 → 沪宁高速 → 镇江</div>
+            </div>
+            <div class="transport-option">
+                <div class="method">过路费</div>
+                <div class="details">约30元</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚌 镇江市内交通</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>公共交通</h4>
+                    <p><strong>公交卡:</strong> 镇江一卡通，可刷卡或扫码支付</p>
+                    <p><strong>主要线路:</strong></p>
+                    <ul>
+                        <li>15路: 连接火车站与主要景区</li>
+                        <li>49路: 金泉花园 → 焦山风景区</li>
+                        <li>30路: 三茅宫 → 焦山风景区</li>
+                        <li>112路: 南山西入口 → 京口中学</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h4>出租车/网约车</h4>
+                    <p><strong>起步价:</strong> 8元（3公里内）</p>
+                    <p><strong>市区打车:</strong> 一般20-40元可到达主要景点</p>
+                </div>
+                <div class="info-card">
+                    <h4>共享单车</h4>
+                    <p><strong>品牌:</strong> 哈啰单车、青桔单车等</p>
+                    <p><strong>适用:</strong> 景区间短距离出行</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section" id="attractions">
+            <h2>🏛️ 景点推荐</h2>
+            
+            <h3>必游景点</h3>
+            
+            <div class="info-card">
+                <h4>1. 金山寺 <span class="rating">⭐⭐⭐⭐⭐</span></h4>
+                <p><strong>门票:</strong> <span class="price-tag">65元</span></p>
+                <p><strong>开放时间:</strong> 6:00-18:00</p>
+                <p><strong>游玩时长:</strong> 2-3小时</p>
+                <p><strong>特色:</strong> 白蛇传故事发源地，"金山寺在江心"</p>
+                <p><strong>地址:</strong> 金山路62号</p>
+                <p><strong>交通:</strong> 可乘坐15路、38路等公交到达</p>
+            </div>
+
+            <div class="info-card">
+                <h4>2. 西津渡历史文化街区 <span class="rating">⭐⭐⭐⭐⭐</span></h4>
+                <p><strong>门票:</strong> <span class="price-tag">免费</span>（部分景点收费）</p>
+                <p><strong>开放时间:</strong> 全天</p>
+                <p><strong>游玩时长:</strong> 半天</p>
+                <p><strong>特色:</strong> 千年古渡口，保存完好的历史街区</p>
+                <p><strong>地址:</strong> 西津渡街25号</p>
+                <p><strong>网红打卡点:</strong> 西津渡古街石板路、昭关石塔</p>
+            </div>
+
+            <div class="info-card">
+                <h4>3. 焦山风景区 <span class="rating">⭐⭐⭐⭐</span></h4>
+                <p><strong>门票:</strong> <span class="price-tag">65元</span>（含往返轮渡）</p>
+                <p><strong>开放时间:</strong> 8:00-17:00</p>
+                <p><strong>游玩时长:</strong> 3-4小时</p>
+                <p><strong>特色:</strong> 江中绿洲，书法艺术宝库</p>
+                <p><strong>地址:</strong> 东吴路83号</p>
+            </div>
+
+            <div class="info-card">
+                <h4>4. 北固山公园 <span class="rating">⭐⭐⭐⭐</span></h4>
+                <p><strong>门票:</strong> <span class="price-tag">40元</span></p>
+                <p><strong>开放时间:</strong> 6:00-18:00</p>
+                <p><strong>游玩时长:</strong> 2-3小时</p>
+                <p><strong>特色:</strong> 三国文化圣地，"天下第一江山"</p>
+                <p><strong>地址:</strong> 东吴路3号</p>
+            </div>
+
+            <h3>小众景点</h3>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>镇江博物馆 <span class="rating">⭐⭐⭐</span></h4>
+                    <p><strong>门票:</strong> 免费（需预约）</p>
+                    <p><strong>特色:</strong> 了解镇江历史文化</p>
+                </div>
+                <div class="info-card">
+                    <h4>中国镇江醋文化博物馆 <span class="rating">⭐⭐⭐</span></h4>
+                    <p><strong>门票:</strong> 30元</p>
+                    <p><strong>特色:</strong> 了解镇江香醋制作工艺</p>
+                </div>
+                <div class="info-card">
+                    <h4>宝华山国家森林公园 <span class="rating">⭐⭐⭐⭐</span></h4>
+                    <p><strong>门票:</strong> 50元</p>
+                    <p><strong>特色:</strong> 佛教文化与自然风光结合</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🏨 住宿建议</h2>
+            
+            <h3>高端酒店</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>镇江康华汇利喜来登酒店 <span class="rating">⭐⭐⭐⭐⭐</span></h4>
+                    <p><strong>地址:</strong> 北府路88号</p>
+                    <p><strong>价格:</strong> 400-800元/晚</p>
+                    <p><strong>特色:</strong> 国际连锁，服务优质</p>
+                </div>
+                <div class="info-card">
+                    <h4>镇江佰润粤海国际酒店 <span class="rating">⭐⭐⭐⭐</span></h4>
+                    <p><strong>地址:</strong> 黄山南路21号</p>
+                    <p><strong>价格:</strong> 300-500元/晚</p>
+                    <p><strong>特色:</strong> 近市中心，交通便利</p>
+                </div>
+            </div>
+
+            <h3>经济型酒店</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>全季酒店(镇江火车站店) <span class="rating">⭐⭐⭐</span></h4>
+                    <p><strong>地址:</strong> 黄山西路29号常发广场8号楼</p>
+                    <p><strong>价格:</strong> 200-300元/晚</p>
+                    <p><strong>特色:</strong> 近火车站，交通方便</p>
+                </div>
+                <div class="info-card">
+                    <h4>维也纳酒店(镇江火车站西津渡店) <span class="rating">⭐⭐⭐</span></h4>
+                    <p><strong>地址:</strong> 朱方路2道巷9号</p>
+                    <p><strong>价格:</strong> 150-250元/晚</p>
+                    <p><strong>特色:</strong> 近西津渡景区</p>
+                </div>
+            </div>
+
+            <h3>特色民宿</h3>
+            <div class="info-card">
+                <h4>镇江西津渡雅狮度假精品酒店 <span class="rating">⭐⭐⭐⭐</span></h4>
+                <p><strong>地址:</strong> 迎江路43号</p>
+                <p><strong>价格:</strong> 300-600元/晚</p>
+                <p><strong>特色:</strong> 古典庭院风格，文化氛围浓厚</p>
+            </div>
+        </div>
+
+        <div class="content-section" id="food">
+            <h2>🍜 美食推荐</h2>
+            
+            <h3>必吃特色美食</h3>
+            
+            <div class="highlight-box">
+                <h4>镇江锅盖面 <span class="rating">⭐⭐⭐⭐⭐</span></h4>
+                <p><strong>推荐店铺:</strong></p>
+                <ul>
+                    <li>镇江锅盖面(永安路店) - 古更楼巷28栋</li>
+                    <li>好润发锅盖面(万达店) - 华都名城荣锦苑60栋</li>
+                    <li>陶大面馆(万达店) - 万达广场C02幢1层</li>
+                </ul>
+                <p><strong>特色:</strong> 面条爽滑，汤鲜味美，锅盖独特制作工艺</p>
+                <p><strong>价格:</strong> 15-25元/碗</p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>镇江香醋</h4>
+                    <p><strong>推荐:</strong> 恒顺香醋，镇江特产</p>
+                    <p><strong>购买地点:</strong> 各大超市、醋文化博物馆</p>
+                </div>
+                <div class="info-card">
+                    <h4>蟹黄汤包</h4>
+                    <p><strong>推荐店铺:</strong> 老字号包子店</p>
+                    <p><strong>特色:</strong> 皮薄汁多，蟹黄鲜美</p>
+                    <p><strong>价格:</strong> 25-35元/笼</p>
+                </div>
+            </div>
+
+            <h3>网红美食店</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>海底捞火锅(常发广场店)</h4>
+                    <p><strong>地址:</strong> 黄山西路15号常发广场1层</p>
+                    <p><strong>特色:</strong> 连锁火锅，服务优质</p>
+                </div>
+                <div class="info-card">
+                    <h4>全聚德(领城国际店)</h4>
+                    <p><strong>地址:</strong> 黄山西路26号领城国际A座一层</p>
+                    <p><strong>特色:</strong> 北京烤鸭名店</p>
+                </div>
+                <div class="info-card">
+                    <h4>静悦轩·江南小菜(国控大厦店)</h4>
+                    <p><strong>地址:</strong> 南山路61号国投商务广场F1层</p>
+                    <p><strong>特色:</strong> 江南风味菜肴</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📸 网红打卡地推荐</h2>
+            
+            <div class="photo-tip">
+                <h4>1. 西津渡古街 <span class="rating">⭐⭐⭐⭐⭐</span></h4>
+                <p><strong>拍照点:</strong> 石板路、古建筑、昭关石塔</p>
+                <p><strong>最佳时间:</strong> 傍晚黄昏时分</p>
+                <p><strong>交通:</strong> 公交15路、49路可达</p>
+            </div>
+
+            <div class="photo-tip">
+                <h4>2. 金山寺水中倒影 <span class="rating">⭐⭐⭐⭐</span></h4>
+                <p><strong>拍照点:</strong> 寺庙与长江的完美结合</p>
+                <p><strong>最佳时间:</strong> 清晨或傍晚</p>
+                <p><strong>交通:</strong> 金山公园内</p>
+            </div>
+
+            <div class="photo-tip">
+                <h4>3. 北固山甘露寺 <span class="rating">⭐⭐⭐⭐</span></h4>
+                <p><strong>拍照点:</strong> "天下第一江山"石刻</p>
+                <p><strong>最佳时间:</strong> 上午光线较好</p>
+                <p><strong>交通:</strong> 公交到北固山公园</p>
+            </div>
+
+            <div class="photo-tip">
+                <h4>4. 焦山定慧寺 <span class="rating">⭐⭐⭐</span></h4>
+                <p><strong>拍照点:</strong> 古塔与江景</p>
+                <p><strong>最佳时间:</strong> 下午2-4点</p>
+                <p><strong>交通:</strong> 需乘轮渡上岛</p>
+            </div>
+        </div>
+
+        <div class="content-section" id="schedule">
+            <h2>🗓️ 两日行程建议</h2>
+            
+            <div class="schedule-day">
+                <h4>Day 1: 古韵镇江</h4>
+                <div class="time-block">
+                    <strong>上午 (9:00-12:00)</strong>
+                    <ul>
+                        <li>抵达镇江，前往西津渡历史文化街区</li>
+                        <li>游览古街，参观昭关石塔</li>
+                        <li>品尝镇江锅盖面</li>
+                    </ul>
+                </div>
+                <div class="time-block">
+                    <strong>下午 (13:30-17:00)</strong>
+                    <ul>
+                        <li>前往金山寺</li>
+                        <li>登塔观江景，了解白蛇传文化</li>
+                        <li>在金山湖畔休憩拍照</li>
+                    </ul>
+                </div>
+                <div class="time-block">
+                    <strong>晚上 (18:00-21:00)</strong>
+                    <ul>
+                        <li>返回市区，逛万达广场或常发广场</li>
+                        <li>品尝当地特色菜肴</li>
+                        <li>入住酒店休息</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="schedule-day">
+                <h4>Day 2: 山水镇江</h4>
+                <div class="time-block">
+                    <strong>上午 (8:30-12:00)</strong>
+                    <ul>
+                        <li>前往焦山风景区</li>
+                        <li>乘轮渡上岛，游览定慧寺</li>
+                        <li>欣赏书法碑刻艺术</li>
+                    </ul>
+                </div>
+                <div class="time-block">
+                    <strong>下午 (13:30-16:30)</strong>
+                    <ul>
+                        <li>前往北固山公园</li>
+                        <li>登甘露寺，观长江美景</li>
+                        <li>寻访三国古迹</li>
+                    </ul>
+                </div>
+                <div class="time-block">
+                    <strong>下午 (17:00-19:00)</strong>
+                    <ul>
+                        <li>可选择前往镇江醋文化博物馆</li>
+                        <li>购买特产香醋</li>
+                        <li>返程南京</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🌤️ 天气穿搭建议</h2>
+            
+            <h3>当前天气情况（6月）</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>今日</h4>
+                    <p>多云转阴，26-36°C，东南风1-3级</p>
+                </div>
+                <div class="info-card">
+                    <h4>明日</h4>
+                    <p>中雨转大雨，24-27°C，南风1-3级</p>
+                </div>
+                <div class="info-card">
+                    <h4>后天</h4>
+                    <p>小雨转大雨，23-29°C，南风1-3级</p>
+                </div>
+            </div>
+
+            <h3>穿搭建议</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>夏季</h4>
+                    <p>短袖、短裤、防晒帽、遮阳伞</p>
+                </div>
+                <div class="info-card">
+                    <h4>雨季</h4>
+                    <p>轻薄雨衣、防滑鞋、速干衣物</p>
+                </div>
+                <div class="info-card">
+                    <h4>必备</h4>
+                    <p>防晒霜、墨镜、充电宝</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>💡 防坑小贴士</h2>
+            
+            <div class="warning-box">
+                <h4>交通方面</h4>
+                <ul>
+                    <li><strong>高铁票:</strong> 提前购买，特别是周末和节假日</li>
+                    <li><strong>市内交通:</strong> 下载"镇江公交"APP查询实时班次</li>
+                    <li><strong>打车:</strong> 使用正规网约车平台，避免黑车</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>景点方面</h4>
+                <ul>
+                    <li><strong>焦山:</strong> 注意轮渡时间，最晚16:30</li>
+                    <li><strong>金山寺:</strong> 避开节假日高峰期，人流量大</li>
+                    <li><strong>门票:</strong> 可在官方渠道购买，避免黄牛</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>美食方面</h4>
+                <ul>
+                    <li><strong>锅盖面:</strong> 选择老字号店铺，口味更正宗</li>
+                    <li><strong>香醋:</strong> 认准恒顺品牌，避免假冒产品</li>
+                    <li><strong>消费:</strong> 正常消费水平，避免景区内高价餐厅</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>住宿方面</h4>
+                <ul>
+                    <li><strong>预订:</strong> 提前预订，特别是周末</li>
+                    <li><strong>位置:</strong> 选择交通便利的酒店</li>
+                    <li><strong>点评:</strong> 参考真实用户评价</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📱 实用信息</h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>紧急联系方式</h4>
+                    <ul>
+                        <li>报警: 110</li>
+                        <li>火警: 119</li>
+                        <li>医疗急救: 120</li>
+                        <li>旅游投诉: 12301</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h4>当地特产推荐</h4>
+                    <ul>
+                        <li><strong>恒顺香醋</strong> - 镇江特产，调味佳品</li>
+                        <li><strong>镇江膏药</strong> - 传统中药膏药</li>
+                        <li><strong>金山翠芽茶</strong> - 当地名茶</li>
+                        <li><strong>句容草莓</strong> - 时令水果（冬春季）</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h4>购物地点</h4>
+                    <ul>
+                        <li><strong>万达广场:</strong> 品牌齐全，餐饮丰富</li>
+                        <li><strong>常发广场:</strong> 本地购物中心</li>
+                        <li><strong>八佰伴:</strong> 老牌百货商场</li>
+                        <li><strong>苏宁广场:</strong> 电器数码产品</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="highlight-box">
+                <h3>🎯 温馨提示</h3>
+                <p>镇江是一座充满历史韵味的江南小城，建议放慢脚步，细细品味这里的文化底蕴。记得品尝正宗的镇江锅盖面，感受"白蛇传"的浪漫传说！</p>
+                <p><em>最后更新时间: 2025年6月</em></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 旅游攻略指南 | 让每一次旅行都充满美好回忆</p>
+            <p>本攻略仅供参考，实际情况请以当地最新信息为准</p>
+        </div>
+    </footer>
+</body>
+</html> 

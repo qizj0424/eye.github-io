@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南京-常州周末游玩攻略 | Eye旅行指南</title>
+    <script src="html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        .weather-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .weather-card {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .weather-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .return-home {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .return-home:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-section h2 {
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-section h3 {
+            font-size: 1.5em;
+            color: #34495e;
+            margin: 25px 0 15px;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .content-section h4 {
+            font-size: 1.3em;
+            color: #2980b9;
+            margin: 20px 0 10px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .transport-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .transport-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .transport-card h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .price-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 5px 5px 5px 0;
+            font-weight: bold;
+        }
+
+        .attraction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .attraction-card {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(116, 185, 255, 0.3);
+        }
+
+        .attraction-card h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .hotspot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .hotspot-card {
+            background: linear-gradient(135deg, #ff7675, #fd79a8);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 118, 117, 0.3);
+        }
+
+        .hotspot-card h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .hotel-card {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 184, 148, 0.3);
+        }
+
+        .hotel-card h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .restaurant-card {
+            background: linear-gradient(135deg, #fdcb6e, #f39c12);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(253, 203, 110, 0.3);
+        }
+
+        .restaurant-card h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #667eea;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 20px 0;
+            padding: 20px;
+            width: 45%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 55%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -35px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -35px;
+        }
+
+        .budget-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .budget-card {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(162, 155, 254, 0.3);
+        }
+
+        .budget-card h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .tips-card {
+            background: linear-gradient(135deg, #55a3ff, #667eea);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(85, 163, 255, 0.3);
+        }
+
+        .tips-card h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .tips-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips-card li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .tips-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00b894;
+            font-weight: bold;
+        }
+
+        .tips-card li.warning::before {
+            content: "✗";
+            color: #e74c3c;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            color: #2d3436;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 10px 30px rgba(255, 234, 167, 0.3);
+        }
+
+        .highlight-box h3 {
+            color: #2d3436;
+            margin-bottom: 15px;
+            border: none;
+            padding: 0;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 10px 30px rgba(253, 121, 168, 0.3);
+        }
+
+        .contact-info h3 {
+            color: white;
+            margin-bottom: 15px;
+            border: none;
+            padding: 0;
+        }
+
+        .contact-info ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .contact-info li {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .footer p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .footer .tips-list {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .footer .tips-list li {
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: calc(100% - 40px);
+                left: 40px !important;
+            }
+
+            .timeline-item::after {
+                left: -35px !important;
+            }
+
+            .return-home {
+                top: 10px;
+                right: 10px;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="return-home" onclick="window.location.href='../index.html'">返回首页</button>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🦕 南京-常州周末游玩攻略</h1>
+            <p><strong>出发地：</strong>南京 | <strong>目的地：</strong>常州 | <strong>推荐天数：</strong>2天1夜</p>
+            <p><strong>最佳季节：</strong>四季皆宜，春秋最佳 | <strong>攻略生成时间：</strong>2025年6月18日</p>
+            
+            <div class="weather-info">
+                <div class="weather-card">
+                    <h3>6月18日(周三)</h3>
+                    <p>多云转阴</p>
+                    <p>27°C - 35°C</p>
+                    <p>东南风1-3级</p>
+                </div>
+                <div class="weather-card">
+                    <h3>6月19日(周四)</h3>
+                    <p>小雨转中雨</p>
+                    <p>26°C - 29°C</p>
+                    <p>东南风1-3级</p>
+                </div>
+                <div class="weather-card">
+                    <h3>6月20日(周五)</h3>
+                    <p>小雨转中雨</p>
+                    <p>25°C - 29°C</p>
+                    <p>南风1-3级</p>
+                </div>
+                <div class="weather-card">
+                    <h3>6月21日(周六)</h3>
+                    <p>大雨转小雨</p>
+                    <p>20°C - 25°C</p>
+                    <p>西北风1-3级</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚄 出行规划</h2>
+            <h3>交通方式对比</h3>
+            
+            <div class="transport-comparison">
+                <div class="transport-card">
+                    <h4>1. 普通火车（推荐）</h4>
+                    <p><strong>出发站：</strong>南京站</p>
+                    <p><strong>到达站：</strong>常州站</p>
+                    <p><strong>运行时间：</strong>约1小时12分钟-1小时33分钟</p>
+                    <div class="price-tag">硬座：21.5元</div>
+                    <div class="price-tag">硬卧：67.5元</div>
+                    <div class="price-tag">软卧：102.5元</div>
+                    <p><strong>推荐班次：</strong>T135、K1555、K359</p>
+                    <p><strong>优势：</strong>价格便宜，班次较多，时间短</p>
+                </div>
+                
+                <div class="transport-card">
+                    <h4>2. 自驾</h4>
+                    <p><strong>距离：</strong>约140公里</p>
+                    <p><strong>行驶时间：</strong>约1小时50分钟</p>
+                    <p><strong>路线：</strong>南京→G42沪蓉高速→常州</p>
+                    <div class="price-tag">过路费：约60元</div>
+                    <div class="price-tag">油费：约90元</div>
+                    <p><strong>优势：</strong>自由度高，方便携带行李</p>
+                </div>
+                
+                <div class="transport-card">
+                    <h4>3. 长途客车</h4>
+                    <p><strong>出发站：</strong>南京汽车客运站</p>
+                    <p><strong>到达站：</strong>常州汽车客运站</p>
+                    <p><strong>运行时间：</strong>约2小时</p>
+                    <div class="price-tag">票价：约55元</div>
+                    <p><strong>班次：</strong>每天多班</p>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <h3>💡 建议</h3>
+                <p>选择普通火车，性价比最高且到达市中心方便</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚌 常州市内交通</h2>
+            
+            <div class="grid-container">
+                <div class="card">
+                    <h4>地铁系统</h4>
+                    <p><strong>1号线：</strong>博爱路站-森林公园站</p>
+                    <p>主要站点：常州火车站、文化宫、红梅公园、博爱路</p>
+                    <p><strong>2号线：</strong>五角场站-宜兴站</p>
+                    <p>主要站点：常州火车站、青枫公园、新区公园</p>
+                </div>
+                
+                <div class="card">
+                    <h4>支付方式</h4>
+                    <p>• 常州地铁APP：支持扫码乘车</p>
+                    <p>• 支付宝/微信：可直接扫码乘车</p>
+                    <p>• 全国交通一卡通：支持刷卡乘车</p>
+                </div>
+                
+                <div class="card">
+                    <h4>其他交通</h4>
+                    <p><strong>出租车：</strong>起步价8元（3公里内）</p>
+                    <p><strong>网约车：</strong>滴滴、高德等</p>
+                    <p><strong>公交：</strong>2元/次，扫码支付</p>
+                    <p><strong>共享单车：</strong>1.5元/15分钟</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 景点推荐</h2>
+            <h3>🔥 热门必游景点</h3>
+            
+            <div class="attraction-grid">
+                <div class="attraction-card">
+                    <h4>1. 中华恐龙园</h4>
+                    <p><strong>地址：</strong>新北区河海东路60号</p>
+                    <p><strong>门票：</strong>260元（包含游乐设施）</p>
+                    <p><strong>开放时间：</strong>9:00-17:00</p>
+                    <p><strong>游玩时长：</strong>一整天</p>
+                    <p><strong>特色：</strong>中国最大的恐龙主题公园</p>
+                    <p><strong>推荐项目：</strong>通天塔、翼龙骑士、雷龙过山车</p>
+                </div>
+                
+                <div class="attraction-card">
+                    <h4>2. 天宁禅寺</h4>
+                    <p><strong>地址：</strong>天宁区延陵中路636号</p>
+                    <p><strong>门票：</strong>20元，登宝塔另收费80元</p>
+                    <p><strong>开放时间：</strong>7:00-17:30</p>
+                    <p><strong>游玩时长：</strong>2-3小时</p>
+                    <p><strong>特色：</strong>1300多年历史的古刹</p>
+                    <p><strong>交通：</strong>地铁1号线文化宫站步行10分钟</p>
+                </div>
+                
+                <div class="attraction-card">
+                    <h4>3. 青果巷历史文化街区</h4>
+                    <p><strong>地址：</strong>天宁区东下塘74号</p>
+                    <p><strong>门票：</strong>免费</p>
+                    <p><strong>开放时间：</strong>全天</p>
+                    <p><strong>游玩时长：</strong>2-3小时</p>
+                    <p><strong>特色：</strong>明清古建筑群，江南水乡风情</p>
+                    <p><strong>交通：</strong>地铁1号线文化宫站5B口步行5分钟</p>
+                </div>
+                
+                <div class="attraction-card">
+                    <h4>4. 常州博物馆</h4>
+                    <p><strong>地址：</strong>新北区龙城大道1288号</p>
+                    <p><strong>门票：</strong>免费（需预约）</p>
+                    <p><strong>开放时间：</strong>周二至周日9:00-17:00</p>
+                    <p><strong>游玩时长：</strong>2-3小时</p>
+                    <p><strong>特色：</strong>了解常州历史文化</p>
+                    <p><strong>交通：</strong>地铁1号线市民广场站</p>
+                </div>
+            </div>
+            
+            <h3>🌟 小众特色景点</h3>
+            <div class="grid-container">
+                <div class="card">
+                    <h4>红梅公园</h4>
+                    <p><strong>门票：</strong>免费，文笔塔登塔10元</p>
+                    <p><strong>特色：</strong>市内最大公园，有文笔塔、红梅阁</p>
+                </div>
+                
+                <div class="card">
+                    <h4>运河五号创意街区</h4>
+                    <p><strong>门票：</strong>免费</p>
+                    <p><strong>特色：</strong>工业遗址改造的文创园区</p>
+                </div>
+                
+                <div class="card">
+                    <h4>青枫公园</h4>
+                    <p><strong>门票：</strong>免费</p>
+                    <p><strong>特色：</strong>现代化城市公园，适合散步拍照</p>
+                </div>
+                
+                <div class="card">
+                    <h4>东坡园</h4>
+                    <p><strong>门票：</strong>免费</p>
+                    <p><strong>特色：</strong>纪念苏东坡的古典园林</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📸 网红打卡地推荐</h2>
+            
+            <div class="hotspot-grid">
+                <div class="hotspot-card">
+                    <h4>1. 中华恐龙园入口恐龙雕塑</h4>
+                    <p><strong>最佳拍照时间：</strong>上午10-11点光线最好</p>
+                    <p><strong>特色：</strong>超大恐龙造型，科幻感十足</p>
+                </div>
+                
+                <div class="hotspot-card">
+                    <h4>2. 天宁宝塔</h4>
+                    <p><strong>最佳拍照时间：</strong>夕阳西下时分</p>
+                    <p><strong>特色：</strong>现代佛教建筑，金碧辉煌</p>
+                </div>
+                
+                <div class="hotspot-card">
+                    <h4>3. 青果巷古街夜景</h4>
+                    <p><strong>最佳拍照时间：</strong>晚上7-9点</p>
+                    <p><strong>特色：</strong>江南水乡夜景，古朴雅致</p>
+                </div>
+                
+                <div class="hotspot-card">
+                    <h4>4. 常州文化广场</h4>
+                    <p><strong>地址：</strong>新北区龙城大道1288号</p>
+                    <p><strong>特色：</strong>现代建筑群，音乐喷泉表演</p>
+                </div>
+                
+                <div class="hotspot-card">
+                    <h4>5. 运河五号创意街区</h4>
+                    <p><strong>特色：</strong>工业风建筑，涂鸦墙</p>
+                    <p><strong>拍照点：</strong>老厂房、创意装置艺术</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🏨 住宿建议</h2>
+            
+            <div class="hotel-grid">
+                <div class="hotel-card">
+                    <h4>常州明都大饭店</h4>
+                    <p><strong>位置：</strong>天宁区和平北路258号</p>
+                    <p><strong>价格：</strong>约350-450元/晚</p>
+                    <p><strong>优势：</strong>老牌五星酒店，近天宁寺</p>
+                </div>
+                
+                <div class="hotel-card">
+                    <h4>常州白金汉爵大酒店</h4>
+                    <p><strong>位置：</strong>武进区东方东路227号</p>
+                    <p><strong>价格：</strong>约300-400元/晚</p>
+                    <p><strong>优势：</strong>豪华装修，设施齐全</p>
+                </div>
+                
+                <div class="hotel-card">
+                    <h4>维也纳国际酒店(湖塘店)</h4>
+                    <p><strong>位置：</strong>武进区常武北路72号</p>
+                    <p><strong>价格：</strong>约160-220元/晚</p>
+                    <p><strong>优势：</strong>连锁品牌，性价比高</p>
+                </div>
+                
+                <div class="hotel-card">
+                    <h4>常州文璞酒店</h4>
+                    <p><strong>位置：</strong>新北区锦绣路2号</p>
+                    <p><strong>价格：</strong>约280-380元/晚</p>
+                    <p><strong>优势：</strong>近文化广场，设计感强</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🍜 美食推荐</h2>
+            
+            <h3>必尝特色美食</h3>
+            <div class="highlight-box">
+                <p><strong>常州银丝面</strong> - 面条细如银丝，汤清味鲜</p>
+                <p><strong>常州麻糕</strong> - 传统糕点，香甜可口</p>
+                <p><strong>常州萝卜干</strong> - 开胃小菜，酸甜爽脆</p>
+                <p><strong>天目湖大鱼头</strong> - 湖鲜美味，营养丰富</p>
+                <p><strong>常州芝麻糖</strong> - 香甜酥脆的传统零食</p>
+            </div>
+            
+            <h3>推荐餐厅</h3>
+            <div class="restaurant-grid">
+                <div class="restaurant-card">
+                    <h4>老西门·常州菜(新北店)</h4>
+                    <p><strong>地址：</strong>新北区晋陵北路398号</p>
+                    <p><strong>特色：</strong>正宗常州菜，装修古雅</p>
+                </div>
+                
+                <div class="restaurant-card">
+                    <h4>绿茶餐厅(万达店)</h4>
+                    <p><strong>地址：</strong>新北区通江中路88号新北万达广场4F</p>
+                    <p><strong>特色：</strong>网红餐厅，环境优美</p>
+                </div>
+                
+                <div class="restaurant-card">
+                    <h4>太食獸泰式茶餐厅</h4>
+                    <p><strong>地址：</strong>武进区中吴大道1231号常州万象城F6层</p>
+                    <p><strong>特色：</strong>泰式料理，异域风情</p>
+                </div>
+                
+                <div class="restaurant-card">
+                    <h4>常州大学城夜市</h4>
+                    <p><strong>地址：</strong>武进区凤栖路附近</p>
+                    <p><strong>特色：</strong>小吃集中，价格便宜</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📅 两日行程安排</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Day 1 上午 (9:00-12:00)</h4>
+                    <p>• 抵达常州站</p>
+                    <p>• 前往天宁禅寺，参观古刹和天宁宝塔</p>
+                    <p>• 游览时间：3小时</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Day 1 中午 (12:00-13:30)</h4>
+                    <p>• 在附近用餐</p>
+                    <p>• 推荐老西门常州菜</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Day 1 下午 (13:30-17:00)</h4>
+                    <p>• 游览青果巷历史文化街区</p>
+                    <p>• 参观东坡园</p>
+                    <p>• 前往运河五号创意街区</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Day 1 晚上 (17:00-21:00)</h4>
+                    <p>• 入住酒店</p>
+                    <p>• 晚餐后漫步红梅公园</p>
+                    <p>• 夜游青果巷，欣赏夜景</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Day 2 上午 (8:30-12:00)</h4>
+                    <p>• 早餐后前往中华恐龙园</p>
+                    <p>• 体验热门项目：通天塔、翼龙骑士</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Day 2 下午 (12:00-17:00)</h4>
+                    <p>• 园内用餐</p>
+                    <p>• 继续游玩恐龙园</p>
+                    <p>• 观看恐龙表演，体验4D影院</p>
+                    <p>• 购买纪念品</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Day 2 晚上 (17:00起)</h4>
+                    <p>• 前往常州站，返回南京</p>
+                    <p>• 或选择留宿一晚，第二天上午返程</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>💰 费用预算</h2>
+            
+            <div class="budget-grid">
+                <div class="budget-card">
+                    <h4>经济型（400-600元/人）</h4>
+                    <p>• 交通：火车往返43元</p>
+                    <p>• 住宿：经济型酒店160元/晚</p>
+                    <p>• 门票：恐龙园260元 + 天宁寺20元</p>
+                    <p>• 餐饮：100元/天</p>
+                    <p>• 其他：50元</p>
+                </div>
+                
+                <div class="budget-card">
+                    <h4>舒适型（600-900元/人）</h4>
+                    <p>• 交通：火车往返43元 + 市内交通50元</p>
+                    <p>• 住宿：中档酒店280元/晚</p>
+                    <p>• 门票：恐龙园260元 + 天宁寺100元</p>
+                    <p>• 餐饮：150元/天</p>
+                    <p>• 其他：100元</p>
+                </div>
+                
+                <div class="budget-card">
+                    <h4>豪华型（900-1500元/人）</h4>
+                    <p>• 交通：自驾往返200元</p>
+                    <p>• 住宿：高档酒店400元/晚</p>
+                    <p>• 门票：恐龙园260元 + 天宁寺100元</p>
+                    <p>• 餐饮：250元/天</p>
+                    <p>• 其他：200元</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🌤️ 天气与穿搭建议</h2>
+            
+            <div class="grid-container">
+                <div class="card">
+                    <h4>夏季（6-8月）</h4>
+                    <p><strong>天气：</strong>炎热潮湿，25-35℃，多雨</p>
+                    <p><strong>穿搭：</strong>轻薄透气衣物，防晒帽，雨具</p>
+                    <p><strong>注意：</strong>防暑降温，多补充水分</p>
+                </div>
+                
+                <div class="card">
+                    <h4>春季（3-5月）</h4>
+                    <p><strong>天气：</strong>温和舒适，15-25℃</p>
+                    <p><strong>穿搭：</strong>长袖衬衫 + 薄外套</p>
+                    <p><strong>特色：</strong>最佳旅游季节</p>
+                </div>
+                
+                <div class="card">
+                    <h4>秋季（9-11月）</h4>
+                    <p><strong>天气：</strong>凉爽干燥，15-25℃</p>
+                    <p><strong>穿搭：</strong>长袖 + 轻薄外套</p>
+                    <p><strong>特色：</strong>秋高气爽，适宜出游</p>
+                </div>
+                
+                <div class="card">
+                    <h4>冬季（12-2月）</h4>
+                    <p><strong>天气：</strong>寒冷湿润，0-10℃</p>
+                    <p><strong>穿搭：</strong>厚外套，保暖衣物</p>
+                    <p><strong>注意：</strong>部分景点开放时间调整</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 防坑小贴士</h2>
+            
+            <div class="tips-grid">
+                <div class="tips-card">
+                    <h4>交通出行</h4>
+                    <ul>
+                        <li>提前购买火车票，避免无票</li>
+                        <li>下载常州地铁APP，扫码乘车方便</li>
+                        <li class="warning">避免在火车站附近打黑车</li>
+                        <li class="warning">节假日避免自驾，拥堵严重</li>
+                    </ul>
+                </div>
+                
+                <div class="tips-card">
+                    <h4>住宿选择</h4>
+                    <ul>
+                        <li>选择正规酒店，查看评价</li>
+                        <li>提前预订，特别是周末和节假日</li>
+                        <li class="warning">避免选择过于偏远的住宿地</li>
+                        <li class="warning">不要贪图便宜选择无证民宿</li>
+                    </ul>
+                </div>
+                
+                <div class="tips-card">
+                    <h4>景点游览</h4>
+                    <ul>
+                        <li>恐龙园门票包含所有项目</li>
+                        <li>天宁寺登塔需另付费，可选择性游览</li>
+                        <li class="warning">避免购买景区内高价商品</li>
+                        <li class="warning">拍照时注意保管财物</li>
+                    </ul>
+                </div>
+                
+                <div class="tips-card">
+                    <h4>美食体验</h4>
+                    <ul>
+                        <li>尝试当地特色小吃，物美价廉</li>
+                        <li>选择人气旺的餐厅，品质有保障</li>
+                        <li class="warning">避免在景区内用餐，价格偏高</li>
+                        <li class="warning">注意食品卫生，选择正规餐厅</li>
+                    </ul>
+                </div>
+                
+                <div class="tips-card">
+                    <h4>购物消费</h4>
+                    <ul>
+                        <li>对比价格后再购买纪念品</li>
+                        <li>保留购物小票，便于退换</li>
+                        <li class="warning">避免冲动消费，理性购买</li>
+                        <li class="warning">不要轻信街头小贩的"特价"商品</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-info">
+            <h3>📞 应急联系方式</h3>
+            <ul>
+                <li>常州旅游咨询热线：0519-85681111</li>
+                <li>常州火车站咨询：0519-88302222</li>
+                <li>常州地铁客服：0519-96196</li>
+                <li>急救电话：120</li>
+                <li>报警电话：110</li>
+                <li>消防电话：119</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <h1>💡 温馨提示</h1>
+            <div class="tips-list">
+                <ol>
+                    <li>关注天气预报，做好雨具准备</li>
+                    <li>恐龙园人气很高，建议工作日前往</li>
+                    <li>常州美食值得品尝，不要错过当地特色</li>
+                    <li>拍照时注意安全，遵守景区规定</li>
+                    <li>保持环保意识，爱护景区环境</li>
+                </ol>
+            </div>
+            <p><strong>祝您在常州玩得开心！🎉</strong></p>
+            <p><em>本攻略内容基于2025年6月信息整理，实际出行前请确认最新的票价、开放时间等信息。</em></p>
+        </div>
+    </div>
+</body>
+</html> 

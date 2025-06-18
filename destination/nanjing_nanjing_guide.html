@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <script src="html2canvas.min.js"></script>
+    <!-- 
+     * 南京周末游攻略页面
+     * 功能：为用户提供详细的南京本地两日游旅行攻略信息
+     * 包含交通、住宿、景点、美食等全方位指南
+     -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南京周末游攻略 | 探寻六朝古都的魅力</title>
+    <style>
+        /* 
+         * 旅游攻略页面样式
+         * 功能：提供清晰、美观的攻略展示界面
+         * 支持响应式设计，适配各种设备
+         */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .guide-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .guide-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content-section {
+            background: white;
+            margin-bottom: 25px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #ff8a80;
+        }
+
+        .price-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .price-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .price-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .price-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .schedule-day {
+            background: #e8f4fd;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .day-title {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .time-slot {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .food-item {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .tips-container {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tips-title {
+            color: #155724;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .attraction-card {
+            background: #f8f9fc;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #6c5ce7;
+        }
+
+        .attraction-name {
+            font-size: 1.2rem;
+            color: #2d3436;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .attraction-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #636e72;
+        }
+
+        .back-home {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-home:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .weather-card {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #90caf9;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #2d3436;
+            color: white;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        .route-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .route-list li {
+            background: #f8f9fa;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #007bff;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .guide-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-home {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页面标题区域 -->
+        <div class="header">
+            <h1 class="guide-title">🏮 南京周末游攻略</h1>
+            <p class="guide-subtitle">探寻六朝古都的魅力 - 适合自由行游客的两日游深度体验</p>
+        </div>
+
+        <!-- 基本信息 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📍</span>
+                基本信息
+            </h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>出发地</h4>
+                    <p>南京市内</p>
+                </div>
+                <div class="info-card">
+                    <h4>目的地</h4>
+                    <p>南京各大景区</p>
+                </div>
+                <div class="info-card">
+                    <h4>适宜时间</h4>
+                    <p>周末2天</p>
+                </div>
+                <div class="info-card">
+                    <h4>最佳季节</h4>
+                    <p>春季（3-5月）、秋季（9-11月）</p>
+                </div>
+                <div class="info-card">
+                    <h4>预算参考</h4>
+                    <p>300-800元/人（不含住宿）</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 天气预报 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🌤️</span>
+                天气预报
+            </h2>
+            <div class="weather-grid">
+                <div class="weather-card">
+                    <h4>6月17日</h4>
+                    <p>晴转多云</p>
+                    <p><strong>25-34℃</strong></p>
+                    <p>西风1-3级</p>
+                </div>
+                <div class="weather-card">
+                    <h4>6月18日</h4>
+                    <p>多云转阴</p>
+                    <p><strong>26-34℃</strong></p>
+                    <p>南风1-3级</p>
+                </div>
+                <div class="weather-card">
+                    <h4>6月19日</h4>
+                    <p>雷阵雨</p>
+                    <p><strong>26-29℃</strong></p>
+                    <p>西南风4级</p>
+                </div>
+                <div class="weather-card">
+                    <h4>6月20日</h4>
+                    <p>阴转雷阵雨</p>
+                    <p><strong>25-31℃</strong></p>
+                    <p>西南风4级</p>
+                </div>
+            </div>
+            <div class="tips-container">
+                <div class="tips-title">温馨提示</div>
+                <ul>
+                    <li>夏季游览建议携带防晒用品、遮阳帽</li>
+                    <li>雷雨天气注意携带雨具</li>
+                    <li>建议穿着舒适的步行鞋</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 市内交通攻略 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🚇</span>
+                市内交通攻略
+            </h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>地铁出行</h4>
+                    <p><strong>主要线路：</strong></p>
+                    <ul>
+                        <li>1号线：串联新街口、夫子庙、鼓楼</li>
+                        <li>2号线：连接玄武湖、中山陵、苜蓿园</li>
+                        <li>3号线：通达夫子庙、鸡鸣寺、大行宫</li>
+                        <li>4号线：贯穿鸡鸣寺、鼓楼等历史文化区</li>
+                    </ul>
+                    <p><strong>支付方式：</strong>金陵通交通卡、支付宝/微信扫码</p>
+                    <p><strong>票价：</strong>2-7元，建议购买一日卡（18元）</p>
+                </div>
+                <div class="info-card">
+                    <h4>公交出行</h4>
+                    <p>市内公交普遍覆盖，票价1-2元</p>
+                    <p>推荐使用支付宝/微信扫码支付</p>
+                    <p>主要旅游线路：游1、游2、游3专线</p>
+                </div>
+                <div class="info-card">
+                    <h4>打车出行</h4>
+                    <p>滴滴、T3出行、美团打车等网约车服务便利</p>
+                    <p>市内短程费用15-30元</p>
+                    <p>景区周边可能存在拥堵，建议提前规划</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 景点推荐 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🎯</span>
+                景点推荐
+            </h2>
+            
+            <h3>历史文化类（必游）</h3>
+            
+            <div class="attraction-card">
+                <div class="attraction-name">🏛️ 夫子庙秦淮风光带</div>
+                <div class="attraction-details">
+                    <div class="detail-item">
+                        <span class="detail-label">地址：</span>
+                        <span>平江府路80-1号（夫子庙地铁站2号口步行170米）</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">门票：</span>
+                        <span>免费参观，部分室内景点收费</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">游玩时长：</span>
+                        <span>2-3小时</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">特色：</span>
+                        <span>六朝古都文化精髓，秦淮河畔风光</span>
+                    </div>
+                </div>
+                <p><strong>最佳游览时间：</strong>傍晚至夜晚（夜景更美）</p>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">⛰️ 钟山风景名胜区</div>
+                <div class="attraction-details">
+                    <div class="detail-item">
+                        <span class="detail-label">地址：</span>
+                        <span>石象路7号</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">包含景点：</span>
+                        <span>中山陵、明孝陵、美龄宫、灵谷寺</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">游玩时长：</span>
+                        <span>一整天</span>
+                    </div>
+                </div>
+                <div class="price-table">
+                    <div class="price-card">
+                        <h4>中山陵</h4>
+                        <div class="price">免费预约</div>
+                    </div>
+                    <div class="price-card">
+                        <h4>明孝陵</h4>
+                        <div class="price">70元</div>
+                    </div>
+                    <div class="price-card">
+                        <h4>美龄宫</h4>
+                        <div class="price">30元</div>
+                    </div>
+                    <div class="price-card">
+                        <h4>联票优惠</h4>
+                        <div class="price">120元</div>
+                    </div>
+                </div>
+                <p><strong>特色：</strong>国家5A级景区，民国历史与明代皇陵</p>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">🌊 玄武湖景区</div>
+                <div class="attraction-details">
+                    <div class="detail-item">
+                        <span class="detail-label">地址：</span>
+                        <span>玄武门路1号（玄武门地铁站3号口步行300米）</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">门票：</span>
+                        <span>免费</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">游玩时长：</span>
+                        <span>2-3小时</span>
+                    </div>
+                </div>
+                <p><strong>特色：</strong>"金陵明珠"，城市中央公园</p>
+                <p><strong>推荐路线：</strong>玄武门→樱洲→十里长堤</p>
+            </div>
+
+            <h3>特色街区类</h3>
+            
+            <div class="attraction-card">
+                <div class="attraction-name">🏘️ 老门东历史文化街区</div>
+                <div class="attraction-details">
+                    <div class="detail-item">
+                        <span class="detail-label">地址：</span>
+                        <span>夫子庙街道剪子巷54号</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">门票：</span>
+                        <span>免费</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">特色：</span>
+                        <span>明清建筑群，传统民俗体验</span>
+                    </div>
+                </div>
+                <p><strong>美食推荐：</strong>小郑酥烧饼、蒋有记锅贴</p>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">🌸 颐和路公馆区</div>
+                <div class="attraction-details">
+                    <div class="detail-item">
+                        <span class="detail-label">特色：</span>
+                        <span>民国建筑群，梧桐叶大道</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">最佳拍照时间：</span>
+                        <span>秋季梧桐叶黄时</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">交通：</span>
+                        <span>地铁4号线云南路站</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 网红打卡地推荐 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📸</span>
+                网红打卡地推荐
+            </h2>
+            
+            <h3>拍照圣地</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🌅 紫金山观景台</h4>
+                    <p><strong>特色：</strong>俯瞰南京全景，日出日落绝佳地</p>
+                    <p><strong>最佳时间：</strong>清晨6:00-7:00，傍晚5:30-6:30</p>
+                    <p><strong>交通：</strong>地铁2号线苜蓿园站转公交</p>
+                </div>
+                <div class="info-card">
+                    <h4>🏮 夫子庙夜景</h4>
+                    <p><strong>特色：</strong>古典建筑+现代霓虹，江南水乡风情</p>
+                    <p><strong>最佳拍摄：</strong>秦淮河游船、文德桥、乌衣巷</p>
+                </div>
+                <div class="info-card">
+                    <h4>🌸 玄武湖樱洲</h4>
+                    <p><strong>特色：</strong>春季樱花盛开，湖光山色</p>
+                    <p><strong>拍照技巧：</strong>利用樱花前景，拍摄湖面倒影</p>
+                </div>
+                <div class="info-card">
+                    <h4>🍂 颐和路梧桐大道</h4>
+                    <p><strong>特色：</strong>最美梧桐叶大道，民国风情</p>
+                    <p><strong>最佳季节：</strong>10-11月金秋时节</p>
+                    <p><strong>拍照建议：</strong>逆光剪影、梧桐叶特写</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 美食攻略 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🍜</span>
+                美食攻略
+            </h2>
+            
+            <h3>南京特色小吃</h3>
+            <div class="food-grid">
+                <div class="food-item">
+                    <h4>鸭血粉丝汤</h4>
+                    <p>回味鸭血粉丝汤（夫子庙总店）</p>
+                </div>
+                <div class="food-item">
+                    <h4>盐水鸭</h4>
+                    <p>桂花鸭（总店）</p>
+                </div>
+                <div class="food-item">
+                    <h4>小笼包</h4>
+                    <p>绿柳居（兰园市场店）</p>
+                </div>
+                <div class="food-item">
+                    <h4>牛肉锅贴</h4>
+                    <p>七家湾牛肉锅贴</p>
+                </div>
+                <div class="food-item">
+                    <h4>赤豆糊</h4>
+                    <p>德源酒楼传统甜品</p>
+                </div>
+            </div>
+
+            <h3>美食街区推荐</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>夫子庙美食街</h4>
+                    <p><strong>地址：</strong>贡院街、平江府路美食集中区</p>
+                    <p><strong>推荐：</strong>蒋有记锅贴铺、莲湖糕团店、奇芳阁鸭子店、永和园酒楼</p>
+                </div>
+                <div class="info-card">
+                    <h4>新街口美食商圈</h4>
+                    <p><strong>德基广场：</strong>高端餐饮、国际美食</p>
+                    <p><strong>中央商场：</strong>传统南京菜、淮扬菜</p>
+                    <p><strong>推荐餐厅：</strong>萨莉亚意式餐厅、好记大酒店</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 两日行程安排 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">📅</span>
+                两日行程安排
+            </h2>
+            
+            <div class="schedule-day">
+                <div class="day-title">Day 1: 历史文化深度游</div>
+                
+                <div class="time-slot">
+                    <div class="time">上午 8:00-12:00</div>
+                    <p><strong>8:00-9:00</strong> 早餐：酒店附近或绿柳居小笼包</p>
+                    <p><strong>9:00-12:00</strong> 钟山风景区</p>
+                    <ul>
+                        <li>中山陵（9:00-10:30）</li>
+                        <li>明孝陵（10:30-12:00）</li>
+                    </ul>
+                </div>
+                
+                <div class="time-slot">
+                    <div class="time">下午 12:00-18:00</div>
+                    <p><strong>12:00-13:30</strong> 午餐：景区内餐厅或附近农家乐</p>
+                    <p><strong>13:30-15:30</strong> 美龄宫 + 中山植物园</p>
+                    <p><strong>15:30-17:00</strong> 玄武湖景区休闲漫步</p>
+                    <p><strong>17:00-18:00</strong> 返回酒店休息</p>
+                </div>
+                
+                <div class="time-slot">
+                    <div class="time">晚上 18:00-22:00</div>
+                    <p><strong>18:00-19:30</strong> 晚餐：新街口商圈美食</p>
+                    <p><strong>19:30-22:00</strong> 夫子庙夜游</p>
+                    <ul>
+                        <li>秦淮河游船（可选）</li>
+                        <li>古建筑群夜景拍照</li>
+                        <li>特色小吃品尝</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="schedule-day">
+                <div class="day-title">Day 2: 现代南京体验游</div>
+                
+                <div class="time-slot">
+                    <div class="time">上午 9:00-12:30</div>
+                    <p><strong>9:00-10:00</strong> 早餐：七家湾牛肉锅贴</p>
+                    <p><strong>10:00-12:30</strong> 老门东历史文化街区</p>
+                    <ul>
+                        <li>传统建筑群参观</li>
+                        <li>民俗文化体验</li>
+                        <li>特色手工艺品购买</li>
+                    </ul>
+                </div>
+                
+                <div class="time-slot">
+                    <div class="time">下午 12:30-17:30</div>
+                    <p><strong>12:30-14:00</strong> 午餐：老门东特色餐厅</p>
+                    <p><strong>14:00-16:00</strong> 大报恩寺遗址景区</p>
+                    <p><strong>16:00-17:30</strong> 颐和路公馆区漫步拍照</p>
+                </div>
+                
+                <div class="time-slot">
+                    <div class="time">晚上 17:30-21:00</div>
+                    <p><strong>17:30-19:00</strong> 晚餐：德基广场高端餐厅</p>
+                    <p><strong>19:00-21:00</strong> 新街口购物商圈</p>
+                    <ul>
+                        <li>德基广场、万象天地购物</li>
+                        <li>咖啡厅休闲时光</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 费用预算 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">💰</span>
+                费用预算
+            </h2>
+            <div class="price-table">
+                <div class="price-card">
+                    <h4>经济型</h4>
+                    <div class="price">300-400元/人</div>
+                    <ul>
+                        <li>交通费：50元</li>
+                        <li>门票费：150元</li>
+                        <li>餐饮费：120元</li>
+                        <li>其他：30元</li>
+                    </ul>
+                </div>
+                <div class="price-card">
+                    <h4>舒适型</h4>
+                    <div class="price">500-600元/人</div>
+                    <ul>
+                        <li>交通费：80元</li>
+                        <li>门票费：200元</li>
+                        <li>餐饮费：250元</li>
+                        <li>其他：70元</li>
+                    </ul>
+                </div>
+                <div class="price-card">
+                    <h4>豪华型</h4>
+                    <div class="price">700-800元/人</div>
+                    <ul>
+                        <li>交通费：150元</li>
+                        <li>门票费：200元</li>
+                        <li>餐饮费：350元</li>
+                        <li>其他：100元</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 实用小贴士 -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <span class="section-icon">🎒</span>
+                实用小贴士
+            </h2>
+            
+            <div class="tips-container">
+                <div class="tips-title">出行建议</div>
+                <ul>
+                    <li>提前预约：中山陵需要提前网上预约，免费但限流</li>
+                    <li>错峰出行：避开周末高峰，平日游客较少</li>
+                    <li>舒适穿着：穿着舒适的运动鞋，景区多需步行</li>
+                </ul>
+            </div>
+            
+            <div class="tips-container">
+                <div class="tips-title">防坑指南</div>
+                <ul>
+                    <li>景区餐饮：景区内餐厅价格偏高，可自带零食</li>
+                    <li>纪念品购买：对比多家店铺价格，理性消费</li>
+                    <li>黑车警惕：选择正规出租车或网约车</li>
+                    <li>门票陷阱：通过官方渠道购买门票，避免黄牛</li>
+                </ul>
+            </div>
+            
+            <div class="tips-container">
+                <div class="tips-title">天气应对</div>
+                <ul>
+                    <li>夏季：防晒霜、遮阳帽、充足饮水</li>
+                    <li>雨季：折叠雨伞、防水鞋套</li>
+                    <li>冬季：保暖衣物、围巾手套</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>📝 攻略制作时间：2025年6月17日</p>
+            <p>🔄 信息更新：实时天气及交通状况请关注官方发布</p>
+            <p><strong>愿您在南京的周末时光充满历史韵味与现代活力！🏮✨</strong></p>
+        </div>
+    </div>
+
+    <!-- 返回首页按钮 -->
+    <a href="index.html" class="back-home">🏠 返回首页</a>
+</body>
+</html>
