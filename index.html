@@ -104,6 +104,47 @@
                         <p class="form-hint">上传菜品图片，AI 自动识别菜名、食材和做法。<br><small>⚠️ 首次使用需下载约 10MB 中文语言包，请耐心等待</small></p>
                     </div>
 
+                    <!-- JSON 代码识别区域 -->
+                    <div class="form-group">
+                        <label class="form-label">📋 JSON 导入（可选）</label>
+
+                        <!-- JSON 文件上传 -->
+                        <div class="json-file-upload" style="margin-bottom: 12px;">
+                            <input type="file" id="jsonFileInput" accept=".json" style="display: none;">
+                            <div class="json-upload-area" onclick="document.getElementById('jsonFileInput').click()">
+                                <span class="json-upload-icon">📁</span>
+                                <span>点击上传 JSON 文件</span>
+                                <small style="color: var(--text-light); margin-left: 8px;">支持拖拽上传</small>
+                            </div>
+                            <div id="jsonFileName" style="margin-top: 8px; font-size: 0.9rem; color: var(--text-light);"></div>
+                        </div>
+
+                        <div class="json-divider" style="text-align: center; margin: 16px 0; position: relative;">
+                            <span style="background: var(--card-bg); padding: 0 12px; color: var(--text-light); font-size: 0.85rem;">或粘贴 JSON 代码</span>
+                            <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border); z-index: -1;"></div>
+                        </div>
+
+                        <div class="json-input-area">
+                            <textarea class="form-textarea json-code" id="jsonInput" placeholder='粘贴 JSON 格式的菜单数据，例如：
+{
+  "name": "红烧肉",
+  "desc": "肥而不腻，入口即化的经典家常菜",
+  "tags": ["家常菜", "下饭菜", "经典"],
+  "ingredients": ["五花肉 500克", "生姜 3片", "冰糖 30克"],
+  "steps": ["五花肉切块焯水", "炒糖色", "炖煮45分钟"]
+}'></textarea>
+                            <div class="json-buttons">
+                                <button type="button" class="btn btn-secondary" onclick="parseJsonInput()">
+                                    📥 解析 JSON 数据
+                                </button>
+                                <button type="button" class="btn btn-outline" onclick="showJsonTemplate()">
+                                    📄 查看 JSON 模板
+                                </button>
+                            </div>
+                        </div>
+                        <p class="form-hint">支持 .json 文件上传或粘贴代码，每个文件包含一个菜单</p>
+                    </div>
+
                     <div class="form-group">
                         <label class="form-label">菜单名称 *</label>
                         <input type="text" class="form-input" id="menuName" placeholder="例如：红烧肉" required>

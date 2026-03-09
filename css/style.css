@@ -571,6 +571,46 @@ body {
   vertical-align: middle;
 }
 
+/* JSON Input */
+.json-input-area {
+  margin-top: 8px;
+}
+
+.json-code {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9rem;
+  min-height: 150px;
+  background: #f8f9fa;
+}
+
+.json-buttons {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* JSON Template Modal */
+.template-preview {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  overflow-x: auto;
+}
+
+.template-preview pre {
+  margin: 0;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+.template-preview code {
+  color: #d63384;
+}
+
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
@@ -829,4 +869,62 @@ body {
 .toast.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+}
+
+/* JSON File Upload */
+.json-file-upload {
+  margin-bottom: 12px;
+}
+
+.json-upload-area {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.json-upload-area:hover {
+  border-color: var(--secondary);
+  background: #f0f9f9;
+}
+
+.json-upload-area.dragover {
+  border-color: var(--secondary);
+  background: #f0f9f9;
+  transform: scale(1.01);
+}
+
+.json-upload-icon {
+  font-size: 1.5rem;
+}
+
+.json-divider {
+  text-align: center;
+  margin: 16px 0;
+  position: relative;
+}
+
+.json-divider span {
+  background: var(--card-bg);
+  padding: 0 12px;
+  color: var(--text-light);
+  font-size: 0.85rem;
+}
+
+.json-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+  z-index: 0;
 }

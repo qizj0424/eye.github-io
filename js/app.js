@@ -560,6 +560,86 @@ function initImageUpload() {
             handleFile(files[0]);
         }
     });
+
+    // 初始化 JSON 文件上传
+    initJsonFileUpload();
+}
+
+// JSON 文件上传初始化
+function initJsonFileUpload() {
+    const jsonFileInput = document.getElementById('jsonFileInput');
+    const jsonUploadArea = document.querySelector('.json-upload-area');
+
+    if (!jsonFileInput || !jsonUploadArea) return;
+
+    // 文件选择
+    jsonFileInput.addEventListener('change', handleJsonFileSelect);
+
+    // 拖拽上传
+    jsonUploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        jsonUploadArea.classList.add('dragover');
+    });
+
+    jsonUploadArea.addEventListener('dragleave', () => {
+        jsonUploadArea.classList.remove('dragover');
+    });
+
+    jsonUploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        jsonUploadArea.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleJsonFile(files[0]);
+        }
+    });
+}
+
+function handleJsonFileSelect(e) {
+    const file = e.target.files[0];
+    if (file) handleJsonFile(file);
+}
+
+function handleJsonFile(file) {
+    // 检查文件类型
+    if (!file.name.endsWith('.json') && file.type !== 'application/json') {
+        showToast('⚠️ 请选择 JSON 文件 (.json)');
+        return;
+    }
+
+    // 显示文件名
+    const fileNameEl = document.getElementById('jsonFileName');
+    if (fileNameEl) {
+        fileNameEl.textContent = `已选择: ${file.name} (${formatFileSize(file.size)})`;
+    }
+
+    // 读取文件内容
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const content = e.target.result;
+            // 将内容填入 textarea
+            const jsonInput = document.getElementById('jsonInput');
+            if (jsonInput) {
+                jsonInput.value = content;
+            }
+            // 自动解析
+            parseJsonInput();
+        } catch (error) {
+            console.error('读取文件失败:', error);
+            showToast('❌ 读取文件失败');
+        }
+    };
+    reader.onerror = () => {
+        showToast('❌ 文件读取错误');
+    };
+    reader.readAsText(file);
+}
+
+function formatFileSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
 }
 
 function handleFileSelect(e) {
@@ -692,6 +772,161 @@ async function recognizeImage() {
     }
 }
 
+// ==================== JSON 导入功能 ====================
+
+// JSON 模板
+const JSON_TEMPLATE = {
+    "name": "菜品名称（必填）",
+    "desc": "菜品简介描述（可选）",
+    "tags": ["标签1", "标签2", "标签3"],
+    "ingredients": [
+        "食材1 用量",
+        "食材2 用量",
+        "食材3 用量"
+    ],
+    "steps": [
+        "步骤1：具体操作",
+        "步骤2：具体操作",
+        "步骤3：具体操作"
+    ]
+};
+
+// 解析 JSON 输入
+function parseJsonInput() {
+    const jsonInput = document.getElementById('jsonInput');
+    const jsonText = jsonInput.value.trim();
+
+    if (!jsonText) {
+        showToast('⚠️ 请先粘贴 JSON 数据');
+        return;
+    }
+
+    try {
+        // 解析 JSON
+        const data = JSON.parse(jsonText);
+
+        // 验证必需字段
+        if (!data.name) {
+            throw new Error('JSON 中缺少必需的 "name" 字段（菜品名称）');
+        }
+
+        // 填充表单
+        fillFormFromJson(data);
+
+        showToast('✅ JSON 解析成功，已填充表单');
+
+        // 清空 JSON 输入框
+        jsonInput.value = '';
+
+    } catch (error) {
+        console.error('JSON 解析失败:', error);
+        let errorMsg = 'JSON 格式错误';
+        if (error.message.includes('Unexpected token')) {
+            errorMsg = 'JSON 格式不正确，请检查引号、逗号等符号';
+        } else if (error.message.includes('Missing')) {
+            errorMsg = error.message;
+        } else if (error.message) {
+            errorMsg = error.message;
+        }
+        showToast(`❌ ${errorMsg}`);
+    }
+}
+
+// 从 JSON 数据填充表单
+function fillFormFromJson(data) {
+    // 菜名
+    document.getElementById('menuName').value = data.name || '';
+
+    // 描述
+    document.getElementById('menuDesc').value = data.desc || data.description || '';
+
+    // 标签（支持数组或字符串）
+    let tags = [];
+    if (Array.isArray(data.tags)) {
+        tags = data.tags;
+    } else if (typeof data.tags === 'string') {
+        tags = data.tags.split(/[,，]/).map(t => t.trim()).filter(Boolean);
+    } else if (data.tag) {
+        tags = [data.tag];
+    }
+    document.getElementById('menuTags').value = tags.join(', ');
+
+    // 食材（支持数组或字符串）
+    let ingredients = [];
+    if (Array.isArray(data.ingredients)) {
+        ingredients = data.ingredients;
+    } else if (Array.isArray(data.materials)) {
+        ingredients = data.materials;
+    } else if (typeof data.ingredients === 'string') {
+        ingredients = data.ingredients.split('\n').filter(Boolean);
+    }
+    document.getElementById('menuIngredients').value = ingredients.join('\n');
+
+    // 步骤（支持数组或字符串）
+    let steps = [];
+    if (Array.isArray(data.steps)) {
+        steps = data.steps;
+    } else if (Array.isArray(data.procedures)) {
+        steps = data.procedures;
+    } else if (Array.isArray(data.method)) {
+        steps = data.method;
+    } else if (typeof data.steps === 'string') {
+        steps = data.steps.split('\n').filter(Boolean);
+    }
+
+    // 确保步骤有编号
+    steps = steps.map((step, index) => {
+        const cleanStep = step.replace(/^\d+[.、.\s)）]+/, '').trim();
+        return `${index + 1}. ${cleanStep}`;
+    });
+    document.getElementById('menuSteps').value = steps.join('\n');
+}
+
+// 显示 JSON 模板
+function showJsonTemplate() {
+    const templateHtml = `
+        <div style="text-align: left;">
+            <h3 style="margin-bottom: 16px;">📄 JSON 格式模板</h3>
+            <p style="margin-bottom: 12px; color: var(--text-light);">复制以下模板，修改内容后粘贴到 JSON 输入框：</p>
+            <div class="template-preview">
+                <pre><code>${JSON.stringify(JSON_TEMPLATE, null, 2)}</code></pre>
+            </div>
+            <div style="margin-top: 16px; padding: 12px; background: #f8f9fa; border-radius: 8px; font-size: 0.9rem;">
+                <strong>字段说明：</strong>
+                <ul style="margin: 8px 0 0 20px; line-height: 1.8;">
+                    <li><code>name</code> - 菜品名称（必填）</li>
+                    <li><code>desc</code> - 菜品描述（可选）</li>
+                    <li><code>tags</code> - 标签数组（可选）</li>
+                    <li><code>ingredients</code> - 食材数组（可选）</li>
+                    <li><code>steps</code> - 步骤数组（可选）</li>
+                </ul>
+            </div>
+            <div style="margin-top: 16px; text-align: right;">
+                <button class="btn btn-primary" onclick="this.closest('.modal-overlay').remove()">关闭</button>
+            </div>
+        </div>
+    `;
+
+    // 创建临时模态框显示模板
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay active';
+    modal.innerHTML = `
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 class="modal-title">JSON 模板</h3>
+                <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">×</button>
+            </div>
+            <div class="modal-body">
+                ${templateHtml}
+            </div>
+        </div>
+    `;
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.remove();
+    });
+    document.body.appendChild(modal);
+}
+
 // 模拟识别（演示用，当真实 OCR 失败时提供）
 function simulateRecognition() {
     const statusEl = document.getElementById('ocrStatus');
@@ -736,12 +971,8 @@ function simulateRecognition() {
             };
         }
 
-        // 填充表单
-        document.getElementById('menuName').value = mockData.name;
-        document.getElementById('menuDesc').value = mockData.desc;
-        document.getElementById('menuIngredients').value = mockData.ingredients.join('\n');
-        document.getElementById('menuSteps').value = mockData.steps.join('\n');
-        document.getElementById('menuTags').value = mockData.tags.join(', ');
+        // 使用统一的填充函数
+        fillFormFromJson(mockData);
 
         statusEl.textContent = '✅ 模拟识别完成（演示）';
         showToast('✅ 已使用演示数据填充表单，请根据实际情况修改');
