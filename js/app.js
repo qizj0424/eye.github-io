@@ -1,4 +1,4 @@
-// ==================== 配置 ====================
+﻿// ==================== 配置 ====================
 const GITHUB_CONFIG = {
     owner: 'qizj0424',
     repo: 'eye.github-io',
@@ -113,6 +113,20 @@ const utils = {
 
     parseList(text) {
         return text.split('\n').map(l => l.trim()).filter(Boolean);
+    },
+
+    // UTF-8 安全的 Base64 编码（支持中文）
+    utf8ToBase64(str) {
+        const bytes = new TextEncoder().encode(str);
+        const binString = Array.from(bytes, (b) => String.fromCharCode(b)).join('');
+        return btoa(binString);
+    },
+
+    // UTF-8 安全的 Base64 解码（支持中文）
+    base64ToUtf8(base64) {
+        const binString = atob(base64);
+        const bytes = Uint8Array.from(binString, (c) => c.charCodeAt(0));
+        return new TextDecoder().decode(bytes);
     }
 };
 
@@ -171,7 +185,7 @@ const github = {
 
             const data = await response.json();
             state.fileSha = data.sha;
-            const content = atob(data.content.replace(/\n/g, ''));
+            const content = utils.base64ToUtf8(data.content.replace(/\n/g, ''));
             const parsed = JSON.parse(content);
             state.menus = parsed?.length ? parsed : [...defaultMenus];
             showToast('✅ 数据加载成功！');
@@ -195,7 +209,7 @@ const github = {
         setLoading(true);
         try {
             showToast('💾 正在保存...');
-            const content = btoa(unescape(encodeURIComponent(JSON.stringify(state.menus, null, 2))));
+            const content = utils.utf8ToBase64(JSON.stringify(state.menus, null, 2));
             const body = { message, content, branch: GITHUB_CONFIG.branch };
             if (state.fileSha) body.sha = state.fileSha;
 
