@@ -508,6 +508,9 @@ function init() {
     elements.uploadModal.addEventListener('click', e => { if (e.target === elements.uploadModal) closeUploadModal(); });
     elements.tokenModal.addEventListener('click', e => { if (e.target === elements.tokenModal) closeTokenModal(); });
 
+    // 初始化图片上传
+    initImageUpload();
+
     // 应用视图设置
     elements.gridViewBtn.classList.toggle('active', state.currentView === 'grid');
     elements.listViewBtn.classList.toggle('active', state.currentView === 'list');
@@ -520,6 +523,208 @@ function init() {
 
     // 加载数据
     github.load().then(() => renderMenus());
+}
+
+// ==================== 图片上传与 OCR ====================
+let currentImageFile = null;
+
+function initImageUpload() {
+    const uploadArea = document.getElementById('imageUploadArea');
+    const fileInput = document.getElementById('dishImage');
+
+    // 文件选择
+    fileInput.addEventListener('change', handleFileSelect);
+
+    // 拖拽上传
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFile(files[0]);
+        }
+    });
+}
+
+function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (file) handleFile(file);
+}
+
+function handleFile(file) {
+    if (!file.type.startsWith('image/')) {
+        showToast('⚠️ 请选择图片文件');
+        return;
+    }
+
+    currentImageFile = file;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        document.getElementById('previewImg').src = e.target.result;
+        // 使用 querySelector 获取 class
+        const placeholder = document.querySelector('#imageUploadArea .upload-placeholder');
+        if (placeholder) placeholder.style.display = 'none';
+        document.getElementById('imagePreview').style.display = 'inline-block';
+        document.getElementById('ocrButtons').style.display = 'flex';
+    };
+    reader.readAsDataURL(file);
+}
+
+function removeImage() {
+    currentImageFile = null;
+    document.getElementById('dishImage').value = '';
+    document.getElementById('previewImg').src = '';
+    const placeholder = document.querySelector('#imageUploadArea .upload-placeholder');
+    if (placeholder) placeholder.style.display = 'block';
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('ocrButtons').style.display = 'none';
+    document.getElementById('ocrStatus').textContent = '';
+}
+
+async function recognizeImage() {
+    if (!currentImageFile) {
+        showToast('⚠️ 请先上传图片');
+        return;
+    }
+
+    const statusEl = document.getElementById('ocrStatus');
+    const btn = document.getElementById('recognizeBtn');
+
+    statusEl.textContent = '正在识别...';
+    statusEl.classList.add('loading');
+    btn.disabled = true;
+
+    try {
+        // 使用 Tesseract.js 进行 OCR 识别
+        const result = await Tesseract.recognize(
+            currentImageFile,
+            'chi_sim+eng', // 中文简体 + 英文
+            {
+                logger: message => {
+                    if (message.status === 'recognizing text') {
+                        statusEl.textContent = `识别中... ${Math.round(message.progress * 100)}%`;
+                    }
+                }
+            }
+        );
+
+        const text = result.data.text;
+        console.log('OCR 识别结果:', text);
+
+        // 解析识别结果并填充表单
+        parseAndFillForm(text);
+
+        statusEl.textContent = '✅ 识别完成';
+        showToast('✅ 图片识别完成，已自动填充表单');
+    } catch (error) {
+        console.error('OCR 识别失败:', error);
+        statusEl.textContent = '❌ 识别失败';
+        showToast('❌ 图片识别失败，请手动输入');
+    } finally {
+        statusEl.classList.remove('loading');
+        btn.disabled = false;
+    }
+}
+
+function parseAndFillForm(text) {
+    // 简单的文本解析逻辑
+    const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+    // 尝试提取菜名（通常是第一行或包含"菜名"、"名称"的行）
+    let name = '';
+    for (const line of lines) {
+        if (line.includes('菜名') || line.includes('名称')) {
+            name = line.replace(/菜名[：:]?/g, '').replace(/名称[：:]?/g, '').trim();
+            break;
+        }
+    }
+    if (!name && lines.length > 0) {
+        name = lines[0].substring(0, 20); // 取第一行前20字符
+    }
+    if (name) document.getElementById('menuName').value = name;
+
+    // 尝试提取食材（查找包含"食材"、"用料"、"材料"的区域）
+    let ingredients = [];
+    let inIngredientsSection = false;
+    for (const line of lines) {
+        if (line.includes('食材') || line.includes('用料') || line.includes('材料') || line.includes('原料')) {
+            inIngredientsSection = true;
+            continue;
+        }
+        if (inIngredientsSection && line.length > 1 && !line.includes('步骤') && !line.includes('做法')) {
+            // 过滤掉可能的用量单位行
+            if (/[克g毫升ml勺个根片]+/.test(line) || line.length < 30) {
+                ingredients.push(line);
+            }
+        }
+        if (line.includes('步骤') || line.includes('做法') || line.includes('制作')) {
+            inIngredientsSection = false;
+        }
+    }
+    if (ingredients.length > 0) {
+        document.getElementById('menuIngredients').value = ingredients.join('\n');
+    }
+
+    // 尝试提取步骤（查找包含"步骤"、"做法"、"制作"的区域）
+    let steps = [];
+    let inStepsSection = false;
+    let stepNum = 1;
+    for (const line of lines) {
+        if (line.includes('步骤') || line.includes('做法') || line.includes('制作') || line.includes('烹调')) {
+            inStepsSection = true;
+            continue;
+        }
+        if (inStepsSection && line.length > 5) {
+            // 去除开头的数字序号
+            const cleanLine = line.replace(/^\d+[.、.\s)）]+/, '').trim();
+            if (cleanLine) {
+                steps.push(`${stepNum}. ${cleanLine}`);
+                stepNum++;
+            }
+        }
+    }
+    if (steps.length > 0) {
+        document.getElementById('menuSteps').value = steps.join('\n');
+    }
+
+    // 尝试提取描述（如果没有食材和步骤的区域，可能整段都是描述）
+    if (!ingredients.length && !steps.length && lines.length > 1) {
+        const desc = lines.slice(1, 3).join('，');
+        document.getElementById('menuDesc').value = desc;
+    }
+
+    // 智能标签推荐
+    const tagMap = {
+        '辣': ['川菜', '辣'],
+        '麻辣': ['川菜', '辣'],
+        '红烧': ['家常菜', '下饭菜'],
+        '糖醋': ['家常菜', '甜酸'],
+        '蒸': ['清淡', '健康'],
+        '凉拌': ['快手菜', '素食'],
+        '炒': ['快手菜', '家常菜'],
+        '炖': ['家常菜', '汤'],
+        '炸': ['小吃', '香脆'],
+        '烤': ['西餐', '烤箱菜']
+    };
+
+    const suggestedTags = [];
+    for (const [keyword, tags] of Object.entries(tagMap)) {
+        if (text.includes(keyword)) {
+            suggestedTags.push(...tags);
+        }
+    }
+    if (suggestedTags.length > 0) {
+        document.getElementById('menuTags').value = [...new Set(suggestedTags)].join(', ');
+    }
 }
 
 // 启动

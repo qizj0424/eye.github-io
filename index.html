@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>家庭菜单 - 美味食谱管理</title>
     <link rel="stylesheet" href="css/style.css" charset="UTF-8">
+    <script src='https://unpkg.com/tesseract.js@4.1.1/dist/tesseract.min.js'></script>
 </head>
 <body>
     <!-- 首页 -->
@@ -78,6 +79,31 @@
             <div class="modal-body">
                 <form id="uploadForm">
                     <input type="hidden" id="editMenuId">
+
+                    <!-- 图片上传区域 -->
+                    <div class="form-group">
+                        <label class="form-label">📷 菜品图片识别（可选）</label>
+                        <div class="image-upload-area" id="imageUploadArea">
+                            <input type="file" id="dishImage" accept="image/*" style="display: none;">
+                            <div class="upload-placeholder" onclick="document.getElementById('dishImage').click()">
+                                <div class="upload-icon">📸</div>
+                                <p>点击上传菜品图片</p>
+                                <p class="upload-hint">支持拖拽图片到此处</p>
+                            </div>
+                            <div class="image-preview" id="imagePreview" style="display: none;">
+                                <img id="previewImg" src="" alt="预览">
+                                <button type="button" class="remove-image" onclick="removeImage()">×</button>
+                            </div>
+                        </div>
+                        <div class="ocr-buttons" id="ocrButtons" style="display: none;">
+                            <button type="button" class="btn btn-secondary" onclick="recognizeImage()" id="recognizeBtn">
+                                🔍 AI 识别菜品信息
+                            </button>
+                            <span class="ocr-status" id="ocrStatus"></span>
+                        </div>
+                        <p class="form-hint">上传菜品图片，AI 自动识别菜名、食材和做法</p>
+                    </div>
+
                     <div class="form-group">
                         <label class="form-label">菜单名称 *</label>
                         <input type="text" class="form-input" id="menuName" placeholder="例如：红烧肉" required>
