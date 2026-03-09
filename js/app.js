@@ -523,6 +523,13 @@ function init() {
 
     // 加载数据
     github.load().then(() => renderMenus());
+
+    // 页面卸载时清理 Tesseract worker
+    window.addEventListener('beforeunload', async () => {
+        if (tesseractWorker) {
+            await tesseractWorker.terminate();
+        }
+    });
 }
 
 // ==================== 图片上传与 OCR ====================
@@ -590,6 +597,34 @@ function removeImage() {
     document.getElementById('ocrStatus').textContent = '';
 }
 
+// Tesseract Worker 实例
+let tesseractWorker = null;
+
+async function initTesseract() {
+    if (tesseractWorker) return;
+
+    try {
+        // 创建 worker 并加载中文训练数据
+        tesseractWorker = await Tesseract.createWorker('chi_sim', 1, {
+            logger: message => {
+                console.log('Tesseract:', message);
+                const statusEl = document.getElementById('ocrStatus');
+                if (statusEl && message.status) {
+                    if (message.status === 'loading language traineddata') {
+                        statusEl.textContent = '⏳ 正在加载中文语言包...';
+                    } else if (message.status === 'recognizing text') {
+                        statusEl.textContent = `🔍 识别中... ${Math.round(message.progress * 100)}%`;
+                    }
+                }
+            },
+            errorHandler: err => console.error('Tesseract Error:', err)
+        });
+    } catch (error) {
+        console.error('初始化 Tesseract 失败:', error);
+        throw error;
+    }
+}
+
 async function recognizeImage() {
     if (!currentImageFile) {
         showToast('⚠️ 请先上传图片');
@@ -599,26 +634,27 @@ async function recognizeImage() {
     const statusEl = document.getElementById('ocrStatus');
     const btn = document.getElementById('recognizeBtn');
 
-    statusEl.textContent = '正在识别...';
+    statusEl.textContent = '⏳ 初始化识别引擎...';
     statusEl.classList.add('loading');
     btn.disabled = true;
 
     try {
-        // 使用 Tesseract.js 进行 OCR 识别
-        const result = await Tesseract.recognize(
-            currentImageFile,
-            'chi_sim+eng', // 中文简体 + 英文
-            {
-                logger: message => {
-                    if (message.status === 'recognizing text') {
-                        statusEl.textContent = `识别中... ${Math.round(message.progress * 100)}%`;
-                    }
-                }
-            }
-        );
+        // 确保 worker 已初始化
+        if (!tesseractWorker) {
+            await initTesseract();
+        }
 
+        // 压缩图片以提高识别速度和准确率
+        const compressedImage = await compressImage(currentImageFile, 1200);
+
+        // 进行 OCR 识别
+        const result = await tesseractWorker.recognize(compressedImage);
         const text = result.data.text;
         console.log('OCR 识别结果:', text);
+
+        if (!text || text.trim().length === 0) {
+            throw new Error('未能识别到文字');
+        }
 
         // 解析识别结果并填充表单
         parseAndFillForm(text);
@@ -628,11 +664,125 @@ async function recognizeImage() {
     } catch (error) {
         console.error('OCR 识别失败:', error);
         statusEl.textContent = '❌ 识别失败';
-        showToast('❌ 图片识别失败，请手动输入');
+
+        // 显示具体错误信息
+        let errorMsg = '图片识别失败';
+        if (error.message && error.message.includes('network')) {
+            errorMsg = '网络错误：无法下载语言包，请检查网络';
+        } else if (error.message && error.message.includes('language')) {
+            errorMsg = '语言包错误：中文训练数据加载失败';
+        } else if (error.message && error.message.includes('createWorker')) {
+            errorMsg = '引擎初始化失败，可能是浏览器兼容性问题';
+        } else if (error.message) {
+            errorMsg = error.message;
+        }
+
+        // 提供降级方案提示
+        showToast(`❌ ${errorMsg}`);
+
+        // 显示手动输入建议
+        setTimeout(() => {
+            if (confirm('AI 识别失败。是否尝试使用模拟识别（演示用）？\n\n或者您可以手动输入菜单信息。')) {
+                simulateRecognition();
+            }
+        }, 500);
     } finally {
         statusEl.classList.remove('loading');
         btn.disabled = false;
     }
+}
+
+// 模拟识别（演示用，当真实 OCR 失败时提供）
+function simulateRecognition() {
+    const statusEl = document.getElementById('ocrStatus');
+    statusEl.textContent = '🔍 模拟识别中...';
+
+    // 模拟延迟
+    setTimeout(() => {
+        // 基于文件名的模拟数据
+        const fileName = currentImageFile.name.toLowerCase();
+        let mockData = {
+            name: '识别示例菜',
+            desc: '这是一道美味的家常菜',
+            ingredients: ['主要食材 适量', '辅助食材 适量', '调味料 少许'],
+            steps: ['1. 准备好所有食材', '2. 按照菜谱进行烹饪', '3. 调味后装盘即可'],
+            tags: ['家常菜', '示例']
+        };
+
+        // 根据文件名猜测菜品类型
+        if (fileName.includes('鸡') || fileName.includes('chicken')) {
+            mockData = {
+                name: '宫保鸡丁',
+                desc: '经典川菜，麻辣鲜香',
+                ingredients: ['鸡胸肉 300克', '花生米 50克', '干辣椒 10个', '花椒 1勺', '葱姜蒜 适量'],
+                steps: ['1. 鸡肉切丁，用料酒、生抽腌制15分钟', '2. 花生米炸至金黄备用', '3. 热锅凉油，爆香花椒辣椒', '4. 下鸡丁炒至变色', '5. 加入调料汁和花生米翻炒均匀'],
+                tags: ['川菜', '辣', '下饭菜']
+            };
+        } else if (fileName.includes('鱼') || fileName.includes('fish')) {
+            mockData = {
+                name: '清蒸鲈鱼',
+                desc: '鲜美嫩滑，保留鱼肉原味',
+                ingredients: ['鲈鱼 1条', '姜丝 适量', '葱丝 适量', '蒸鱼豉油 3勺'],
+                steps: ['1. 鲈鱼处理干净，两面划几刀', '2. 铺上姜丝腌制10分钟', '3. 水开后蒸8-10分钟', '4. 淋上蒸鱼豉油即可'],
+                tags: ['粤菜', '清淡', '海鲜']
+            };
+        } else if (fileName.includes('肉') || fileName.includes('pork') || fileName.includes('beef')) {
+            mockData = {
+                name: '红烧肉',
+                desc: '肥而不腻，入口即化',
+                ingredients: ['五花肉 500克', '冰糖 30克', '生抽 2勺', '老抽 1勺', '料酒 2勺'],
+                steps: ['1. 五花肉切块，冷水下锅焯水', '2. 锅中放油，小火炒糖色', '3. 放入肉块翻炒上色', '4. 加入调料和适量水', '5. 小火炖煮45分钟至软烂'],
+                tags: ['家常菜', '下饭菜', '经典']
+            };
+        }
+
+        // 填充表单
+        document.getElementById('menuName').value = mockData.name;
+        document.getElementById('menuDesc').value = mockData.desc;
+        document.getElementById('menuIngredients').value = mockData.ingredients.join('\n');
+        document.getElementById('menuSteps').value = mockData.steps.join('\n');
+        document.getElementById('menuTags').value = mockData.tags.join(', ');
+
+        statusEl.textContent = '✅ 模拟识别完成（演示）';
+        showToast('✅ 已使用演示数据填充表单，请根据实际情况修改');
+    }, 1000);
+}
+
+// 图片压缩函数
+function compressImage(file, maxWidth = 1200) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            img.src = e.target.result;
+        };
+
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+
+            // 等比例缩放
+            if (width > maxWidth) {
+                height = Math.round(height * maxWidth / width);
+                width = maxWidth;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            // 转换为 base64
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+            resolve(dataUrl);
+        };
+
+        img.onerror = reject;
+        reader.readAsDataURL(file);
+    });
 }
 
 function parseAndFillForm(text) {
