@@ -7,7 +7,7 @@ const GITHUB_CONFIG = {
     token: ''
 };
 
-const FOOD_ICONS = ['🍖', '🥩', '🍗', '🥘', '🍲', '🥗', '🍜', '🍝', '🍛', '🍤', '🥟', '🍳', '🥦', '🍅', '🐟'];
+const FOOD_ICONS = ['🍖', '🥩', '🍗', '🥘', '🍲', '🥗', '🍜', '🍝', '🍛', '🍤', '🥟', '🍳', '🥦', '🍅', '🐟', '🥬', '🥒', '🌶️', '🫑', '🌽', '🥕', '🧅', '🧄', '🍆', '🥔', '🍠', '🥜', '🌰', '🍄', '🍱', '🍣', '🍙', '🍚', '🍘', '🍥', '🥮', '🍢', '🍡', '🍧', '🍨', '🍦', '🥧', '🧁', '🍰', '🎂', '🍮', '🍭', '🍬', '🍫', '🍿', '🍩', '🍪', '🌮', '🌯', '🫔', '🥙', '🧆', '🥪', '🫓', '🥫', '🥣', '🥢', '🍽️', '🍴', '🥄', '🐔', '🦆', '🦢', '🦉', '🦚', '🦜', '🦡', '🦗', '🦂', '🦟', '🦞', '🦀', '🦐', '🦑', '🐙', '🦋', '🐌', '🐞', '🐜', '🦠', '🍏', '🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🫐', '🍈', '🍒', '🍑', '🥭', '🍍', '🥥', '🥝', '🍋‍🟩', '🍈', '🫒', '🥐', '🥯', '🍞', '🥖', '🥨', '🧀', '🥚', '🍳', '🧈', '🥞', '🧇', '🥓', '🥩', '🍗', '🍖', '🦴', '🌭', '🍔', '🍟', '🍕', '🫕', '🥘', '🍝', '🥫', '🥗', '🥙', '🥪', '🌮', '🌯', '🫔', '🥚', '🍳', '🥘', '🍲', '🫕', '🥣', '🥗', '🍿', '🧂', '🥫'];
 
 // ==================== 状态管理 ====================
 const state = {
@@ -83,7 +83,8 @@ function cacheElements() {
     const ids = ['homePage', 'detailPage', 'menuGrid', 'emptyState', 'listTitle', 'searchInput',
                  'uploadModal', 'tokenModal', 'modalTitle', 'submitBtn', 'editMenuId',
                  'menuName', 'menuDesc', 'menuTags', 'menuIngredients', 'menuSteps',
-                 'githubToken', 'gridViewBtn', 'listViewBtn', 'toast', 'detailContent', 'tokenBtn'];
+                 'githubToken', 'gridViewBtn', 'listViewBtn', 'toast', 'detailContent', 'tokenBtn',
+                 'iconSelector', 'menuIcon'];
     ids.forEach(id => elements[id] = document.getElementById(id));
 }
 
@@ -419,6 +420,11 @@ function openUploadModal() {
     elements.submitBtn.textContent = '✅ 保存菜单';
     elements.editMenuId.value = '';
     document.getElementById('uploadForm').reset();
+
+    // 初始化图标选择器
+    initIconSelector();
+    clearIconSelection();
+
     elements.uploadModal.classList.add('active');
 }
 
@@ -434,6 +440,15 @@ function openEditModal(id) {
     elements.menuTags.value = menu.tags.join(', ');
     elements.menuIngredients.value = menu.ingredients.join('\n');
     elements.menuSteps.value = menu.steps.join('\n');
+
+    // 初始化图标选择器并选中当前图标
+    initIconSelector();
+    if (menu.icon) {
+        selectIcon(menu.icon);
+    } else {
+        clearIconSelection();
+    }
+
     elements.uploadModal.classList.add('active');
 }
 
@@ -467,6 +482,52 @@ function saveToken() {
     }
 }
 
+// ==================== 图标选择器 ====================
+function initIconSelector() {
+    const selector = elements.iconSelector;
+    if (!selector) return;
+
+    // 清空现有内容
+    selector.innerHTML = '';
+
+    // 添加随机选择按钮
+    const randomBtn = document.createElement('div');
+    randomBtn.className = 'icon-random-btn';
+    randomBtn.textContent = '🎲 随机选择';
+    randomBtn.onclick = () => selectRandomIcon();
+    selector.appendChild(randomBtn);
+
+    // 添加所有图标选项
+    FOOD_ICONS.forEach(icon => {
+        const option = document.createElement('div');
+        option.className = 'icon-option';
+        option.textContent = icon;
+        option.onclick = () => selectIcon(icon);
+        selector.appendChild(option);
+    });
+}
+
+function selectIcon(icon) {
+    elements.menuIcon.value = icon;
+
+    // 更新选中状态
+    const options = elements.iconSelector.querySelectorAll('.icon-option');
+    options.forEach(opt => {
+        opt.classList.toggle('selected', opt.textContent === icon);
+    });
+}
+
+function selectRandomIcon() {
+    const randomIcon = utils.getRandomIcon();
+    selectIcon(randomIcon);
+}
+
+function clearIconSelection() {
+    elements.menuIcon.value = '';
+    const options = elements.iconSelector.querySelectorAll('.icon-option');
+    options.forEach(opt => opt.classList.remove('selected'));
+}
+
 // ==================== CRUD 操作 ====================
 async function handleSubmit(e) {
     e.preventDefault();
@@ -476,12 +537,16 @@ async function handleSubmit(e) {
     const name = elements.menuName.value.trim();
     const desc = elements.menuDesc.value.trim();
 
+    // 获取选择的图标，如果没有则随机分配
+    const selectedIcon = elements.menuIcon.value || utils.getRandomIcon();
+
     const menuData = {
         name,
         desc,
         tags: utils.parseTags(elements.menuTags.value),
         ingredients: utils.parseList(elements.menuIngredients.value),
-        steps: utils.parseList(elements.menuSteps.value)
+        steps: utils.parseList(elements.menuSteps.value),
+        icon: selectedIcon
     };
 
     if (editId) {
@@ -497,8 +562,7 @@ async function handleSubmit(e) {
     } else {
         const newMenu = {
             id: Date.now(),
-            ...menuData,
-            icon: utils.getRandomIcon()
+            ...menuData
         };
         state.menus.unshift(newMenu);
         if (await github.save(`新增菜单: ${name}`)) {

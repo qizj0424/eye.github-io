@@ -150,6 +150,14 @@
                         <input type="text" class="form-input" id="menuName" placeholder="例如：红烧肉" required>
                     </div>
                     <div class="form-group">
+                        <label class="form-label">菜品图标</label>
+                        <div class="icon-selector" id="iconSelector">
+                            <!-- 动态生成图标选项 -->
+                        </div>
+                        <input type="hidden" id="menuIcon" value="">
+                        <p class="form-hint">点击选择菜品图标，不选则随机分配</p>
+                    </div>
+                    <div class="form-group">
                         <label class="form-label">简介描述</label>
                         <input type="text" class="form-input" id="menuDesc" placeholder="简单介绍这道菜的特点">
                     </div>
