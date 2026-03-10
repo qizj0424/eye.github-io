@@ -381,6 +381,32 @@ function showAllMenus() {
 
 function generateRandomMenus() {
     const count = Math.min(parseInt(document.getElementById('randomCount').value) || 3, state.menus.length);
+
+    // 如果生成数量 >= 2，确保至少有一个蔬菜菜单
+    if (count >= 2) {
+        // 获取所有标签包含"蔬菜"的菜单
+        const vegetableMenus = state.menus.filter(menu =>
+            menu.tags.some(tag => tag.includes('蔬菜'))
+        );
+
+        if (vegetableMenus.length > 0) {
+            // 随机选择一道蔬菜菜
+            const randomVegetable = vegetableMenus[Math.floor(Math.random() * vegetableMenus.length)];
+
+            // 从剩余菜单中随机选择其他菜（排除已选的蔬菜菜）
+            const otherMenus = state.menus.filter(menu => menu.id !== randomVegetable.id);
+            const shuffledOthers = [...otherMenus].sort(() => Math.random() - 0.5);
+            const otherRandomMenus = shuffledOthers.slice(0, count - 1);
+
+            // 合并结果
+            const randomMenus = [randomVegetable, ...otherRandomMenus];
+            renderMenus(randomMenus, `🎲 随机推荐 (${randomMenus.length})`);
+            showToast(`已为您随机生成 ${count} 道菜品（含1道蔬菜）`);
+            return;
+        }
+    }
+
+    // 默认随机选择逻辑（count < 2 或没有蔬菜菜单时）
     const shuffled = [...state.menus].sort(() => Math.random() - 0.5);
     const randomMenus = shuffled.slice(0, count);
     renderMenus(randomMenus, `🎲 随机推荐 (${randomMenus.length})`);
